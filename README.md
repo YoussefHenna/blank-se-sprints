@@ -1,4 +1,4 @@
-# Black SE Project - Sprints
+# Blank SE Project - Sprints
 
 ## Initial steps:
 
