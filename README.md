@@ -51,6 +51,7 @@ yarn start
 ## References
 
 - [Basic React + Typescript tutorial](https://www.youtube.com/watch?v=Z5iWr6Srsj8&ab_channel=BenAwad)
+- [Mongo Docs for CRUD](https://docs.mongodb.com/drivers/node/current/fundamentals/crud/)
 - [Material-UI](https://material-ui.com/components/buttons/) Use this library for basic ui elements - library already added to packages
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html) (since we'll be using functional components)
 - [State hoisting](https://reactjs.org/docs/lifting-state-up.html) Quick read on where state should be held
