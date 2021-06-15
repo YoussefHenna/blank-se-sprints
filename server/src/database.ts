@@ -9,5 +9,5 @@ export function initDb() {
     useUnifiedTopology: true,
   });
   client.connect();
-  db = client.db();
+  db = client.db("blank-db");
 }
