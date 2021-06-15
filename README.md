@@ -2,18 +2,41 @@
 
 ## Initial steps:
 
-Note: this project uses yarn instead of npm
+### Node + Yarn
 
-Run these to install required packages
+[Download Node](https://nodejs.org/en/download/)  
+[Install Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable)
 
-_Server_
+### Database
+
+[Download MongoDB](https://www.mongodb.com/try/download/community?tck=docs_server)  
+[Install Mongo](https://docs.mongodb.com/manual/administration/install-community/)
+
+- Make sure you install MongoDB Compass as well (should be checkbox in setup process)
+- To create a db follow this
+
+<figure class="video_container">
+  <iframe src="https://streamable.com/ql4ee6" frameborder="0" allowfullscreen="true"> </iframe>
+</figure>
+Make sure you use name = 'blank-db', and create collection 'users'    
+&nbsp;
+
+&nbsp;
+
+For now, each one of us will use a different local DB, we will host a shared DB online when we're done
+
+### Server
+
+Exceute in terminal while in project directory
 
 ```
 cd server
 yarn install
 ```
 
-_Client_
+### Client
+
+Exceute in terminal while in project directory
 
 ```
 cd client
