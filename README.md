@@ -13,12 +13,9 @@
 [Install Mongo](https://docs.mongodb.com/manual/administration/install-community/)
 
 - Make sure you install MongoDB Compass as well (should be checkbox in setup process)
-- To create a db follow this
+- To create a db follow [this](https://streamable.com/ql4ee6)
 
-<figure class="video_container">
-  <iframe src="https://streamable.com/ql4ee6" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-Make sure you use name = 'blank-db', and create collection 'users'    
+Make sure you use name = 'blank-db', and create collection 'users'  
 &nbsp;
 
 &nbsp;
