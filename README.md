@@ -59,6 +59,12 @@ yarn start
 - [VSCode](https://code.visualstudio.com/) use this editor, has integrated github that you should use
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) vscode plugin to format the code and make it look nice
 
+## Sample UI Style
+
+![ui](https://i.imgur.com/YWTIfOm.png)
+This is mock I made. Try to match these styles.  
+Material-UI has theming support, so use components from there and eveything should look good.
+
 ## Project structure (for client)
 
 ├── src  
