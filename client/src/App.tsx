@@ -60,9 +60,6 @@ const App: React.FC = () => {
             <Route path="/student/schedule">
               <StudentViewSchedule />
             </Route>
-            <Route path="/student/grades">
-              <StudentViewGradesPage />
-            </Route>
             {/* ////////////////////// */}
 
             {/* Routes for admin */}
