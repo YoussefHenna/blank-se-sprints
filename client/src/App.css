@@ -1,0 +1,11 @@
+/*Styles that are shared throughout the app */
+
+.background {
+  background-color: #f3f3f3;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow-x: hidden;
+  left: 0;
+  right: 0;
+}
