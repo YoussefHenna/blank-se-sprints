@@ -1,5 +1,6 @@
 import express from "express";
-import * as db from "./database";
+import {Database} from "./database";
+import * as testAPI from './testAPI'
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -8,12 +9,16 @@ import * as db from "./database";
  */
 const app = express();
 const port = 4000;
-db.initDb();
+const database = new Database("mongodb://localhost:27017?retryWrites=true&w=majority")
 
 //Sample get request to test it works
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   res.send("Server works!");
 });
+
+
+testAPI.addStudentTest(app,database)
+
 
 console.log(`Server running at http://localhost:${port}`);
 app.listen(port);
