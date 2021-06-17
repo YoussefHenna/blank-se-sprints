@@ -6,11 +6,11 @@ export enum SessionType {
 export interface StudentSession {
   time: Date;
   location: string;
-  courseID: number;
+  courseId: number;
   sessionType: SessionType;
 }
 
 export class StudentSchedule {
-  private studentID: number;
+  private studentId: number;
   private sessions: StudentSession[];
 }
