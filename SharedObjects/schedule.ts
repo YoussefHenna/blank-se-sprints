@@ -10,7 +10,7 @@ export interface StudentSession {
   sessionType: SessionType;
 }
 
-export class StudentSchedule {
-  private studentId: number;
-  private sessions: StudentSession[];
+export interface StudentSchedule {
+  studentId: number;
+  sessions: StudentSession[];
 }
