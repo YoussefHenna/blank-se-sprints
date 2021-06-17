@@ -102,5 +102,6 @@ allows us to have nicer looking and well-organized code base.
 │ │ └── (other files if needed).ts (extra files that can be included)\
 
 
+
 #### classes and interfaces that are used by both client & server is in `SharedObjects` folder
 #### NOTE : in both both folders of client and server, there is a symbolic link (shortcut) with the name `SharedObjects` which points back to the folder in the root directory 
