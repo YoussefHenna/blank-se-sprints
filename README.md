@@ -33,7 +33,7 @@ yarn install
 
 ### Client
 
-Exceute in terminal while in project directory
+Execute in terminal while in project directory
 
 ```
 cd client
@@ -93,6 +93,6 @@ allows us to have nicer looking and well-organized code base.
 
 examples:
 - APIs concerned with student grades can be grouped in file `gradesAPIs.ts`
-- APIs concerned with login/signoutcan be grouped in file `userManageAPIs.ts`
+- APIs concerned with login/signout can be grouped in file `userManageAPIs.ts`
 
 
