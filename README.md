@@ -95,11 +95,11 @@ allows us to have nicer looking and well-organized code base.
 ## Recommended structure for the server side
 #### the code in the test folder in 'src' is a nice guide
 
-├── src  
-│ ├── (sectionName) (name of the section (e.g. schedule, studentGrades,etc... ))
-│ │ └── apis.ts (where functions and APIs that handle requests from the client (and other logic) are stored)
-│ │ └── dbOperations.ts (where functions that query the database are stored)
-│ │ └── (other files if needed).ts (extra files that can be included)
+├── src\
+│ ├── (sectionName) (name of the section (e.g. schedule, studentGrades,etc... ))\
+│ │ └── apis.ts (where functions and APIs that handle requests from the client (and other logic) are stored)\
+│ │ └── dbOperations.ts (where functions that query the database are stored)\
+│ │ └── (other files if needed).ts (extra files that can be included)\
 
 
 #### classes and interfaces that are used by both client & server is in `SharedObjects` folder
