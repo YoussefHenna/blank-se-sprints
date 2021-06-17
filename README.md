@@ -86,4 +86,13 @@ This is just a guide, you can alter it to how you see fit, just try to be consis
 
 ## Project structure (for server)
 
-Server will not need more than 1 - 3 files. Put them all in src directory
+Source codes for the server will be in the src directory,
+it is recommended to group APIs, classes or functions based
+on their purpose to facilitate separation of concerns
+and allows us to have nicer looking code base
+
+for example:
+APIs concerned with student grades can be grouped in file `gradesAPIs.ts`
+APIs concerned with login/signoutcan be grouped in file `userManageAPIs.ts`
+
+

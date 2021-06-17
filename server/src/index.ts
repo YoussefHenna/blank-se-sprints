@@ -1,6 +1,6 @@
 import express from "express";
 import {Database} from "./database";
-import * as testAPI from './testAPI'
+import * as testAPIs from './testAPIs' //this is only used for testing
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -17,7 +17,7 @@ app.get("/", async (req, res) => {
 });
 
 
-testAPI.addStudentTest(app,database)
+testAPIs.addStudentTest(app,database)
 
 
 console.log(`Server running at http://localhost:${port}`);

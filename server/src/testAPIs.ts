@@ -2,6 +2,7 @@ import {Express} from 'express'
 import {Database} from "./database";
 import fs from 'fs'
 
+// APIs that can be used for testing 
 
 export const addStudentTest = (app : Express,db : Database) => {
 
