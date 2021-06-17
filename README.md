@@ -91,8 +91,16 @@ it is recommended to group APIs, classes or functions based
 on their purpose to facilitate separation of concerns. This also
 allows us to have nicer looking and well-organized code base.
 
-examples:
-- APIs concerned with student grades can be grouped in file `gradesAPIs.ts`
-- APIs concerned with login/signout can be grouped in file `userManageAPIs.ts`
+
+## Recommended structure for the server side
+#### the code in the test folder in 'src' is a nice guide
+
+├── src  
+│ ├── (sectionName) (name of the section (e.g. schedule, studentGrades,etc... ))
+│ │ └── apis.ts (where functions and APIs that handle requests from the client (and other logic) are stored)
+│ │ └── dbOperations.ts (where functions that query the database are stored)
+│ │ └── (other files if needed).ts (extra files that can be included)
 
 
+#### classes and interfaces that are used by both client & server is in `SharedObjects` folder
+#### NOTE : in both both folders of client and server, there is a symbolic link (shortcut) with the name `SharedObjects` which points back to the folder in the root directory 
