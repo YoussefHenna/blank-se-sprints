@@ -1,6 +1,6 @@
 import { Db, MongoClient } from "mongodb";
 
-let db: Db;
+let db : Db
 
 export function initDb() {
   const uri = "mongodb://localhost:27017?retryWrites=true&w=majority";
@@ -11,3 +11,4 @@ export function initDb() {
   client.connect();
   db = client.db("blank-db");
 }
+

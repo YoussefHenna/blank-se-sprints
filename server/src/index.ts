@@ -6,7 +6,6 @@ import * as db from "./database";
  *
  * Include any database operations in the database.ts file, and export functions to use here
  */
-
 const app = express();
 const port = 4000;
 db.initDb();
