@@ -91,8 +91,8 @@ it is recommended to group APIs, classes or functions based
 on their purpose to facilitate separation of concerns. This also
 allows us to have nicer looking and well-organized code base.
 
-for example:
-APIs concerned with student grades can be grouped in file `gradesAPIs.ts`
-APIs concerned with login/signoutcan be grouped in file `userManageAPIs.ts`
+examples:
+- APIs concerned with student grades can be grouped in file `gradesAPIs.ts`
+- APIs concerned with login/signoutcan be grouped in file `userManageAPIs.ts`
 
 
