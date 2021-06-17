@@ -15,7 +15,7 @@ export const addStudentTest = (app : Express,db : Database) => {
 
   app.get("/add-courses-test",async (req,res)=>{ 
 
-    db.addStudents(testData.students)
+    db.addCourses(testData.courses)
     res.send('success')
 
   })
