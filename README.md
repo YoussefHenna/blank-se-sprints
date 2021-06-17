@@ -88,8 +88,8 @@ This is just a guide, you can alter it to how you see fit, just try to be consis
 
 Source codes for the server will be in the src directory,
 it is recommended to group APIs, classes or functions based
-on their purpose to facilitate separation of concerns
-and allows us to have nicer looking code base
+on their purpose to facilitate separation of concerns. This also
+allows us to have nicer looking and well-organized code base.
 
 for example:
 APIs concerned with student grades can be grouped in file `gradesAPIs.ts`
