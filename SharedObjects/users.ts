@@ -2,7 +2,7 @@ export interface User {
     firstName : string
     lastName : string
     password : string //not the password itself but its bcrypt hash
-    id : number // user id
+    _id : number // user id
 }
 export interface Student extends User {
     facultyId : number

@@ -2,7 +2,7 @@ export interface Course {
     name : string
     description : string
     instructorsId : number[]
-    id : number
+    _id : number
 }
 
 export enum Grade {
