@@ -10,7 +10,7 @@ import testAPIs from "./test/apis"; //this is only used for testing
 const app = express();
 const port = 4000;
 const cl = new DatabaseClient(
-  "mongodb://localhost:27017?retryWrites=true&w=majority"
+  "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority"
 );
 
 //Sample get request to test it works
