@@ -1,8 +1,9 @@
+
 export interface Course {
   name: string;
   description: string;
   instructorsId: number[];
-  _id: number;
+  _id: string;
 }
 
 export enum Grade {

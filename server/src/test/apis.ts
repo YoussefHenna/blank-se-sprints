@@ -1,7 +1,6 @@
 import { Express } from "express";
 import DatabaseClient from "./../database";
 import * as Operations from "./dbOperations";
-import * as testData from "./testData";
 
 // APIs that can be used for testing
 
@@ -10,26 +9,21 @@ import * as testData from "./testData";
 // you can also follow this as a guide for other APIs
 
 const testAPIs = (app: Express, cl: DatabaseClient) => {
-  app.post("/add-students-test", async (req, res) => {
+
+  app.get('/get-all-students-test',async (req,res)=>{
 
     try {
-      await Operations.addStudents(cl, testData.students);
-      res.send("success");
-    } catch (e) {
-      console.log(e);
-      res.send("internal server error");
+      const students = await Operations.getAllStudents(cl);
+      res.send(students)
     }
-  });
 
-  app.post("/add-courses-test", async (req, res) => {
-    try {
-      await Operations.addCourses(cl, testData.courses);
-      res.send("success");
-    } catch (e) {
-      console.log(e);
-      res.send("internal server error");
+    catch (e){
+      console.log(e)
+      res.statusCode = 500;
+      res.send({msg:"internal server error"})
     }
-  });
+
+  })
 };
 
 export default testAPIs;
