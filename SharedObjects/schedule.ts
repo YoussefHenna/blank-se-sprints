@@ -7,11 +7,11 @@ export enum SessionType {
 export interface StudentSession {
   time: Date;
   location: string;
-  courseId: string;
+  courseId: any;
   sessionType: SessionType;
 }
 
 export interface StudentSchedule {
-  studentId: string;
+  studentId: any;
   sessions: StudentSession[];
 }
