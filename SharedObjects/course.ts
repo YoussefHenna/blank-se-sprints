@@ -1,7 +1,7 @@
 export interface Course {
   name: string;
   description: string;
-  instructorsId: number[];
+  instructorsId: any[];
   _id: any;
 }
 
