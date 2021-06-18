@@ -11,7 +11,20 @@ export interface StudentSession {
   sessionType: SessionType;
 }
 
-export interface StudentSchedule {
-  studentId: any;
-  sessions: StudentSession[];
+export class StudentSchedule {
+
+  constructor (
+    private studentId: any,
+    private sessions: StudentSession[],
+  ){}
+
+  getSessions(){
+    return this.sessions
+  }
+
+  getStudentId(){
+    return this.studentId
+  }
+
+
 }
