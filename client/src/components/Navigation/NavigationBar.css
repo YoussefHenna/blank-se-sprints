@@ -6,6 +6,8 @@
   align-items: center;
   padding-top: 20px;
   padding-bottom: 20px;
+  box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.3);
+  margin-right: 10px;
 }
 
 #topLogo {
@@ -41,13 +43,15 @@
   height: 100px;
   display: flex;
   flex-direction: column;
-  margin-left: 10% !important;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
-  background-color: #f3f3f3 !important;
+  background-color: white !important;
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
+  border-radius: 10px !important;
 }
 
 .itemSelectedText {
