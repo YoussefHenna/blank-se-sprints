@@ -1,0 +1,13 @@
+#mainSideBar {
+  width: 150px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#topLogo {
+  width: 115px;
+}
