@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import LoginPage from "../../pages/Login/LoginPage";
 import RegisterPage from "../../pages/Register/RegisterPage";
 import AdminCourseEditPage from "../../pages/AdminCourseEdit/AdminCourseEditPage";
@@ -12,50 +7,51 @@ import StudentViewGradesPage from "../../pages/StudentViewGrades/StudentViewGrad
 import StudentViewSchedule from "../../pages/StudentViewSchedule/StudentViewSchedulePage";
 import { Typography } from "@material-ui/core";
 
-const NavigationRoutes: React.FC = () => {
+interface NavigationRoutesProps {
+  setUserType: (type: "student" | "TA" | "admin") => void;
+}
+const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
   return (
-    <Router>
-      <div className="background">
-        <Switch>
-          {/* Routes for all users */}
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Route path="/register">
-            <RegisterPage />
-          </Route>
-          {/* ////////////////////// */}
+    <div className="background">
+      <Switch>
+        {/* Routes for all users */}
+        <Route path="/login">
+          <LoginPage setUserType={props.setUserType} />
+        </Route>
+        <Route path="/register">
+          <RegisterPage setUserType={props.setUserType} />
+        </Route>
+        {/* ////////////////////// */}
 
-          {/* Routes for students */}
-          <Route path="/student/major">
-            <StudentMajorInfoPage />
-          </Route>
-          <Route path="/student/grades">
-            <StudentViewGradesPage />
-          </Route>
-          <Route path="/student/schedule">
-            <StudentViewSchedule />
-          </Route>
-          {/* ////////////////////// */}
+        {/* Routes for students */}
+        <Route path="/student/major">
+          <StudentMajorInfoPage />
+        </Route>
+        <Route path="/student/grades">
+          <StudentViewGradesPage />
+        </Route>
+        <Route path="/student/schedule">
+          <StudentViewSchedule />
+        </Route>
+        {/* ////////////////////// */}
 
-          {/* Routes for admin */}
-          <Route path="/admin/courses">
-            <AdminCourseEditPage />
-          </Route>
-          {/* ////////////////////// */}
+        {/* Routes for admin */}
+        <Route path="/admin/courses">
+          <AdminCourseEditPage />
+        </Route>
+        {/* ////////////////////// */}
 
-          <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
+        <Route exact path="/">
+          <Redirect to="/login" />
+        </Route>
 
-          <Route
-            path="*"
-            exact={true}
-            component={() => <Typography>Page not found</Typography>}
-          />
-        </Switch>
-      </div>
-    </Router>
+        <Route
+          path="*"
+          exact={true}
+          component={() => <Typography>Page not found</Typography>}
+        />
+      </Switch>
+    </div>
   );
 };
 

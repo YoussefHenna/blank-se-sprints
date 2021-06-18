@@ -1,4 +1,5 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter as Router } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 import {
   NavigationRoutes,
@@ -27,6 +28,14 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: "Poppins",
+    subtitle1: {
+      fontWeight: 200,
+      fontSize: 14,
+    },
+    fontWeightLight: 200,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+    fontWeightBold: 700,
     button: {
       textTransform: "none",
     },
@@ -39,13 +48,15 @@ const App: React.FC = () => {
     useState<"student" | "TA" | "admin">("student");
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div id="appMainContainer">
-        <NavigationBar navItems={getNavigationItems(userType)} />
-        <NavigationRoutes />
-      </div>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div id="appMainContainer">
+          <NavigationBar navItems={getNavigationItems(userType)} />
+          <NavigationRoutes setUserType={setUserType} />
+        </div>
+      </ThemeProvider>
+    </Router>
   );
 };
 
