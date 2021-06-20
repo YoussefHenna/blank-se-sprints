@@ -34,7 +34,7 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
       : {
           name: "",
           description: "",
-          credits: 1,
+          credits: -1,
           faculty: props.faculties[0].id,
         }
   );
@@ -86,13 +86,18 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
           type="number"
           placeholder="5"
           variant="outlined"
-          value={currentInput.credits}
+          value={currentInput.credits === -1 ? undefined : currentInput.credits}
           onChange={(event) => {
             const asNum = +event.target.value;
-            if (asNum > 0) {
+            if (!isNaN(asNum) && asNum > 0) {
               setCurrentInput({
                 ...currentInput,
                 credits: asNum,
+              });
+            } else {
+              setCurrentInput({
+                ...currentInput,
+                credits: -1,
               });
             }
           }}
@@ -123,7 +128,7 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
           variant="contained"
           color="primary"
         >
-          Submit
+          {isUpdate ? "Update" : "Submit"}
         </Button>
       </div>
     </div>
