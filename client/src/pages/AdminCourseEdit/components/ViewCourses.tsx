@@ -2,6 +2,7 @@ import { Typography, IconButton, Button, ButtonBase } from "@material-ui/core";
 import { useStyles } from "../AdminCourseEditStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import BackIcon from "@material-ui/icons/ArrowBackIos";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { CurrentInputData } from "./AddCourse";
 
 interface CourseItemProps {
@@ -17,7 +18,7 @@ const CourseItem: React.FC<CourseItemProps> = (props) => {
   const classes = useStyles();
 
   return (
-    <ButtonBase
+    <div
       className={classes.courseItem}
       style={{ backgroundColor: props.color }}
     >
@@ -25,21 +26,26 @@ const CourseItem: React.FC<CourseItemProps> = (props) => {
       <Typography className={classes.courseItemDesc}>
         {props.description}
       </Typography>
-      <IconButton
-        onClick={() => {
-          props.onEditCoursePressed({
-            description: props.description,
-            name: props.name,
-            faculty: props.faculty,
-            credits: props.credits,
-            id: props.id,
-          });
-        }}
-        className={classes.courseEditButton}
-      >
-        <EditIcon />
-      </IconButton>
-    </ButtonBase>
+      <div className={classes.courseButtonsContainer}>
+        <IconButton
+          onClick={() => {
+            props.onEditCoursePressed({
+              description: props.description,
+              name: props.name,
+              faculty: props.faculty,
+              credits: props.credits,
+              id: props.id,
+            });
+          }}
+          className={classes.courseIconButton}
+        >
+          <EditIcon />
+        </IconButton>
+        <IconButton className={classes.courseIconButton}>
+          <DeleteIcon />
+        </IconButton>
+      </div>
+    </div>
   );
 };
 

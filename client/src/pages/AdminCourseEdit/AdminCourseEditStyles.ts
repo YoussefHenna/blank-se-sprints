@@ -71,8 +71,11 @@ export const useStyles = makeStyles((theme) => ({
     "user-select": "none",
   },
 
-  courseEditButton: {
+  courseIconButton: {
     color: "white",
+  },
+
+  courseButtonsContainer: {
     alignSelf: "flex-end",
   },
 
