@@ -3,6 +3,7 @@ export interface Course {
   description: string;
   faculty: any; //id of faculty where course exists
   credits: number;
+  color: string; //each course has it's own color, generated randomly on server when course added by admin
   _id: any;
 }
 

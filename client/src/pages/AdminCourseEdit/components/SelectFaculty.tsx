@@ -21,6 +21,7 @@ const SelectFaculty: React.FC<SelectFacultyProps> = ({
       {faculties.map((item) => {
         return (
           <Button
+            key={item.id}
             className={classes.facultySelectionItem}
             onClick={() => onSelect(item.id)}
           >
