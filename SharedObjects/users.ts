@@ -4,11 +4,9 @@ export interface User {
   password: string; //not the password itself but its bcrypt hash
   _id: any; // user id
 }
+
 export interface Student extends User {
-  facultyId: string;
-  enrolledCoursesId: any[]; // array of ids of enrolled courses
-  admissionYear: number; //the year when the student was admitted
-  semester: number;
+  groupId : any[];
 }
 
 export interface Instructor extends User {
@@ -18,4 +16,11 @@ export interface Instructor extends User {
 
 export interface Admin extends User {
   coursesId: any[]; // array of ids of courses added by admin
+}
+
+export interface StudentGroup {
+  semester: number;
+  facultyId : any;
+  admissionYear: number; //the year when the student was admitted
+  coursesId: any[]; // array of ids of courses
 }
