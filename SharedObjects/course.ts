@@ -1,7 +1,8 @@
 export interface Course {
   name: string;
   description: string;
-  instructorsId: any[];
+  faculty: any; //id of faculty where course exists
+  credits: number;
   _id: any;
 }
 

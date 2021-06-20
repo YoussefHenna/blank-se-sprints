@@ -21,9 +21,9 @@ const theme = createMuiTheme({
       light: "#ff7063",
     },
     secondary: {
-      main: "#707070",
-      dark: "#454545",
-      light: "#9e9e9e",
+      main: "#f7b801",
+      dark: "#bf8900",
+      light: "#ffea4d",
     },
   },
   typography: {
@@ -44,8 +44,7 @@ const theme = createMuiTheme({
 
 //Navigation Bar + all routes that app can take
 const App: React.FC = () => {
-  const [userType, setUserType] =
-    useState<"student" | "TA" | "admin">("student");
+  const [userType, setUserType] = useState<"student" | "TA" | "admin">("admin");
 
   return (
     <Router>

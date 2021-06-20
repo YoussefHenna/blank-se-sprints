@@ -50,7 +50,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
       <div id="logoSpacing" />
       {navItems.map((item) => {
         const MenuIcon = item.icon;
-        const selected = currentLocation == item.route;
+        const selected = currentLocation === item.route;
         return (
           <ButtonBase
             className={selected ? "itemSelected" : "itemUnselected"}
