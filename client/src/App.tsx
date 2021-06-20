@@ -6,7 +6,7 @@ import {
   NavigationBar,
   getNavigationItems,
 } from "./components/Navigation/Navigation";
-import "./App.css";
+import { useStyles } from "./AppStyles";
 import { useState } from "react";
 
 //Theme that will be used on all Material UI components
@@ -45,12 +45,13 @@ const theme = createMuiTheme({
 //Navigation Bar + all routes that app can take
 const App: React.FC = () => {
   const [userType, setUserType] = useState<"student" | "TA" | "admin">("admin");
+  const classes = useStyles();
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div id="appMainContainer">
+        <div className={classes.appMainContainer}>
           <NavigationBar navItems={getNavigationItems(userType)} />
           <NavigationRoutes setUserType={setUserType} />
         </div>

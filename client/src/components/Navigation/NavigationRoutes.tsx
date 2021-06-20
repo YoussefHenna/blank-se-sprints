@@ -6,13 +6,15 @@ import StudentMajorInfoPage from "../../pages/StudentMajorInfo/StudentMajorInfoP
 import StudentViewGradesPage from "../../pages/StudentViewGrades/StudentViewGradesPage";
 import StudentViewSchedule from "../../pages/StudentViewSchedule/StudentViewSchedulePage";
 import { Typography } from "@material-ui/core";
+import { useStyles } from "../../AppStyles";
 
 interface NavigationRoutesProps {
   setUserType: (type: "student" | "TA" | "admin") => void;
 }
 const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
+  const classes = useStyles();
   return (
-    <div className="background">
+    <div className={classes.background}>
       <Switch>
         {/* Routes for all users */}
         <Route path="/login">

@@ -10,9 +10,9 @@ import { styled } from "@material-ui/styles";
 import { useHistory } from "react-router-dom";
 import logoLight from "../../assets/img/logo_light.png";
 import SI from "@material-ui/icons/Settings";
-import "./NavigationBar.css";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useStyles } from "./NavigationStyles";
 
 export interface NavigationItem {
   icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
@@ -28,6 +28,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
   const theme = useTheme();
   const history = useHistory();
   const SettingsIcon = styled(SI)({ color: "white" });
+  const classes = useStyles();
 
   const [currentLocation, setCurrentLocation] = useState(
     history.location.pathname
@@ -43,31 +44,35 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
 
   return (
     <div
-      id="mainSideBar"
+      className={classes.mainSideBar}
       style={{ backgroundColor: theme.palette.primary.main }}
     >
-      <img id="topLogo" src={logoLight} />
-      <div id="logoSpacing" />
+      <img className={classes.topLogo} src={logoLight} />
+      <div className={classes.logoSpacing} />
       {navItems.map((item) => {
         const MenuIcon = item.icon;
         const selected = currentLocation === item.route;
         return (
           <ButtonBase
-            className={selected ? "itemSelected" : "itemUnselected"}
+            className={selected ? classes.itemSelected : classes.itemUnselected}
             onClick={() => {
               history.replace(item.route);
             }}
           >
             <div>
               <MenuIcon
-                className={selected ? "itemSelectedIcon" : "itemUnselectedIcon"}
+                className={
+                  selected
+                    ? classes.itemSelectedIcon
+                    : classes.itemUnselectedIcon
+                }
               />
               <Typography
                 variant="subtitle1"
                 className={
                   selected
-                    ? "itemSelectedText unselectable"
-                    : "itemUnselectedText unselectable"
+                    ? classes.itemSelectedText
+                    : classes.itemUnselectedText
                 }
               >
                 {item.label}
@@ -76,7 +81,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
           </ButtonBase>
         );
       })}
-      <div id="settingsIcon">
+      <div className={classes.settingsIcon}>
         <IconButton>
           <SettingsIcon />
         </IconButton>
