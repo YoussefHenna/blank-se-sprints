@@ -1,5 +1,5 @@
-import { Student } from "../SharedObjects/users";
-import { Schedule, Session, Slot, WeekDay } from "../SharedObjects/schedule";
+import { Student } from "../../../SharedObjects/users";
+import { Schedule, Session, Slot, WeekDay } from "../../../SharedObjects/schedule";
 import DatabaseClient from "./../database";
 import * as Exceptions from "./exceptions";
 import { ObjectId } from "Mongodb";

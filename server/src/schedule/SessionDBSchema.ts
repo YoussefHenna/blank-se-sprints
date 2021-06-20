@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import {Slot, WeekDay} from '../SharedObjects/schedule'
+import {Slot, WeekDay} from '../../../SharedObjects/schedule'
 
 interface SessionDBSchema {
     slot : Slot

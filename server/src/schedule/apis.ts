@@ -1,4 +1,4 @@
-import { Session, Schedule } from "./../SharedObjects/schedule";
+import { Session, Schedule } from "../../../SharedObjects/schedule";
 import { Express } from "express";
 import DatabaseClient from "./../database";
 import * as Operations from "./dbOperations";
