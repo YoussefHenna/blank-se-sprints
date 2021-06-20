@@ -8,8 +8,10 @@ export default class DatabaseClient {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
+  }
 
-    this.client.connect();
+  async connect() {
+    return await this.client.connect();
   }
 
   get db() {
