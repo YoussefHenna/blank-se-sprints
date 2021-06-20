@@ -44,15 +44,18 @@ const theme = createMuiTheme({
 
 //Navigation Bar + all routes that app can take
 const App: React.FC = () => {
-  const [userType, setUserType] = useState<"student" | "TA" | "admin">("admin");
+  const [userType, setUserType] =
+    useState<"student" | "TA" | "admin" | undefined>("admin");
   const classes = useStyles();
+
+  const navItems = getNavigationItems(userType);
 
   return (
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className={classes.appMainContainer}>
-          <NavigationBar navItems={getNavigationItems(userType)} />
+          {navItems && <NavigationBar navItems={navItems} />}
           <NavigationRoutes setUserType={setUserType} />
         </div>
       </ThemeProvider>

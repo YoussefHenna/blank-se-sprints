@@ -17,8 +17,8 @@ const adminNavigationItems: NavigationItem[] = [
 const TANavigationItems: NavigationItem[] = [];
 
 export function getNavigationItems(
-  userType: "student" | "TA" | "admin"
-): NavigationItem[] {
+  userType: "student" | "TA" | "admin" | undefined
+): NavigationItem[] | undefined {
   switch (userType) {
     case "student":
       return studentNavigationItems;
@@ -26,5 +26,7 @@ export function getNavigationItems(
       return TANavigationItems;
     case "admin":
       return adminNavigationItems;
+    default:
+      return undefined;
   }
 }

@@ -54,6 +54,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
         const selected = currentLocation === item.route;
         return (
           <ButtonBase
+            key={item.route}
             className={selected ? classes.itemSelected : classes.itemUnselected}
             onClick={() => {
               history.replace(item.route);
