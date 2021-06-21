@@ -1,6 +1,6 @@
 import DatabaseClient from "../database";
-import { Course } from "../SharedObjects/course";
-import { Student } from "../SharedObjects/users";
+import { Course } from "../../../SharedObjects/course";
+import { Student } from "../../../SharedObjects/users";
 import { ObjectId } from "Mongodb";
 
 export const addCourses = async (cl: DatabaseClient, courses: Course[]) => {};
@@ -17,9 +17,9 @@ export const getStudentCourses = async (
   const coursesId = result[0].enrolledCoursesId; //extract the array of courses from the query result
 
   const courses = await cl.db
-    .collection("courses") 
+    .collection("courses")
     .find({ _id: { $in: coursesId } }) //find the courses that has their id in the array coursesId
-    .toArray(); 
+    .toArray();
 
   return courses;
 };
