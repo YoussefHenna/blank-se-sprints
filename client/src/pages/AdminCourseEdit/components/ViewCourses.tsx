@@ -49,13 +49,6 @@ const CourseItem: React.FC<CourseItemProps> = (props) => {
   );
 };
 
-function generateDarkColorRgb() {
-  const red = Math.floor((Math.random() * 256) / 2);
-  const green = Math.floor((Math.random() * 256) / 2);
-  const blue = Math.floor((Math.random() * 256) / 2);
-  return "rgb(" + red + ", " + green + ", " + blue + ")";
-}
-
 interface ViewCoursesProps {
   onBackPressed: () => void;
   onEditCoursePressed: (data: CurrentInputData) => void;
@@ -84,7 +77,7 @@ const ViewCourses: React.FC<ViewCoursesProps> = ({
           name="CSEN 104"
           description="Introduction to Computer Science"
           id={0}
-          color={generateDarkColorRgb()}
+          color={"rgba(0,0,0)"}
           faculty={1}
           credits={5}
           onEditCoursePressed={onEditCoursePressed}
@@ -93,7 +86,7 @@ const ViewCourses: React.FC<ViewCoursesProps> = ({
           name="CSEN 104"
           description="Introduction to Computer Science"
           id={0}
-          color={generateDarkColorRgb()}
+          color={"rgba(0,0,0)"}
           faculty={1}
           credits={5}
           onEditCoursePressed={onEditCoursePressed}
@@ -102,7 +95,7 @@ const ViewCourses: React.FC<ViewCoursesProps> = ({
           name="CSEN 104"
           description="Introduction to Computer Science"
           id={0}
-          color={generateDarkColorRgb()}
+          color={"rgba(0,0,0)"}
           faculty={1}
           credits={5}
           onEditCoursePressed={onEditCoursePressed}
@@ -111,7 +104,7 @@ const ViewCourses: React.FC<ViewCoursesProps> = ({
           name="CSEN 104"
           description="Introduction to Computer Science"
           id={0}
-          color={generateDarkColorRgb()}
+          color={"rgba(0,0,0)"}
           faculty={1}
           credits={5}
           onEditCoursePressed={onEditCoursePressed}

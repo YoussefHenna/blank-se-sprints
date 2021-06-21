@@ -18,11 +18,6 @@ const cl = new DatabaseClient(
 
 //Connect to database first, then start server
 cl.connect().then(() => {
-  //Sample get request to test it works
-  // app.get("/", async (req, res) => {
-  //   res.send("Server works!");
-  // });
-
   editCourseAPIs(app, cl);
   testAPIs(app, cl);
   scheduleAPIs(app, cl);

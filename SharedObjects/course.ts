@@ -1,12 +1,12 @@
-import {Session} from './schedule'
+import { Session } from "./schedule";
 
 export interface Course {
   name: string;
   description: string;
   faculty: any; //id of faculty where course exists
   credits: number;
+  color: string;
   _id: any;
-  
 }
 
 export enum Grade {
