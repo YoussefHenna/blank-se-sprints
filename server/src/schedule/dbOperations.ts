@@ -71,6 +71,9 @@ export const findAvailableSlots = async (
   return availableSlots(<WeekSlot[]>occupied);
 };
 
+<<<<<<< HEAD
+export const addSession = async (cl: DatabaseClient, session: Session) => {};
+=======
 
 export const addSessionsToSlots = async (cl: DatabaseClient, toBeAdded: SessionsToBeAdded) => {
 
@@ -93,4 +96,5 @@ export const addSessionsToSlots = async (cl: DatabaseClient, toBeAdded: Sessions
 
 
 
+>>>>>>> 33a758124193a5ed01f480fae06f5eec5cd65d8c
 
