@@ -1,10 +1,15 @@
 import { Student } from "../../../SharedObjects/users";
-import { FreeSlotsRequest, Session,WeekSlot,Slot, WeekDay } from "../../../SharedObjects/schedule";
+import {
+  FreeSlotsRequest,
+  Session,
+  WeekSlot,
+  Slot,
+  WeekDay,
+} from "../../../SharedObjects/schedule";
 import DatabaseClient from "./../database";
 import * as Exceptions from "./exceptions";
 import { ObjectId } from "mongodb";
 import SessionDBSchema from "./SessionDBSchema";
-
 
 //the following code is too verbose and ineffecient, I'm looking for a better way to perform this
 
@@ -22,8 +27,8 @@ const availableSlots = (occupied: WeekSlot[]) => {
   //create an array of all possible 5x7 slots, then removes the ones that exists in array of occupied slots
   let available = [];
 
-  for (const i in WeekDay) {
-    for (const j in Slot) {
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 5; j++) {
       available.push({ weekDay: i, slot: j }); //create all possible slots
     }
   }
@@ -34,7 +39,7 @@ const availableSlots = (occupied: WeekSlot[]) => {
 export const findAvailableSlots = async (
   //after the admin enters the desired course, instructor and student group, the function will search for empty slots
   cl: DatabaseClient,
-  req : FreeSlotsRequest,
+  req: FreeSlotsRequest
 ) => {
   const occupied = await cl.db //find the occupied slots
     .collection("sessions")
@@ -56,6 +61,8 @@ export const findAvailableSlots = async (
       }
     )
     .toArray();
+  console.log(`Occupied Sessions`)
+  console.log(occupied)
 
   return availableSlots(<WeekSlot[]>occupied);
 };
