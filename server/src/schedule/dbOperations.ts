@@ -61,3 +61,4 @@ export const findAvailableSlots = async (
 };
 
 export const addSession = async (cl: DatabaseClient, session: Session) => {};
+
