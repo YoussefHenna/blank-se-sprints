@@ -23,15 +23,7 @@ export enum Slot {
 
 export type KeyStringInverseFunc = (str: string) => [WeekDay, Slot];
 export type Sessions = { [key: string]: Session };
-export type SessionsIterator = (key: [WeekDay, Slot], val: Session) => void;
-
-export const keyString = (weekDay: WeekDay, slot: Slot) => `${weekDay},${slot}`; //slot and day of the week are together primary keys, enums are converted to a key string
-
-export const keyStringInverse: KeyStringInverseFunc = (str: string) => {
-  //parses the key string back to a Weekday,Slot tuple
-  const arr = str.split(",");
-  return [parseInt(arr[0]), parseInt(arr[1])];
-};
+export type SessionsIterator = (weekDay : WeekDay,slot : Slot, val: Session) => void;
 
 export interface Session {
   _id?: any;
@@ -57,16 +49,43 @@ export interface WeekSlot {
 }
 
 export class Schedule {
+  static keyString = (weekDay: WeekDay, slot: Slot) => `${weekDay},${slot}`; //slot and day of the week are together primary keys, enums are converted to a key string
+  static keyStringInverse: KeyStringInverseFunc = (str: string) => {
+    //parses the key string back to a Weekday,Slot tuple
+    const arr = str.split(",");
+    return [parseInt(arr[0]), parseInt(arr[1])];
+  };
+
   protected sessions: Sessions;
 
   constructor(sessions?: Sessions) {
     this.sessions = sessions || {};
   }
 
+  getSession(week: WeekDay, slot: Slot) {
+    return this.sessions[Schedule.keyString(week, slot)];
+  }
+
   forEach(func: SessionsIterator) {
     //arrow function can be passed here to iterate over the sessions, useful for displaying schedules in the frontend
 
-    for (const key in this.sessions)
-      func(keyStringInverse(key), this.sessions[key]);
+    let weekSlotTuple : [WeekDay,Slot]
+
+    for (const key in this.sessions){
+      weekSlotTuple = Schedule.keyStringInverse(key)
+      func(weekSlotTuple[0],weekSlotTuple[1],this.sessions[key]);
+    }
   }
+}
+
+export class SessionsToBeAdded extends Schedule {
+  constructor(sessions?: Sessions) {
+    super(sessions);
+    this.sessions = sessions || {};
+  }
+
+  setSession(week: WeekDay, slot: Slot,session : Session) {
+    this.sessions[Schedule.keyString(week, slot)]=session;
+  }
+
 }

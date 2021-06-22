@@ -5,6 +5,7 @@ import {
   WeekSlot,
   Slot,
   WeekDay,
+  SessionsToBeAdded,
 } from "../../../SharedObjects/schedule";
 import DatabaseClient from "./../database";
 import * as Exceptions from "./exceptions";
@@ -68,4 +69,26 @@ export const findAvailableSlots = async (
   return availableSlots(<WeekSlot[]>occupied);
 };
 
-export const addSession = async (cl: DatabaseClient, session: Session) => {};
+
+export const addSessionsToSlots = async (cl: DatabaseClient, toBeAdded: SessionsToBeAdded) => {
+
+  let sessions : SessionDBSchema[] = []
+
+  toBeAdded.forEach((weekDay,slot,session)=>{
+    sessions.push({
+      weekDay : weekDay,
+      slot : slot,
+      studentGroupId : session.studentGroupId,
+      instructorId : session.instructorId,
+      locationId : session.locationId,
+      courseId : session.courseId
+    })
+  })
+
+  await cl.db.collection('sessions').insertMany(sessions)
+
+};
+
+
+
+
