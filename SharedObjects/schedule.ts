@@ -34,9 +34,9 @@ export const keyStringInverse: KeyStringInverseFunc = (str: string) => {
 };
 
 export interface Session {
-  _id? : any
+  _id?: any;
   sessionType: SessionType;
-  locationName: string;        // Names that will be shown in the frontEnd
+  locationName: string; // Names that will be shown in the frontEnd
   instructorName: string;
   courseName: string;
   courseId: any;
@@ -45,6 +45,16 @@ export interface Session {
   studentGroupId: any;
 }
 
+export interface FreeSlotsRequest {
+  locationId: any;
+  instructorId: any;
+  studentGroupId: any;
+}
+
+export interface WeekSlot {
+  slot: Slot;
+  weekDay: WeekDay;
+}
 
 export class Schedule {
   protected sessions: Sessions;
@@ -59,5 +69,4 @@ export class Schedule {
     for (const key in this.sessions)
       func(keyStringInverse(key), this.sessions[key]);
   }
-
 }

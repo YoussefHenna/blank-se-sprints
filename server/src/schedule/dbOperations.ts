@@ -1,11 +1,10 @@
 import { Student } from "../../../SharedObjects/users";
-import { Schedule, Session, Slot, WeekDay } from "../../../SharedObjects/schedule";
+import { FreeSlotsRequest, Session,WeekSlot,Slot, WeekDay } from "../../../SharedObjects/schedule";
 import DatabaseClient from "./../database";
 import * as Exceptions from "./exceptions";
-import { ObjectId } from "Mongodb";
+import { ObjectId } from "mongodb";
 import SessionDBSchema from "./SessionDBSchema";
 
-type WeekSlot = { slot: Slot; weekDay: WeekDay };
 
 //the following code is too verbose and ineffecient, I'm looking for a better way to perform this
 
@@ -35,9 +34,7 @@ const availableSlots = (occupied: WeekSlot[]) => {
 export const findAvailableSlots = async (
   //after the admin enters the desired course, instructor and student group, the function will search for empty slots
   cl: DatabaseClient,
-  locationId: ObjectId,
-  instructorId: ObjectId,
-  studentGroupId: ObjectId
+  req : FreeSlotsRequest,
 ) => {
   const occupied = await cl.db //find the occupied slots
     .collection("sessions")
@@ -45,9 +42,9 @@ export const findAvailableSlots = async (
       {
         $or: [
           // query for sessions thats satisfy at least one of the following
-          { studentGroupId: studentGroupId }, //get the occupied slots of the student group
-          { locationId: locationId }, //get the occupied slots of the location
-          { instructorId: instructorId }, //get the occupied slots of the instructor
+          { studentGroupId: new ObjectId(req.studentGroupId) }, //get the occupied slots of the student group
+          { locationId: new ObjectId(req.locationId) }, //get the occupied slots of the location
+          { instructorId: new ObjectId(req.instructorId) }, //get the occupied slots of the instructor
         ],
       },
       {

@@ -17,6 +17,7 @@ const testAPIs = (app: Express, cl: DatabaseClient) => {
       const sid = new ObjectId(req.params.sid);  //extract student id from the url and convert it to an ObjectId
       const courses = await Operations.getStudentCourses(cl,sid); 
       console.log(courses)
+      res.statusCode = 200
       res.send(courses)
     }
 
@@ -32,6 +33,7 @@ const testAPIs = (app: Express, cl: DatabaseClient) => {
 
     try {
       const students = await Operations.getAllStudents(cl);
+      res.statusCode = 200
       res.send(students)
     }
 
