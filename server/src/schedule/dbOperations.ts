@@ -11,6 +11,7 @@ import * as Exceptions from "./exceptions";
 import { ObjectId } from "mongodb";
 import SessionDBSchema from "./SessionDBSchema";
 
+
 //the following code is too verbose and ineffecient, I'm looking for a better way to perform this
 
 const includesEq = (x: WeekSlot, y: WeekSlot[]) => {
