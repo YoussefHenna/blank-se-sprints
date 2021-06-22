@@ -43,6 +43,8 @@ export const findAvailableSlots = async (
   cl: DatabaseClient,
   req: FreeSlotsRequest
 ) => {
+
+  console.log(await cl.db.collection('sessions').find().toArray())
   const occupied = await cl.db //find the occupied slots
     .collection("sessions")
     .find(
@@ -50,8 +52,8 @@ export const findAvailableSlots = async (
         $or: [
           // query for sessions thats satisfy at least one of the following
           { studentGroupId: new ObjectId(req.studentGroupId) }, //get the occupied slots of the student group
-          { locationId: new ObjectId(req.locationId) }, //get the occupied slots of the location
           { instructorId: new ObjectId(req.instructorId) }, //get the occupied slots of the instructor
+          { locationId: new ObjectId(req.locationId) }, //get the occupied slots of the location
         ],
       },
       {
@@ -78,10 +80,10 @@ export const addSessionsToSlots = async (cl: DatabaseClient, toBeAdded: Sessions
     sessions.push({
       weekDay : weekDay,
       slot : slot,
-      studentGroupId : session.studentGroupId,
-      instructorId : session.instructorId,
-      locationId : session.locationId,
-      courseId : session.courseId
+      studentGroupId : new ObjectId(session.studentGroupId),
+      instructorId : new ObjectId(session.instructorId),
+      locationId : new ObjectId(session.locationId),
+      courseId : new ObjectId(session.courseId)
     })
   })
 

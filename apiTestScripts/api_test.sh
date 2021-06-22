@@ -31,7 +31,6 @@ getRequestJSON(){
     curl -s $url | jq ${3}
   fi
 
-  curl -s $url | jq . 
 }
 
 getRequest(){
@@ -46,9 +45,29 @@ getRequest(){
 
 }
 
+postRequest(){
+  local json=$(jq -c . "${1}" )
+  local url="${2}"
+  echo $json
+
+    result=$(curl -X POST \
+    -H "Content-Type: application/json" \
+    -d "$json" $url)
+
+  if [[ -z $3 ]] 
+  then
+    echo $result | jq '.'
+  else
+    echo $result | jq ${3}
+  fi
+
+
+}
+
 
 getRequestJSON './getAvailableSlotsTest.json' 'http://localhost:3500/available-slots/'
-getRequest 'http://localhost:3500/faculties'
-getRequest 'http://localhost:3500/courses/60cc8205111a71a2f67da38e' '.courses'
+#getRequest 'http://localhost:3500/faculties'
+#getRequest 'http://localhost:3500/courses/60cc8205111a71a2f67da38e' '.courses'
+#postRequest './addSessionsTest.json' 'http://localhost:3500/sessions/'
 
 exit 0

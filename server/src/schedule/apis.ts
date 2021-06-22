@@ -12,6 +12,7 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
         try {
             const slotsReq : FreeSlotsRequest = JSON.parse(decodeURIComponent(req.params.slotsReq))
             const result = await Operations.findAvailableSlots(cl,slotsReq)
+            console.log(slotsReq)
             res.statusCode = 200
             res.send(result)
         }
@@ -27,6 +28,7 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
   app.post('/sessions',async (req,res)=>{
 
         try {
+          console.log(req.body)
           const sessions : Sessions = <Sessions> req.body
           await Operations.addSessionsToSlots(cl,new SessionsToBeAdded(sessions))
           res.statusCode = 200
