@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import DatabaseClient from "./database";
 import testAPIs from "./test/apis"; //this is only used for testing
 import scheduleAPIs from "./schedule/apis";
@@ -11,7 +12,8 @@ import editCourseAPIs from "./editcourse/apis";
  */
 const app = express();
 app.use(express.json());
-const port = 4000;
+app.use(cors());
+const port = 3500;
 const cl = new DatabaseClient(
   "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority"
 );

@@ -6,11 +6,14 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  CircularProgress,
 } from "@material-ui/core";
 import { useStyles } from "../AdminCourseEditStyles";
-import { FacultyItem } from "./SelectFaculty";
 import BackIcon from "@material-ui/icons/ArrowBackIos";
-import { useState } from "react";
+import { Faculty } from "../../../../../SharedObjects/faculty";
+import { useState, useEffect } from "react";
+import { addCourse, updateCourse } from "../AdminCourseEditRequests";
+import ErrorDialog, { ErrorDialogProps } from "./ErrorDialog";
 
 export interface CurrentInputData {
   name: string;
@@ -20,9 +23,10 @@ export interface CurrentInputData {
   id?: any;
 }
 interface AddCourseProps {
-  faculties: FacultyItem[];
+  faculties: Faculty[];
   onBackPressed: () => void;
   backMsg: string;
+  showSnackbar: (msg: string) => void;
   initData?: CurrentInputData;
 }
 
@@ -35,10 +39,105 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
           name: "",
           description: "",
           credits: -1,
-          faculty: props.faculties[0].id,
+          faculty: props.faculties[0]._id,
         }
   );
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorDialogState, setErrorDialogState] = useState<ErrorDialogProps>({
+    open: false,
+    onClose: () => {},
+    title: "",
+    content: "",
+  });
+
+  const validateData = (): boolean => {
+    const result =
+      !!currentInput.name &&
+      currentInput.name.length > 0 &&
+      !!currentInput.description &&
+      currentInput.description.length > 0 &&
+      currentInput.credits != -1;
+    if (!result) {
+      setErrorDialogState({
+        open: true,
+        onClose: dismissErrorDialog,
+        title: "Some fields are empty",
+        content: "Please verify that all fields are filled in and not empty",
+      });
+    }
+    return result;
+  };
+
+  const dismissErrorDialog = () => {
+    setErrorDialogState({
+      open: false,
+      onClose: () => {},
+      title: "",
+      content: "",
+    });
+  };
+
+  const addNewCourse = () => {
+    if (!validateData()) {
+      return;
+    }
+    setIsLoading(true);
+    addCourse({ ...currentInput, color: "", _id: "" }).then(
+      (value) => {
+        setIsLoading(false);
+        props.showSnackbar("Course added successfully");
+        props.onBackPressed();
+      },
+      (err) => {
+        setIsLoading(false);
+        setErrorDialogState({
+          open: true,
+          onClose: dismissErrorDialog,
+          title: "Add course failed",
+          content: err.error
+            ? err.error
+            : "Unknown error occured while adding course, please try again",
+        });
+      }
+    );
+  };
+
+  const updateCurrentCourse = () => {
+    if (!validateData()) {
+      return;
+    }
+    setIsLoading(true);
+    updateCourse(currentInput.id, { ...currentInput, color: "", _id: "" }).then(
+      (value) => {
+        setIsLoading(false);
+        props.showSnackbar("Course updated successfully");
+        props.onBackPressed();
+      },
+      (err) => {
+        setIsLoading(false);
+        setErrorDialogState({
+          open: true,
+          onClose: dismissErrorDialog,
+          title: "Update course failed",
+          content: err.error
+            ? err.error
+            : "Unknown error occured while updating course, please try again",
+        });
+      }
+    );
+  };
+
   const isUpdate = !!props.initData;
+
+  if (isLoading) {
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress color="primary" />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.addCourseContainer}>
       <Button
@@ -119,7 +218,7 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
             }
           >
             {props.faculties.map((item) => {
-              return <MenuItem value={item.id}>{item.name}</MenuItem>;
+              return <MenuItem value={item._id}>{item.facultyName}</MenuItem>;
             })}
           </Select>
         </FormControl>
@@ -127,10 +226,18 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
           className={classes.submitCourseButton}
           variant="contained"
           color="primary"
+          onClick={() => {
+            if (isUpdate) {
+              updateCurrentCourse();
+            } else {
+              addNewCourse();
+            }
+          }}
         >
           {isUpdate ? "Update" : "Submit"}
         </Button>
       </div>
+      <ErrorDialog {...errorDialogState} />
     </div>
   );
 };

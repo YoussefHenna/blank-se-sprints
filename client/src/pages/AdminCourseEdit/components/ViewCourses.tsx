@@ -1,9 +1,24 @@
-import { Typography, IconButton, Button, ButtonBase } from "@material-ui/core";
+import {
+  Typography,
+  IconButton,
+  Button,
+  CircularProgress,
+} from "@material-ui/core";
 import { useStyles } from "../AdminCourseEditStyles";
 import EditIcon from "@material-ui/icons/Edit";
 import BackIcon from "@material-ui/icons/ArrowBackIos";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { CurrentInputData } from "./AddCourse";
+import { getCourses, deleteCourse } from "../AdminCourseEditRequests";
+import { useState } from "react";
+import { Course } from "../../../../../SharedObjects/course";
+import { useEffect } from "react";
+import { Faculty } from "../../../../../SharedObjects/faculty";
+import ErrorDialog, { ErrorDialogProps } from "./ErrorDialog";
+import DeleteDialog, {
+  DeleteDialogProps,
+} from "../components/DeleteConfirmationDialog";
+import { useHistory } from "react-router-dom";
 
 interface CourseItemProps {
   name: string;
@@ -13,6 +28,7 @@ interface CourseItemProps {
   id: any;
   faculty: any;
   onEditCoursePressed: (data: CurrentInputData) => void;
+  onDeleteClicked: (id: string) => void;
 }
 const CourseItem: React.FC<CourseItemProps> = (props) => {
   const classes = useStyles();
@@ -41,7 +57,12 @@ const CourseItem: React.FC<CourseItemProps> = (props) => {
         >
           <EditIcon />
         </IconButton>
-        <IconButton className={classes.courseIconButton}>
+        <IconButton
+          onClick={() => {
+            props.onDeleteClicked(props.id);
+          }}
+          className={classes.courseIconButton}
+        >
           <DeleteIcon />
         </IconButton>
       </div>
@@ -52,13 +73,109 @@ const CourseItem: React.FC<CourseItemProps> = (props) => {
 interface ViewCoursesProps {
   onBackPressed: () => void;
   onEditCoursePressed: (data: CurrentInputData) => void;
+  faculty: Faculty | undefined;
+  showSnackbar: (msg: string) => void;
 }
 
 const ViewCourses: React.FC<ViewCoursesProps> = ({
   onBackPressed,
   onEditCoursePressed,
+  showSnackbar,
+  faculty,
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorDialogState, setErrorDialogState] = useState<ErrorDialogProps>({
+    open: false,
+    onClose: () => {},
+    title: "",
+    content: "",
+  });
+  const [deleteDialogState, setDeleteDialogState] = useState<DeleteDialogProps>(
+    {
+      open: false,
+      onClose: () => {},
+      onConfirmDelete: () => {},
+    }
+  );
+  const [courses, setCourses] = useState<Course[]>([]);
+
+  const dismissErrorDialog = () => {
+    setErrorDialogState({
+      open: false,
+      onClose: () => {},
+      title: "",
+      content: "",
+    });
+    loadCourses();
+  };
+
+  const dimissDeleteDialog = () => {
+    setDeleteDialogState({
+      open: false,
+      onClose: () => {},
+      onConfirmDelete: () => {},
+    });
+  };
+
+  const deleteSelectedCourse = (id: string) => {
+    setIsLoading(true);
+    deleteCourse(id).then(
+      (value) => {
+        setIsLoading(false);
+        showSnackbar("Course deleted successfully");
+        loadCourses();
+      },
+      (err) => {
+        setIsLoading(false);
+        setErrorDialogState({
+          open: true,
+          onClose: dismissErrorDialog,
+          title: "Delete course failed",
+          content: err.error
+            ? err.error
+            : "Unknown error occured while loading courses, dismiss to try again",
+        });
+      }
+    );
+  };
+  const loadCourses = () => {
+    setIsLoading(true);
+    setCourses([]);
+    if (faculty) {
+      getCourses(faculty._id).then(
+        (value) => {
+          setIsLoading(false);
+          setCourses(value);
+        },
+        (err) => {
+          setIsLoading(false);
+          setErrorDialogState({
+            open: true,
+            onClose: dismissErrorDialog,
+            title: "Loading courses failed",
+            content: err.error
+              ? err.error
+              : "Unknown error occured while loading courses, dismiss to try again",
+          });
+        }
+      );
+    } else {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    loadCourses();
+  }, [faculty]);
   const classes = useStyles();
+
+  if (isLoading) {
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress color="primary" />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.viewCoursesContainer}>
       <Button
@@ -70,46 +187,39 @@ const ViewCourses: React.FC<ViewCoursesProps> = ({
       </Button>
 
       <Typography className={classes.coursesTitle} variant="h6">
-        {"Informatics & Computer Science Courses"}
+        {!!faculty ? faculty.facultyName + " Courses" : ""}
       </Typography>
+      {courses.length === 0 && (
+        <div className={classes.loadingContainer}>
+          <Typography>No courses</Typography>
+        </div>
+      )}
       <div className={classes.courseItemsContainer}>
-        <CourseItem
-          name="CSEN 104"
-          description="Introduction to Computer Science"
-          id={0}
-          color={"rgba(0,0,0)"}
-          faculty={1}
-          credits={5}
-          onEditCoursePressed={onEditCoursePressed}
-        />
-        <CourseItem
-          name="CSEN 104"
-          description="Introduction to Computer Science"
-          id={0}
-          color={"rgba(0,0,0)"}
-          faculty={1}
-          credits={5}
-          onEditCoursePressed={onEditCoursePressed}
-        />
-        <CourseItem
-          name="CSEN 104"
-          description="Introduction to Computer Science"
-          id={0}
-          color={"rgba(0,0,0)"}
-          faculty={1}
-          credits={5}
-          onEditCoursePressed={onEditCoursePressed}
-        />
-        <CourseItem
-          name="CSEN 104"
-          description="Introduction to Computer Science"
-          id={0}
-          color={"rgba(0,0,0)"}
-          faculty={1}
-          credits={5}
-          onEditCoursePressed={onEditCoursePressed}
-        />
+        {courses.map((item) => {
+          return (
+            <CourseItem
+              name={item.name}
+              description={item.description}
+              id={item._id}
+              faculty={item.faculty}
+              credits={item.credits}
+              color={item.color}
+              onEditCoursePressed={onEditCoursePressed}
+              onDeleteClicked={(id) => {
+                setDeleteDialogState({
+                  open: true,
+                  onClose: dimissDeleteDialog,
+                  onConfirmDelete: () => {
+                    deleteSelectedCourse(id);
+                  },
+                });
+              }}
+            />
+          );
+        })}
       </div>
+      <ErrorDialog {...errorDialogState} />
+      <DeleteDialog {...deleteDialogState} />
     </div>
   );
 };
