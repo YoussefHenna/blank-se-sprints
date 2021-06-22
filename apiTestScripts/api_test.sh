@@ -19,12 +19,36 @@ rawurlencode() {
 }
 
 
+getRequestJSON(){
 
-getAvailableStudentsJSON=$(jq -c . './getAvailableSlotsTest.json')
+  local json=$(jq -c . "${1}" )
+  local url="${2}$(rawurlencode $json)"
 
-url="http://localhost:3500/available-slots/$(rawurlencode $getAvailableStudentsJSON)"
-result=$(curl $url)
+  if [[ -z $3 ]] 
+  then
+    curl -s $url | jq '.'
+  else
+    curl -s $url | jq ${3}
+  fi
 
-echo $result | jq . 
+  curl -s $url | jq . 
+}
+
+getRequest(){
+  local url="${1}"
+
+  if [[ -z $2 ]] 
+  then
+    curl -s $url | jq '.'
+  else
+    curl -s $url | jq ${2}
+  fi
+
+}
+
+
+getRequestJSON './getAvailableSlotsTest.json' 'http://localhost:3500/available-slots/'
+getRequest 'http://localhost:3500/faculties'
+getRequest 'http://localhost:3500/courses/60cc8205111a71a2f67da38e' '.courses'
 
 exit 0
