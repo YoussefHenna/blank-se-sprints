@@ -1,4 +1,3 @@
-import * as api from "./AdminCourseEditRequests";
 import SelectFaculty from "./components/SelectFaculty";
 import { useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";

@@ -1,10 +1,12 @@
 import { Switch, Route, Redirect } from "react-router-dom";
+import HomePage from "../../pages/Home/HomePage";
 import LoginPage from "../../pages/Login/LoginPage";
 import RegisterPage from "../../pages/Register/RegisterPage";
 import AdminCourseEditPage from "../../pages/AdminCourseEdit/AdminCourseEditPage";
 import StudentMajorInfoPage from "../../pages/StudentMajorInfo/StudentMajorInfoPage";
 import StudentViewGradesPage from "../../pages/StudentViewGrades/StudentViewGradesPage";
 import StudentViewSchedule from "../../pages/StudentViewSchedule/StudentViewSchedulePage";
+import ApplyToUniPage from "../../pages/ApplyToUni/ApplyToUniPage";
 import { Typography } from "@material-ui/core";
 import { useStyles } from "../../AppStyles";
 
@@ -17,6 +19,12 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
     <div className={classes.background}>
       <Switch>
         {/* Routes for all users */}
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route path="/apply">
+          <ApplyToUniPage />
+        </Route>
         <Route path="/login">
           <LoginPage setUserType={props.setUserType} />
         </Route>
@@ -42,10 +50,6 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
           <AdminCourseEditPage />
         </Route>
         {/* ////////////////////// */}
-
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
 
         <Route
           path="*"

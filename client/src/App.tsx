@@ -45,7 +45,7 @@ const theme = createMuiTheme({
 //Navigation Bar + all routes that app can take
 const App: React.FC = () => {
   const [userType, setUserType] =
-    useState<"student" | "TA" | "admin" | undefined>("admin");
+    useState<"student" | "TA" | "admin" | undefined>(undefined);
   const classes = useStyles();
 
   const navItems = getNavigationItems(userType);
