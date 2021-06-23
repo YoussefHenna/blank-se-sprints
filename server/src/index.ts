@@ -4,7 +4,7 @@ import DatabaseClient from "./database";
 import testAPIs from "./test/apis"; //this is only used for testing
 import scheduleAPIs from "./schedule/apis";
 import editCourseAPIs from "./editcourse/apis";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -14,20 +14,35 @@ import mongoose from 'mongoose';
 const app = express();
 app.use(express.json());
 app.use(cors());
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+const port = 3500;
+const dbUri =
+  "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority";
+const cl = new DatabaseClient(dbUri);
 
-const db = "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority";
 //Connect to database first, then start server
-mongoose 
-.connect(db, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-},
-(err) => {
-  if (err) return console.error(err);
-  console.log("Connected To MongGod...")
-}
+//Setup for APIs that use traditional mongodb way of handling things
+cl.connect().then(() => {
+  editCourseAPIs(app, cl);
+  testAPIs(app, cl);
+  scheduleAPIs(app, cl);
+
+  console.log(`Server running at http://localhost:${port}`);
+  app.listen(port);
+});
+////////////////////////////////////////////////////////////////////
+
+//Setup for APIs that use Mongoose library////////////////////
+mongoose.connect(
+  dbUri,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) return console.error(err);
+    console.log("Connected To MongGod...");
+  }
 );
 // set up routes
-app.use("/auth", require('./routers/userRouter'));
+app.use("/auth", require("./routers/userRouter"));
+///////////////////////////////////////////////////////////////
