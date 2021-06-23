@@ -182,13 +182,3 @@ export const getSchedule = async (
   return new Schedule(sessions);
 };
 
-export const getInstructorSchedule = async (
-  cl: DatabaseClient,
-  instructorId: ObjectId
-) => {
-  const sessions = cl.db
-    .collection("sessions")
-    .find({ instructorId })
-    .toArray();
-  return sessions;
-};
