@@ -1,10 +1,8 @@
-import * as api from "./RegisterRequests";
+import * as api from "./TAUpdateGradeRequests";
 import { useHistory } from "react-router-dom";
-import { useStyles } from "./RegisterStyles";
+import { useStyles } from "./TAUpdateGradeStyles";
 
-interface RegisterPageProps {}
-
-const RegisterPage: React.FC<RegisterPageProps> = (props) => {
+const TAUpdateGradePage: React.FC = () => {
   const history = useHistory();
   //Use this to navigate to different screens
   //Example: history.replace("/student/schedule") to navigate to student schedule page
@@ -15,4 +13,4 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
   return <div>{/** Put ui elements here */}</div>;
 };
 
-export default RegisterPage;
+export default TAUpdateGradePage;

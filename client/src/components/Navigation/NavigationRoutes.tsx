@@ -6,6 +6,10 @@ import AdminCourseEditPage from "../../pages/AdminCourseEdit/AdminCourseEditPage
 import StudentMajorInfoPage from "../../pages/StudentMajorInfo/StudentMajorInfoPage";
 import StudentViewGradesPage from "../../pages/StudentViewGrades/StudentViewGradesPage";
 import StudentViewSchedule from "../../pages/StudentViewSchedule/StudentViewSchedulePage";
+import AdminCreateSchedulePage from "../../pages/AdminCreateSchedule/AdminCreateSchedulePage";
+import ChangePasswordPage from "../../pages/ChangePassword/ChangePasswordPage";
+import TAUpdateGradePage from "../../pages/TAUpdateGrade/TAUpdateGradePage";
+import TAViewClassesPage from "../../pages/TAViewClasses/TAViewClassesPage";
 import ApplyToUniPage from "../../pages/ApplyToUni/ApplyToUniPage";
 import { Typography } from "@material-ui/core";
 import { useStyles } from "../../AppStyles";
@@ -26,10 +30,13 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
           <ApplyToUniPage />
         </Route>
         <Route path="/login">
-          <LoginPage setUserType={props.setUserType} />
+          <LoginPage />
         </Route>
         <Route path="/register">
-          <RegisterPage setUserType={props.setUserType} />
+          <RegisterPage />
+        </Route>
+        <Route path="/change-password">
+          <ChangePasswordPage />
         </Route>
         {/* ////////////////////// */}
 
@@ -48,6 +55,18 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
         {/* Routes for admin */}
         <Route path="/admin/courses">
           <AdminCourseEditPage />
+        </Route>
+        <Route path="/admin/schedule">
+          <AdminCreateSchedulePage />
+        </Route>
+        {/* ////////////////////// */}
+
+        {/* Routes for TAs */}
+        <Route path="/instructor/grades">
+          <TAUpdateGradePage />
+        </Route>
+        <Route path="/instructor/classes">
+          <TAViewClassesPage />
         </Route>
         {/* ////////////////////// */}
 

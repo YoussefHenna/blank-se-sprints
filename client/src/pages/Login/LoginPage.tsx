@@ -2,19 +2,7 @@ import * as api from "./LoginRequests";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./LoginStyles";
 
-interface LoginPageProps {
-  setUserType: (type: "student" | "TA" | "admin") => void;
-}
-
-/**
- * Login & register are special when it comes to navigation because they determine what user type is
- * call props.setUserType("student") for example if signed in user is a student (other options: TA, admin)
- *
- *
- * You also have to naviagate to the correct page after signing in, check NavigationRoutes.tsx to see all routes
- * To navigate use history.replace("/student/schedule") - which page to navigate to should depend on user type:
- * student should not be navigated to admin page for example.
- */
+interface LoginPageProps {}
 
 const LoginPage: React.FC<LoginPageProps> = (props) => {
   const history = useHistory();

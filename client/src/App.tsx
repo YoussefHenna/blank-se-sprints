@@ -1,5 +1,5 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { BrowserRouter as Router } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 import {
   NavigationRoutes,
@@ -7,7 +7,7 @@ import {
   getNavigationItems,
 } from "./components/Navigation/Navigation";
 import { useStyles } from "./AppStyles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //Theme that will be used on all Material UI components
 const theme = createMuiTheme({
@@ -44,22 +44,49 @@ const theme = createMuiTheme({
 
 //Navigation Bar + all routes that app can take
 const App: React.FC = () => {
-  const [userType, setUserType] =
-    useState<"student" | "TA" | "admin" | undefined>(undefined);
+  const [userType, setUserType] = useState<
+    "student" | "TA" | "admin" | undefined
+  >(undefined);
   const classes = useStyles();
+  const history = useHistory();
+
+  const setTypeFromRoute = (path: string) => {
+    if (path.includes("student") && userType != "student") {
+      setUserType("student");
+    } else if (path.includes("instructor") && userType != "TA") {
+      setUserType("TA");
+    } else if (path.includes("admin") && userType != "admin") {
+      setUserType("admin");
+    } else if (
+      path.includes("student") &&
+      path.includes("instructor") &&
+      path.includes("admin") &&
+      userType != undefined
+    ) {
+      setUserType(undefined);
+    }
+  };
+
+  useEffect(() => {
+    if (history) {
+      history.listen((loc) => {
+        setTypeFromRoute(loc.pathname.toString());
+      });
+    }
+  }, [history]);
+
+  setTypeFromRoute(history.location.pathname.toString());
 
   const navItems = getNavigationItems(userType);
 
   return (
-    <Router>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className={classes.appMainContainer}>
-          {navItems && <NavigationBar navItems={navItems} />}
-          <NavigationRoutes setUserType={setUserType} />
-        </div>
-      </ThemeProvider>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className={classes.appMainContainer}>
+        {navItems && <NavigationBar navItems={navItems} />}
+        <NavigationRoutes setUserType={setUserType} />
+      </div>
+    </ThemeProvider>
   );
 };
 

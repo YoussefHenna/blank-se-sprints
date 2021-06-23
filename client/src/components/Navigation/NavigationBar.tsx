@@ -31,7 +31,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
   const classes = useStyles();
 
   const [currentLocation, setCurrentLocation] = useState(
-    history.location.pathname
+    history.location.pathname.toString()
   );
 
   useEffect(() => {
