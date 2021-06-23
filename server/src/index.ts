@@ -19,8 +19,9 @@ app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`)
 const cl = new DatabaseClient(
   "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority"
 );
-const db = "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority";
-//Connect to database first, then start server
+const db = "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority"
+// Connect to database first, then start server 
+// mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority
 mongoose 
 .connect(db, {
   useNewUrlParser: true,
