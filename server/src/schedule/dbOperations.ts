@@ -2,16 +2,18 @@ import { Student } from "../../../SharedObjects/users";
 import {
   FreeSlotsRequest,
   Session,
+  SessionType,
   WeekSlot,
   Slot,
   WeekDay,
   SessionsToBeAdded,
+  Sessions,
+  Schedule,
 } from "../../../SharedObjects/schedule";
 import DatabaseClient from "./../database";
 import * as Exceptions from "./exceptions";
 import { ObjectId } from "mongodb";
 import SessionDBSchema from "./SessionDBSchema";
-
 
 //the following code is too verbose and ineffecient, I'm looking for a better way to perform this
 
@@ -43,8 +45,7 @@ export const findAvailableSlots = async (
   cl: DatabaseClient,
   req: FreeSlotsRequest
 ) => {
-
-  console.log(await cl.db.collection('sessions').find().toArray())
+  console.log(await cl.db.collection("sessions").find().toArray());
   const occupied = await cl.db //find the occupied slots
     .collection("sessions")
     .find(
@@ -65,36 +66,129 @@ export const findAvailableSlots = async (
       }
     )
     .toArray();
-  console.log(`Occupied Sessions`)
-  console.log(occupied)
+  console.log(`Occupied Sessions`);
+  console.log(occupied);
 
   return availableSlots(<WeekSlot[]>occupied);
 };
 
-<<<<<<< HEAD
-export const addSession = async (cl: DatabaseClient, session: Session) => {};
-=======
+export const addSessionsToSlots = async (
+  cl: DatabaseClient,
+  toBeAdded: SessionsToBeAdded
+) => {
+  let sessions: SessionDBSchema[] = [];
 
-export const addSessionsToSlots = async (cl: DatabaseClient, toBeAdded: SessionsToBeAdded) => {
-
-  let sessions : SessionDBSchema[] = []
-
-  toBeAdded.forEach((weekDay,slot,session)=>{
+  toBeAdded.forEach((weekDay, slot, session) => {
     sessions.push({
-      weekDay : weekDay,
-      slot : slot,
-      studentGroupId : new ObjectId(session.studentGroupId),
-      instructorId : new ObjectId(session.instructorId),
-      locationId : new ObjectId(session.locationId),
-      courseId : new ObjectId(session.courseId)
-    })
-  })
+      weekDay: weekDay,
+      slot: slot,
+      studentGroupId: new ObjectId(session.studentGroupId),
+      instructorId: new ObjectId(session.instructorId),
+      locationId: new ObjectId(session.locationId),
+      courseId: new ObjectId(session.courseId),
+      sessionType : session.sessionType
+    });
+  });
 
-  await cl.db.collection('sessions').insertMany(sessions)
-
+  await cl.db.collection("sessions").insertMany(sessions);
 };
 
+export const getSchedule = async (
+  cl: DatabaseClient,
+  idField : string,
+  id: ObjectId
+) => {
 
 
->>>>>>> 33a758124193a5ed01f480fae06f5eec5cd65d8c
+  let match = {}
+  match[idField]=id
 
+  const agg = [
+    {
+      $match: match,
+    },
+    {
+      $lookup: {
+        from: "locations",
+        localField: "locationId",
+        foreignField: "_id",
+        as: "locationDocs",
+      },
+    },
+    {
+      $lookup: {
+        from: "instructors",
+        localField: "instructorId",
+        foreignField: "_id",
+        as: "instructorDocs",
+      },
+    },
+    {
+      $lookup: {
+        from: "courses",
+        localField: "courseId",
+        foreignField: "_id",
+        as: "courseDocs",
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [
+            { locationName: { $arrayElemAt: ["$locationDocs.name", 0] } },
+            {
+              instructorName: {
+                $concat: [
+                  { $arrayElemAt: ["$instructorDocs.firstName", 0] },
+                  " ",
+                  { $arrayElemAt: ["$instructorDocs.lastName", 0] },
+                ],
+              },
+            },
+            { courseName: { $arrayElemAt: ["$courseDocs.name", 0] } },
+            "$$ROOT",
+          ],
+        },
+      },
+    },
+    {
+      $project: {
+        courseDocs: 0,
+        instructorDocs: 0,
+        locationDocs: 0,
+      },
+    },
+  ];
+
+  let sessions: Sessions = {};
+
+  await cl.db
+    .collection("sessions")
+    .aggregate(agg)
+    .forEach((doc) => {
+      console.log(doc)
+      sessions[Schedule.keyString(doc.weekDay, doc.slot)] = {
+        locationName: doc.locationName,
+        instructorName: doc.instructorName,
+        courseName: doc.courseName,
+        courseId: doc.courseId,
+        instructorId: doc.instructorId,
+        locationId: doc.locationId,
+        studentGroupId: doc.studentGroupId,
+        sessionType: doc.sessionType,
+      };
+    });
+
+  return new Schedule(sessions);
+};
+
+export const getInstructorSchedule = async (
+  cl: DatabaseClient,
+  instructorId: ObjectId
+) => {
+  const sessions = cl.db
+    .collection("sessions")
+    .find({ instructorId })
+    .toArray();
+  return sessions;
+};

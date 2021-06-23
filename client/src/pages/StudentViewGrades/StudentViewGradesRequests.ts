@@ -1,5 +1,5 @@
 import axios from "../../util/Axios";
-import { BACKEND_URL } from "client/src/constants.ts"; //at deployment stage ,we wil add our domain here .
+import { BACKEND_URL } from "../../constants"; //at deployment stage ,we wil add our domain here .
 //but until now i only used the localhost
 /**
  * Use axios for http requests to the server- https://github.com/axios/axios (for docs on how to use)

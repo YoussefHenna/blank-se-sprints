@@ -41,6 +41,36 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
         }
   })
 
+  app.get('/schedule/student-group/:id',async (req,res)=>{
+        try {
+          const id =  new ObjectId(req.params.id)
+          const result = await Operations.getSchedule(cl,'studentGroupId',id)
+          res.statusCode = 200
+          res.send(result)
+        }
+        catch (e){
+            console.error(e)
+            res.statusCode = 500
+            res.send({msg : 'internal server error'})
+        }
+  })
+  
+  app.get('/schedule/instructor/:id',async (req,res)=>{
+
+        try {
+          const id =  new ObjectId(req.params.id)
+          const result = await Operations.getSchedule(cl,'instructorId',id)
+          res.statusCode = 200
+          res.send(result)
+        }
+        catch (e){
+            console.error(e)
+            res.statusCode = 500
+            res.send({msg : 'internal server error'})
+        }
+    
+  })
+
 };
 
 export default scheduleAPIs;
