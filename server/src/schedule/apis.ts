@@ -71,6 +71,24 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
     
   })
 
+
+  app.delete('/sessions',async (req,res)=>{
+
+        try {
+          const sessionsId = req.body.map(sessionId => new ObjectId(sessionId))
+          const result = await Operations.deleteSessions(cl,sessionsId)
+          res.statusCode = 200
+          res.send({msg : 'success'})
+        }
+        catch (e){
+            console.error(e)
+            res.statusCode = 500
+            res.send({msg : 'internal server error'})
+        }
+    
+  })
+  
+
 };
 
 export default scheduleAPIs;

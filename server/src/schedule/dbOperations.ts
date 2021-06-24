@@ -182,3 +182,13 @@ export const getSchedule = async (
   return new Schedule(sessions);
 };
 
+
+
+
+export const deleteSessions = (cl : DatabaseClient, sessionIds : ObjectId[]) => {
+  cl.db.collection('sessions').deleteMany({_id : { $in : sessionIds}})
+}
+
+
+
+
