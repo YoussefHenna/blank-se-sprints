@@ -9,6 +9,7 @@
   height: 100%;
   width: 50%;
   transition: width 500ms;
+  transform: rotateZ(360deg);
   position: relative;
   cursor: pointer;
 }
@@ -35,6 +36,7 @@
   color: white;
   font-weight: 500 !important;
   font-size: 50px !important;
+  transform: rotateZ(360deg);
   transition: font-weight 100ms;
   transition: font-size 100ms;
 }
