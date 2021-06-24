@@ -5,6 +5,7 @@ import testAPIs from "./test/apis"; //this is only used for testing
 import scheduleAPIs from "./schedule/apis";
 import editCourseAPIs from "./editcourse/apis";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -13,6 +14,7 @@ import mongoose from "mongoose";
  */
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 const port = 3500;
 const dbUri =
@@ -45,4 +47,5 @@ mongoose.connect(
 );
 // set up routes
 app.use("/auth", require("./routers/userRouter"));
+app.use("/test", require("./routers/testRouter"));
 ///////////////////////////////////////////////////////////////
