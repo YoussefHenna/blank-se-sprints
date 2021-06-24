@@ -1,22 +1,13 @@
 import axios from "../../util/Axios";
-import { BACKEND_URL } from "../../constants"; //at deployment stage ,we wil add our domain here .
-//but until now i only used the localhost
-/**
- * Use axios for http requests to the server- https://github.com/axios/axios (for docs on how to use)
- * Export functions from this file to be used in page tsx file
- *
- * sample request: axios.get('/user?ID=12345')
- */
-export async function getStudentsGrades() {
-  let jwtToken = localStorage.getItem("uset-jwt-token");
 
-  return await axios.get("${BACKEND_URL}/student/grades",
-    {
-      headers: "Bearer " + jwtToken,
-    }
-  );
-  
-
-
+export const getGrades = async () => {
+  try {
+    const result = await axios.get("/student/grades")
+ //   console.log(result)// or localhost:3500/student/grades
+    return result.data.grades
+  } catch (error) {
+    console.log(error)
+  }
 
 }
+

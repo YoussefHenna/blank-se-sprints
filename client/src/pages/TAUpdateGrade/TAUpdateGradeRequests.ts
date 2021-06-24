@@ -5,3 +5,14 @@ import axios from "../../util/Axios";
  *
  * sample request: axios.get('/user?ID=12345')
  */
+ export const updateGrades = async () => {
+  try {
+    const result = await axios.patch("/student/grades")
+   // console.log(result)// or localhost:3500/student/grades
+    return result.data.grades
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
