@@ -1,6 +1,7 @@
 import * as api from "./LoginRequests";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./LoginStyles";
+import TopBar from "../../components/TopBar/TopBar";
 
 interface LoginPageProps {}
 
@@ -12,7 +13,12 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
   //Use like this <div className={classes.whateverStyle}/>
   const classes = useStyles();
 
-  return <div>{/** Put ui elements here */}</div>;
+  return (
+    <div>
+      <TopBar title="Online University Portal" />
+      {/** Put ui elements here */}
+    </div>
+  );
 };
 
 export default LoginPage;

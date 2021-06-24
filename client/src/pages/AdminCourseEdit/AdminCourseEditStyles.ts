@@ -37,12 +37,16 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: 20,
     display: "flex",
     flexWrap: "wrap",
+    overflowY: "auto",
+    alignContent: "flex-start",
+    height: "90%",
   },
 
   courseItem: {
     backgroundColor: theme.palette.primary.dark,
     padding: 20,
     width: 400,
+    height: 150,
     borderRadius: 8,
     display: "flex",
     flexDirection: "column",
@@ -97,7 +101,10 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     height: "90%",
     flexWrap: "wrap",
+    overflowY: "auto",
     marginTop: 20,
+    alignContent: "flex-start",
+    columnGap: 50,
     alignItems: "flex-start",
   },
 
