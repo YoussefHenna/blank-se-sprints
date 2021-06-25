@@ -9,6 +9,11 @@ export interface Course {
   _id: any;
 }
 
+export interface CourseGrade {
+  courseId: any;
+  grade: number;
+}
+
 export enum Grade {
   APlus = 11,
   A = 10,

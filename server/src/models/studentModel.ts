@@ -10,6 +10,7 @@ const studentSchema = new mongoose.Schema({
   semester: { type: Number, default: 20 },
   enrolledCoursesId: { type: Array, default: [0] },
   facultyID: { type: String, default: "60cc8205111a71a2f67da38e" },
+  grades: { type: Array, default: [] },
 });
 
 const Student = mongoose.model("student", studentSchema);
