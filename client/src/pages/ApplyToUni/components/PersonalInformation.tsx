@@ -12,10 +12,29 @@ import {
 } from "@material-ui/pickers";
 import { useStyles } from "../ApplyToUniStyles";
 import DateFnsUtils from "@date-io/date-fns";
+import { useState } from "react";
 
-interface PersonalInformatioProps {}
+interface PersonalInformatioProps {
+  onPersonalInfoChanges: (personalInfo: PersonalInfoState) => void;
+  currentPersonalInfo: PersonalInfoState;
+}
 
-const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
+export interface PersonalInfoState {
+  firstName: string;
+  lastName: string;
+  birthday: string | null;
+  gender: number;
+  email: string;
+  country: string;
+  city: string;
+  address: string;
+  nationalId: string;
+}
+
+const PersonalInformation: React.FC<PersonalInformatioProps> = ({
+  currentPersonalInfo,
+  onPersonalInfoChanges,
+}) => {
   const classes = useStyles();
 
   return (
@@ -30,6 +49,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="first_name"
             className={classes.inputItem}
             label="First name"
+            value={currentPersonalInfo.firstName}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                firstName: event.target.value,
+              });
+            }}
             placeholder="First name"
             variant="outlined"
           />
@@ -37,6 +63,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="last_name"
             className={classes.inputItem}
             label="Last name"
+            value={currentPersonalInfo.lastName}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                lastName: event.target.value,
+              });
+            }}
             placeholder="Last name"
             variant="outlined"
           />
@@ -46,10 +79,21 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             margin="normal"
             id="date_birth"
             label="Date of birth"
-            defaultValue={"14/09/2001"}
-            value={"14/09/2001"}
+            value={currentPersonalInfo.birthday}
+            onChange={(event) => {
+              if (event && event?.toDateString() !== "Invalid Date") {
+                onPersonalInfoChanges({
+                  ...currentPersonalInfo,
+                  birthday: event.toDateString(),
+                });
+              } else {
+                onPersonalInfoChanges({
+                  ...currentPersonalInfo,
+                  birthday: null,
+                });
+              }
+            }}
             inputVariant="outlined"
-            onChange={() => {}}
             onError={() => {}}
             error={false}
             helperText=""
@@ -60,7 +104,16 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             className={classes.inputItem}
           >
             <InputLabel>Gender</InputLabel>
-            <Select label="Gender">
+            <Select
+              label="Gender"
+              value={currentPersonalInfo.gender}
+              onChange={(event) =>
+                onPersonalInfoChanges({
+                  ...currentPersonalInfo,
+                  gender: event.target.value as number,
+                })
+              }
+            >
               <MenuItem value={0}>Male</MenuItem>
               <MenuItem value={1}>Female</MenuItem>
             </Select>
@@ -69,6 +122,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="email"
             className={classes.inputItem}
             label="Email"
+            value={currentPersonalInfo.email}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                email: event.target.value,
+              });
+            }}
             placeholder="email@email.com"
             variant="outlined"
             type="email"
@@ -77,6 +137,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="country"
             className={classes.inputItem}
             label="Country"
+            value={currentPersonalInfo.country}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                country: event.target.value,
+              });
+            }}
             placeholder="Egypt"
             variant="outlined"
           />
@@ -85,6 +152,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="city"
             className={classes.inputItem}
             label="City"
+            value={currentPersonalInfo.city}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                city: event.target.value,
+              });
+            }}
             placeholder="Cairo"
             variant="outlined"
           />
@@ -92,6 +166,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="address"
             className={classes.inputItem}
             label="Address"
+            value={currentPersonalInfo.address}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                address: event.target.value,
+              });
+            }}
             placeholder="Address"
             variant="outlined"
           />
@@ -99,6 +180,13 @@ const PersonalInformation: React.FC<PersonalInformatioProps> = (props) => {
             key="national_id"
             className={classes.inputItem}
             label="National ID number"
+            value={currentPersonalInfo.nationalId}
+            onChange={(event) => {
+              onPersonalInfoChanges({
+                ...currentPersonalInfo,
+                nationalId: event.target.value,
+              });
+            }}
             placeholder="National ID"
             variant="outlined"
           />

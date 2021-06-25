@@ -27,6 +27,7 @@ export const useStyles = makeStyles((theme) => ({
 
   subPageTitle: {
     marginTop: 15,
+    fontWeight: 700,
   },
 
   inputsContainer: {
@@ -59,5 +60,47 @@ export const useStyles = makeStyles((theme) => ({
 
   button: {
     width: 100,
+  },
+
+  loadingContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+  },
+
+  blockHolder: {
+    display: "flex",
+    flexDirection: "row",
+    overflowY: "auto",
+    gap: 30,
+  },
+
+  blockConfirmContainer: {
+    display: "flex",
+    flexDirection: "column",
+    flexWrap: "wrap",
+    marginTop: 20,
+  },
+
+  blockConfirmTitle: {
+    fontWeight: 700,
+    fontSize: 16,
+  },
+
+  blockConfirmFieldContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: 15,
+    columnGap: 5,
+  },
+  blockConfirmFieldKey: {
+    fontWeight: 500,
+    fontSize: 14,
+  },
+  blockConfirmFieldValue: {
+    fontWeight: 200,
+    fontSize: 16,
   },
 }));

@@ -9,7 +9,7 @@ import { Fab, Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import { getFaculties } from "./AdminCourseEditRequests";
 import { Faculty } from "../../../../SharedObjects/faculty";
-import ErrorDialog, { ErrorDialogProps } from "./components/ErrorDialog";
+import ErrorDialog, { ErrorDialogProps } from "../../components/ErrorDialog";
 
 function Alert(props: any) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -17,17 +17,16 @@ function Alert(props: any) {
 
 const AdminCourseEditPage: React.FC = () => {
   const history = useHistory();
-  const [currentVisible, setCurrentVisible] =
-    useState<"select_faculty" | "view_courses" | "add_course">(
-      "select_faculty"
-    );
-  const [prevVisible, setPrevVisible] =
-    useState<"select_faculty" | "view_courses" | "add_course">(
-      "select_faculty"
-    );
+  const [currentVisible, setCurrentVisible] = useState<
+    "select_faculty" | "view_courses" | "add_course"
+  >("select_faculty");
+  const [prevVisible, setPrevVisible] = useState<
+    "select_faculty" | "view_courses" | "add_course"
+  >("select_faculty");
 
-  const [preSetUpdateCourse, setPreSetUpdateCourse] =
-    useState<CurrentInputData | undefined>(undefined);
+  const [preSetUpdateCourse, setPreSetUpdateCourse] = useState<
+    CurrentInputData | undefined
+  >(undefined);
 
   const [snackbarState, setSnackbarState] = useState<{
     open: boolean;
@@ -74,8 +73,9 @@ const AdminCourseEditPage: React.FC = () => {
   };
 
   const [faculties, setFaculties] = useState<Faculty[]>([]);
-  const [currentFaculty, setCurrentFaculty] =
-    useState<Faculty | undefined>(undefined);
+  const [currentFaculty, setCurrentFaculty] = useState<Faculty | undefined>(
+    undefined
+  );
   useEffect(() => {
     loadFaculties();
   }, []);

@@ -13,9 +13,23 @@ import {
 import { useStyles } from "../ApplyToUniStyles";
 import DateFnsUtils from "@date-io/date-fns";
 
-interface PersonalInformatioProps {}
+interface EducationHistoryProps {
+  onEducationHistoryChange: (educationHistory: EducationHistoryState) => void;
+  currentEducationHistory: EducationHistoryState;
+}
 
-const EducationHistory: React.FC<PersonalInformatioProps> = (props) => {
+export interface EducationHistoryState {
+  dateOfGrad: string | null;
+  schoolName: string;
+  schoolDiploma: number;
+  schoolGPA: number;
+  schoolAddress: string;
+}
+
+const EducationHistory: React.FC<EducationHistoryProps> = ({
+  currentEducationHistory,
+  onEducationHistoryChange,
+}) => {
   const classes = useStyles();
 
   return (
@@ -30,6 +44,13 @@ const EducationHistory: React.FC<PersonalInformatioProps> = (props) => {
             key="school_name"
             className={classes.inputItem}
             label="School name"
+            value={currentEducationHistory.schoolName}
+            onChange={(event) => {
+              onEducationHistoryChange({
+                ...currentEducationHistory,
+                schoolName: event.target.value,
+              });
+            }}
             placeholder="School name"
             variant="outlined"
           />
@@ -39,10 +60,19 @@ const EducationHistory: React.FC<PersonalInformatioProps> = (props) => {
             className={classes.inputItem}
           >
             <InputLabel>School diploma type</InputLabel>
-            <Select label="School diploma type">
+            <Select
+              label="School diploma type"
+              value={currentEducationHistory.schoolDiploma}
+              onChange={(event) =>
+                onEducationHistoryChange({
+                  ...currentEducationHistory,
+                  schoolDiploma: event.target.value as number,
+                })
+              }
+            >
               <MenuItem value={0}>American</MenuItem>
               <MenuItem value={1}>IGCSE</MenuItem>
-              <MenuItem value={1}>National</MenuItem>
+              <MenuItem value={2}>National</MenuItem>
             </Select>
           </FormControl>
           <KeyboardDatePicker
@@ -51,10 +81,21 @@ const EducationHistory: React.FC<PersonalInformatioProps> = (props) => {
             margin="normal"
             id="date_birth"
             label="Date of graduation"
-            defaultValue={"14/09/2001"}
-            value={"14/09/2001"}
+            value={currentEducationHistory.dateOfGrad}
+            onChange={(event) => {
+              if (event && event?.toDateString() !== "Invalid Date") {
+                onEducationHistoryChange({
+                  ...currentEducationHistory,
+                  dateOfGrad: event.toDateString(),
+                });
+              } else {
+                onEducationHistoryChange({
+                  ...currentEducationHistory,
+                  dateOfGrad: null,
+                });
+              }
+            }}
             inputVariant="outlined"
-            onChange={() => {}}
             onError={() => {}}
             error={false}
             helperText=""
@@ -63,6 +104,25 @@ const EducationHistory: React.FC<PersonalInformatioProps> = (props) => {
             key="gpa"
             className={classes.inputItem}
             label="School GPA"
+            value={
+              currentEducationHistory.schoolGPA === -1
+                ? undefined
+                : currentEducationHistory.schoolGPA
+            }
+            onChange={(event) => {
+              const asNum = +event.target.value;
+              if (!isNaN(asNum) && asNum > 0) {
+                onEducationHistoryChange({
+                  ...currentEducationHistory,
+                  schoolGPA: asNum,
+                });
+              } else {
+                onEducationHistoryChange({
+                  ...currentEducationHistory,
+                  schoolGPA: -1.0,
+                });
+              }
+            }}
             placeholder="4.0"
             variant="outlined"
             type="number"
@@ -71,6 +131,13 @@ const EducationHistory: React.FC<PersonalInformatioProps> = (props) => {
             key="school_address"
             className={classes.inputItem}
             label="School address"
+            value={currentEducationHistory.schoolAddress}
+            onChange={(event) => {
+              onEducationHistoryChange({
+                ...currentEducationHistory,
+                schoolAddress: event.target.value,
+              });
+            }}
             placeholder="School address"
             variant="outlined"
           />

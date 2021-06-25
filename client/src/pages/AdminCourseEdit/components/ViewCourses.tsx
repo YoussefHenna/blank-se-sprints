@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Course } from "../../../../../SharedObjects/course";
 import { useEffect } from "react";
 import { Faculty } from "../../../../../SharedObjects/faculty";
-import ErrorDialog, { ErrorDialogProps } from "./ErrorDialog";
+import ErrorDialog, { ErrorDialogProps } from "../../../components/ErrorDialog";
 import DeleteDialog, {
   DeleteDialogProps,
 } from "../components/DeleteConfirmationDialog";

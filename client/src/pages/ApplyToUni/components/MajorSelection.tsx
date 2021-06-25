@@ -12,10 +12,24 @@ import {
 } from "@material-ui/pickers";
 import { useStyles } from "../ApplyToUniStyles";
 import DateFnsUtils from "@date-io/date-fns";
+import { Faculty } from "../../../../../SharedObjects/faculty";
 
-interface PersonalInformatioProps {}
+interface MajorSelectionProps {
+  faculties: Faculty[];
+  onMajorSelectionChanged: (majorSelectionState: MajorSelectionState) => void;
+  currentMajorSelection: MajorSelectionState;
+}
 
-const MajorSelection: React.FC<PersonalInformatioProps> = (props) => {
+export interface MajorSelectionState {
+  faculty: any;
+  degreeType: number;
+}
+
+const MajorSelection: React.FC<MajorSelectionProps> = ({
+  onMajorSelectionChanged,
+  currentMajorSelection,
+  faculties,
+}) => {
   const classes = useStyles();
 
   return (
@@ -32,10 +46,19 @@ const MajorSelection: React.FC<PersonalInformatioProps> = (props) => {
             className={classes.inputItem}
           >
             <InputLabel>Faculty</InputLabel>
-            <Select label="Faculty">
-              <MenuItem value={0}>Introdcution To Computer Science</MenuItem>
-              <MenuItem value={1}>Introdcution To Computer Science</MenuItem>
-              <MenuItem value={2}>Introdcution To Computer Science</MenuItem>
+            <Select
+              label="Faculty"
+              value={currentMajorSelection.faculty}
+              onChange={(event) =>
+                onMajorSelectionChanged({
+                  ...currentMajorSelection,
+                  faculty: event.target.value,
+                })
+              }
+            >
+              {faculties.map((item) => {
+                return <MenuItem value={item._id}>{item.facultyName}</MenuItem>;
+              })}
             </Select>
           </FormControl>
 
@@ -45,8 +68,17 @@ const MajorSelection: React.FC<PersonalInformatioProps> = (props) => {
             className={classes.inputItem}
           >
             <InputLabel>Degree type</InputLabel>
-            <Select label="Degree type">
-              <MenuItem value={0}>Bachelor</MenuItem>
+            <Select
+              label="Degree type"
+              value={currentMajorSelection.degreeType}
+              onChange={(event) =>
+                onMajorSelectionChanged({
+                  ...currentMajorSelection,
+                  degreeType: event.target.value as number,
+                })
+              }
+            >
+              <MenuItem value={0}>Bachelors</MenuItem>
               <MenuItem value={1}>Masters</MenuItem>
             </Select>
           </FormControl>

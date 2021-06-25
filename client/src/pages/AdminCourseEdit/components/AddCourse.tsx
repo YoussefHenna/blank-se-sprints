@@ -13,7 +13,7 @@ import BackIcon from "@material-ui/icons/ArrowBackIos";
 import { Faculty } from "../../../../../SharedObjects/faculty";
 import { useState, useEffect } from "react";
 import { addCourse, updateCourse } from "../AdminCourseEditRequests";
-import ErrorDialog, { ErrorDialogProps } from "./ErrorDialog";
+import ErrorDialog, { ErrorDialogProps } from "../../../components/ErrorDialog";
 
 export interface CurrentInputData {
   name: string;
@@ -57,7 +57,7 @@ const AddCourse: React.FC<AddCourseProps> = (props) => {
       currentInput.name.length > 0 &&
       !!currentInput.description &&
       currentInput.description.length > 0 &&
-      currentInput.credits != -1;
+      currentInput.credits > 0;
     if (!result) {
       setErrorDialogState({
         open: true,

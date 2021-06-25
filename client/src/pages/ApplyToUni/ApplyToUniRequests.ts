@@ -1,7 +1,17 @@
+import { Faculty } from "../../../../SharedObjects/faculty";
 import axios from "../../util/Axios";
-/**
- * Use axios for http requests to the server- https://github.com/axios/axios (for docs on how to use)
- * Export functions from this file to be used in page tsx file
- *
- * sample request: axios.get('/user?ID=12345')
- */
+
+export const getFaculties = async (): Promise<Faculty[]> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await axios.get("/faculties");
+      if (result.status === 200) {
+        resolve(result.data.faculties);
+      } else {
+        reject(result.data);
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
