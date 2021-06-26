@@ -27,7 +27,7 @@ const ChangePasswordPage: React.FC = () => {
           <LaptopLogo
             style={{
               display: "block",
-              width: "70%",
+              width: "65%",
               marginLeft: "auto",
               marginRight: "auto",
             }}
@@ -35,74 +35,91 @@ const ChangePasswordPage: React.FC = () => {
         </Grid>
         <Grid container className={classes.redBox}>
           <Container>
-            <Grid container className={classes.formBox} justify="center">
+            <Grid
+              container
+              className={classes.formBox}
+              justify="center"
+              direction="column"
+              alignItems="center"
+            >
               <Typography variant="h3" className={classes.logIn}>
                 Change Password
               </Typography>
-              <div className={classes.center}>
-                <ButtonGroup
-                  size="medium"
-                  variant="outlined"
+              <ButtonGroup
+                size="medium"
+                variant="outlined"
+                style={{
+                  display: "flex",
+                  justifyContent: "initial",
+                  marginBottom: "25px",
+                  marginTop: "25px",
+                  color: "#B6B6B6",
+                  borderColor: "#B6B6B6",
+                  maxWidth: "300px",
+                  width: "70%",
+                }}
+              >
+                <Button className={classes.buttonStyle}>Student</Button>
+                <Button className={classes.buttonStyle}> Ta </Button>
+                <Button className={classes.buttonStyle}> Admin </Button>
+              </ButtonGroup>
+              <Grid
+                container
+                direction="column"
+                justify="space-between"
+                alignItems="center"
+                style={{
+                  width: "80%",
+                  maxWidth: "400px",
+                }}
+              >
+                <TextField
+                  label="Username"
+                  margin="dense"
+                  variant="filled"
                   style={{
-                    display: "flex",
-                    justifyContent: "initial",
-                    marginLeft: "43px",
-                    marginBottom: "25px",
-                    marginTop: "25px",
-                    color: "#B6B6B6",
-                    borderColor: "#B6B6B6",
-                    maxWidth: "300px",
-                    minWidth: "200px",
+                    width: "100%",
+                  }}
+                ></TextField>
+                <TextField
+                  type="password"
+                  label="Password"
+                  margin="dense"
+                  variant="filled"
+                  style={{
+                    width: "100%",
+                  }}
+                ></TextField>
+                <TextField
+                  type="password"
+                  label="Confirm Password"
+                  margin="normal"
+                  variant="filled"
+                  style={{
+                    width: "100%",
+                  }}
+                ></TextField>
+              </Grid>
+              <Grid
+                item
+                style={{
+                  display: "inline",
+                  width: "80%",
+                  maxWidth: "400px",
+                  justifyContent: "center",
+                  marginTop: "40px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{
+                    width: "100%",
                   }}
                 >
-                  <Button className={classes.buttonStyle}>Student</Button>
-                  <Button className={classes.buttonStyle}> Ta </Button>
-                  <Button className={classes.buttonStyle}> Admin </Button>
-                </ButtonGroup>
-                <Grid
-                  container
-                  justify="space-between"
-                  style={{
-                    marginLeft: "43px",
-                    maxWidth: "400px",
-                    minWidth: "300px",
-                  }}
-                >
-                  <TextField
-                    label="Username"
-                    margin="dense"
-                    variant="filled"
-                  ></TextField>
-                  <TextField
-                    type="password"
-                    label="Password"
-                    margin="dense"
-                    variant="filled"
-                  ></TextField>
-                  <TextField
-                    type="password"
-                    label="Confirm Password"
-                    margin="normal"
-                    variant="filled"
-                  ></TextField>
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    style={{
-                      display: "inline",
-                      minWidth: "300px",
-                      maxWidth: "300px",
-                      justifyContent: "center",
-                      marginTop: "40px",
-                      marginRight: "100px",
-                    }}
-                  >
-                    Confirm Change
-                  </Button>
-                </Grid>
-              </div>
+                  Confirm Change
+                </Button>
+              </Grid>
             </Grid>
           </Container>
         </Grid>
