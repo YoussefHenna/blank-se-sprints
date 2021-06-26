@@ -8365,6 +8365,11 @@ popper.js@1.16.1-lts:
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1-lts.tgz#cf6847b807da3799d80ee3d6d2f90df8a3f50b05"
   integrity sha512-Kjw8nKRl1m+VrSFCoVGPph93W/qrSO7ZkqPpTf7F4bk/sqcfWK019dWBUpE/fBOsOQY1dks/Bmcbfn1heM/IsA==
 
+poppins-font@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/poppins-font/-/poppins-font-1.0.1.tgz#286570ace7eb6604aa6a15555b7aa9b0ef6646d5"
+  integrity sha512-9kcrZhE3/0cXdp2X3J9akwprO6Age3MtDqdPjsd1bsd+mnbC+AAhmC3Xc13mlKDcBpLOD9Xs64uoq+3oLL5UYw==
+
 portfinder@^1.0.26:
   version "1.0.28"
   resolved "https://registry.yarnpkg.com/portfinder/-/portfinder-1.0.28.tgz#67c4622852bd5374dd1dd900f779f53462fac778"

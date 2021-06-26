@@ -9,4 +9,70 @@ import { makeStyles } from "@material-ui/core/styles";
  * Same as css names but use camelCase (ex: font-weight -> fontWeight)
  */
 
-export const useStyles = makeStyles((theme) => ({}));
+export const useStyles = makeStyles((theme) => ({
+    formBox: {
+        backgroundColor: '#FFFFFF',
+        height: '85%',
+        width: '75%',
+        margin: '0',
+        position: 'relative',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius: '5px',
+    },
+
+    flexContainer: {
+        display: 'flex',
+        border: '1px #ccc solid',
+        height: '100%',
+        margin: '0',
+    },
+    redBox: {
+        backgroundColor: '#DB3B38',
+        width: '40%',
+    },
+    greyBox: {
+        backgroundColor: '#F3F3F3',
+        width: '60%',
+    },
+    img: {
+        width:"500px",
+        height:"100%",   
+    },
+    logIn: {
+        display: "flex",
+        width: "31%",
+        marginTop: "20px",
+        fontWeight: "bold",
+        fontSize: "40px",
+        justifyContent: "center"
+    },
+    buttonStyle: {
+       color: "#B6B6B6",
+       borderColor: "#B6B6B6",
+        '&:hover': { 
+       color: "#E65F62",
+       borderColor: "#E65F62"
+       },
+    },
+    center: {
+        display: "block",
+        width: "100%",
+        marginLeft: "85px",
+        marginBottom: "265px",
+        
+    },
+    username: {
+        placeHolder: "Username"
+    },
+    buttonPassword: {
+        color: "#E65F62",
+        borderColor: "#E65F62",
+        marginTop: "20px"
+    },
+    buttonHold: {
+        color: "#E65F62",
+       borderColor: "#E65F62",
+    },
+}));
