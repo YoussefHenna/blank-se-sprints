@@ -4,10 +4,11 @@ import DatabaseClient from "./database";
 import testAPIs from "./test/apis"; //this is only used for testing
 import scheduleAPIs from "./schedule/apis";
 import editCourseAPIs from "./editcourse/apis";
-import gradesAPIs from "./grades/apis"
-import miscellaneousAPIs from "./misc/apis"
+import gradesAPIs from "./grades/apis";
+import miscellaneousAPIs from "./misc/apis";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import applyApis from "./apply/apis";
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -27,6 +28,7 @@ const cl = new DatabaseClient(dbUri);
 //Setup for APIs that use traditional mongodb way of handling things
 cl.connect().then(() => {
   editCourseAPIs(app, cl);
+  applyApis(app, cl);
   testAPIs(app, cl);
   scheduleAPIs(app, cl);
   gradesAPIs(app, cl);

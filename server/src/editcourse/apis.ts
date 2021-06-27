@@ -77,8 +77,8 @@ const editCourseApis = (app: Express, cl: DatabaseClient) => {
           }
         )
         .catch((e) => {
-          if (e === "Same name") {
-            res.status(400).send({ error: "Same name used" });
+          if (e === "Course with the given code already exists") {
+            res.status(400).send({ error: e });
           } else {
             res.status(500).send({ error: "Server error" });
           }

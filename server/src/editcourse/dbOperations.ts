@@ -53,7 +53,7 @@ export const addCourse = async (
       .collection("courses")
       .findOne({ name: course.name });
     if (sameName) {
-      reject("Same name");
+      reject("Course with the given code already exists");
       return;
     }
     db.collection("courses").insertOne(course, async (err, docInserted) => {
