@@ -88,8 +88,10 @@ deleteRequest(){
 #getRequest 'http://localhost:3500/faculties'
 #getRequest 'http://localhost:3500/courses/60cc8205111a71a2f67da38e' '.courses'
 #postRequest './addSessionsTest.json' 'http://localhost:3500/sessions/'
-getRequest "http://localhost:3500/schedule/student-group/60cf4db77750095064262585"
+#getRequest "http://localhost:3500/schedule/student-group/60cf4db77750095064262585"
 #getRequest "http://localhost:3500/schedule/instructor/60cc8e35111a71a2f67da393"
 #deleteRequest './deleteSessionsTest.json' "http://localhost:3500/sessions"
+#getRequest "http://localhost:3500/instructors"
+getRequest "http://localhost:3500/student-groups"
 
 exit 0

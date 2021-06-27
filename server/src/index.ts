@@ -5,6 +5,7 @@ import testAPIs from "./test/apis"; //this is only used for testing
 import scheduleAPIs from "./schedule/apis";
 import editCourseAPIs from "./editcourse/apis";
 import gradesAPIs from "./grades/apis"
+import miscellaneousAPIs from "./misc/apis"
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
@@ -29,6 +30,7 @@ cl.connect().then(() => {
   testAPIs(app, cl);
   scheduleAPIs(app, cl);
   gradesAPIs(app, cl);
+  miscellaneousAPIs(app, cl);
   console.log(`Server running at http://localhost:${port}`);
   app.listen(port);
 });

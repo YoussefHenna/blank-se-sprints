@@ -1,10 +1,11 @@
-import ScheduleSearch from './ScheduleSearch'
+import ScheduleSearch from "./ScheduleSearch";
 import * as api from "./AdminCreateScheduleRequests";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./AdminCreateScheduleStyles";
 import * as AdminCourseEditStyles from "./../AdminCourseEdit/AdminCourseEditStyles";
-import {Fab,Tab,Tabs} from "@material-ui/core";
+import { Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import {useEffect} from "react";
 
 const AdminCreateSchedulePage: React.FC = () => {
   const adminCourseEditClasses = AdminCourseEditStyles.useStyles();
@@ -16,10 +17,14 @@ const AdminCreateSchedulePage: React.FC = () => {
   //Use like this <div className={classes.whateverStyle}/>
   const classes = useStyles();
 
+  useEffect(()=>{
+    api.getInstructors()
+  })
+
   return (
     <div className={classes.mainContainer}>
       <h1>Search for Schedules</h1>
-      <ScheduleSearch classes={classes}/>
+      <ScheduleSearch />
       <Fab
         color="primary"
         variant="extended"
