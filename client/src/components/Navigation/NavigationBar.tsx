@@ -4,6 +4,8 @@ import {
   useTheme,
   IconButton,
   ButtonBase,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import { styled } from "@material-ui/styles";
@@ -13,6 +15,7 @@ import SI from "@material-ui/icons/Settings";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useStyles } from "./NavigationStyles";
+import { useRef } from "react";
 
 export interface NavigationItem {
   icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
@@ -33,6 +36,9 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
   const [currentLocation, setCurrentLocation] = useState(
     history.location.pathname.toString()
   );
+
+  const [menuShow, setMenuShown] = useState(false);
+  const anchorRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (history) {
@@ -83,9 +89,38 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
         );
       })}
       <div className={classes.settingsIcon}>
-        <IconButton>
+        <IconButton
+          ref={anchorRef}
+          onClick={() => {
+            setMenuShown(true);
+          }}
+        >
           <SettingsIcon />
         </IconButton>
+        <Menu
+          keepMounted
+          anchorEl={anchorRef.current}
+          open={menuShow}
+          onClose={() => {
+            setMenuShown(false);
+          }}
+        >
+          <MenuItem
+            onClick={() => {
+              setMenuShown(false);
+              history.replace("/change-password");
+            }}
+          >
+            Change password
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              setMenuShown(false);
+            }}
+          >
+            Log out
+          </MenuItem>
+        </Menu>
       </div>
     </div>
   );
