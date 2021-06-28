@@ -17,7 +17,10 @@ import { Button, CircularProgress } from "@material-ui/core";
 import ErrorDialog, { ErrorDialogProps } from "../../components/ErrorDialog";
 import { Faculty } from "../../../../SharedObjects/faculty";
 import { useEffect } from "react";
-import { getFaculties } from "./ApplyToUniRequests";
+import { getFaculties, submitApplication } from "./ApplyToUniRequests";
+import SuccessDialog, {
+  SuccessDialogProps,
+} from "../../components/SuccessDialog";
 
 export interface ApplyState {
   personalInformation: PersonalInfoState;
@@ -35,6 +38,14 @@ const ApplyToUniPage: React.FC = () => {
     title: "",
     content: "",
   });
+
+  const [successDialogState, setSuccessDialogState] =
+    useState<SuccessDialogProps>({
+      open: false,
+      onClose: () => {},
+      title: "",
+      content: "",
+    });
 
   const dismissErrorDialog = () => {
     setErrorDialogState({
@@ -80,6 +91,37 @@ const ApplyToUniPage: React.FC = () => {
       degreeType: 0,
     },
   });
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const submit = () => {
+    setIsLoading(true);
+    submitApplication(currentInput).then(
+      (value) => {
+        setIsLoading(false);
+        setSuccessDialogState({
+          open: true,
+          onClose: () => {
+            history.replace("/");
+          },
+          title: "Application submitted successfully!",
+          content:
+            "You will be contacted via email with the next steps to your application",
+        });
+      },
+      (err) => {
+        setIsLoading(false);
+        setErrorDialogState({
+          open: true,
+          onClose: dismissErrorDialog,
+          title: "Application submission failed",
+          content: err.error
+            ? err.error
+            : "Unknown error occured while adding course, please try again",
+        });
+      }
+    );
+  };
 
   const onPersonalInfoChanges = (personalInfo: PersonalInfoState) => {
     setCurrentInput({ ...currentInput, personalInformation: personalInfo });
@@ -162,6 +204,14 @@ const ApplyToUniPage: React.FC = () => {
     );
   }
 
+  if (isLoading) {
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress color="primary" />
+      </div>
+    );
+  }
+
   return (
     <div className={classes.parent}>
       <TopBar title="Application" />
@@ -220,6 +270,8 @@ const ApplyToUniPage: React.FC = () => {
                 return;
               }
               setCurrentStep(currentStep + 1);
+            } else {
+              submit();
             }
           }}
         >
@@ -227,6 +279,7 @@ const ApplyToUniPage: React.FC = () => {
         </Button>
       </div>
       <ErrorDialog {...errorDialogState} />
+      <SuccessDialog {...successDialogState} />
     </div>
   );
 };

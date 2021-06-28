@@ -42,7 +42,7 @@ export const addCourse = async (course: Course): Promise<void> => {
         reject(result.data);
       }
     } catch (e) {
-      reject(e);
+      reject(e.response.data ? e.response.data : e);
     }
   });
 };
@@ -60,7 +60,7 @@ export const updateCourse = async (
         reject(result.data);
       }
     } catch (e) {
-      reject(e);
+      reject(e.response.data ? e.response.data : e);
     }
   });
 };
@@ -75,7 +75,7 @@ export const deleteCourse = async (courseId: string): Promise<void> => {
         reject(result.data);
       }
     } catch (e) {
-      reject(e);
+      reject(e.response.data ? e.response.data : e);
     }
   });
 };

@@ -59,9 +59,9 @@ const App: React.FC = () => {
     } else if (path.includes("admin") && userType != "admin") {
       setUserType("admin");
     } else if (
-      path.includes("student") &&
-      path.includes("instructor") &&
-      path.includes("admin") &&
+      !path.includes("student") &&
+      !path.includes("instructor") &&
+      !path.includes("admin") &&
       userType != undefined
     ) {
       setUserType(undefined);

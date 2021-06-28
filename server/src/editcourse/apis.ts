@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Router } from "express";
 import DatabaseClient from "../database";
 import * as Operations from "./dbOperations";
 import { ObjectId } from "mongodb";
@@ -13,13 +13,13 @@ const containsCourseData = (obj: any): obj is Course => {
   );
 };
 
-const editCourseApis = (app: Express, cl: DatabaseClient) => {
+const editCourseApis = (router: Router, cl: DatabaseClient) => {
   Operations.init(cl);
 
   //Temporary hardcoded, till authentication is implemented
   const adminId = "60cc8175111a71a2f67da386";
 
-  app.get("/faculties", async (req, res) => {
+  router.get("/faculties", async (req, res) => {
     try {
       await Operations.getFaculties()
         .then(
@@ -38,7 +38,7 @@ const editCourseApis = (app: Express, cl: DatabaseClient) => {
     }
   });
 
-  app.get("/courses/:facId", async (req, res) => {
+  router.get("/courses/:facId", async (req, res) => {
     try {
       await Operations.getCourses(req.params.facId)
         .then(
@@ -57,7 +57,7 @@ const editCourseApis = (app: Express, cl: DatabaseClient) => {
     }
   });
 
-  app.post("/course", async (req, res) => {
+  router.post("/course", async (req, res) => {
     try {
       const body = req.body;
       if (!containsCourseData(body)) {
@@ -77,8 +77,8 @@ const editCourseApis = (app: Express, cl: DatabaseClient) => {
           }
         )
         .catch((e) => {
-          if (e === "Same name") {
-            res.status(400).send({ error: "Same name used" });
+          if (e === "Course with the given code already exists") {
+            res.status(400).send({ error: e });
           } else {
             res.status(500).send({ error: "Server error" });
           }
@@ -88,7 +88,7 @@ const editCourseApis = (app: Express, cl: DatabaseClient) => {
     }
   });
 
-  app.put("/course/:courseId", async (req, res) => {
+  router.put("/course/:courseId", async (req, res) => {
     try {
       if (!req.params.courseId) {
         res.status(400).send({ error: "Missing course id" });
@@ -114,7 +114,7 @@ const editCourseApis = (app: Express, cl: DatabaseClient) => {
     }
   });
 
-  app.delete("/course/:courseId", async (req, res) => {
+  router.delete("/course/:courseId", async (req, res) => {
     try {
       if (!req.params.courseId) {
         res.status(400).send({ error: "Missing course id" });

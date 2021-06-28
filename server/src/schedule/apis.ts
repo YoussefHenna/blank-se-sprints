@@ -1,13 +1,16 @@
 import { Session, Schedule, FreeSlotsRequest, Sessions, SessionsToBeAdded } from "../../../SharedObjects/schedule";
-import { Express } from "express";
+import { Router } from "express";
 import DatabaseClient from "./../database";
 import * as Operations from "./dbOperations";
 import * as Exceptions from "./exceptions";
 import { ObjectId } from "mongodb";
+import dotenv from 'dotenv'
+dotenv.config()
 
-const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
 
-    app.get('/available-slots/:slotsReq',async (req,res)=>{
+const scheduleAPIs = (router: Router, cl: DatabaseClient) => {
+
+    router.get('/available-slots/:slotsReq',async (req,res)=>{
 
         try {
             const slotsReq : FreeSlotsRequest = JSON.parse(decodeURIComponent(req.params.slotsReq))
@@ -25,7 +28,7 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
     })
 
 
-  app.post('/sessions',async (req,res)=>{
+  router.post('/sessions',async (req,res)=>{
 
         try {
           console.log(req.body)
@@ -41,7 +44,7 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
         }
   })
 
-  app.get('/schedule/student-group/:id',async (req,res)=>{
+  router.get('/schedule/student-group/:id',async (req,res)=>{
         try {
           const id =  new ObjectId(req.params.id)
           const result = await Operations.getSchedule(cl,'studentGroupId',id)
@@ -55,7 +58,7 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
         }
   })
   
-  app.get('/schedule/instructor/:id',async (req,res)=>{
+  router.get('/schedule/instructor/:id',async (req,res)=>{
 
         try {
           const id =  new ObjectId(req.params.id)
@@ -72,7 +75,7 @@ const scheduleAPIs = (app: Express, cl: DatabaseClient) => {
   })
 
 
-  app.delete('/sessions',async (req,res)=>{
+  router.delete('/sessions',async (req,res)=>{
 
         try {
           const sessionsId = req.body.map(sessionId => new ObjectId(sessionId))
