@@ -1,0 +1,13 @@
+{
+      "firstName" : "Mohammed",
+      "lastName" : "Abdulrahim",
+      "username" : "mohammed.abdulrahim",
+      "password" : "m0_2004_king",
+      "passwordVerify" : "m0_2004_king",
+      "facultyID" : "60cc8205111a71a2f67da38e",
+      "admissionYear" : "2021",
+      "enrolledCoursesId" : [],
+      "semester" : 1,
+      "coursesId" : [],
+      "key" : "Student"
+    }

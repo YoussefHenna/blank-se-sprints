@@ -5,7 +5,7 @@ import { ApplyState } from "./ApplyToUniPage";
 export const getFaculties = async (): Promise<Faculty[]> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.get("/faculties");
+      const result = await axios.get("/public/faculties");
       if (result.status === 200) {
         resolve(result.data.faculties);
       } else {
@@ -22,7 +22,7 @@ export const submitApplication = async (
 ): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await axios.post("/apply", application);
+      const result = await axios.post("/public/apply", application);
       if (result.status === 200) {
         resolve();
       } else {

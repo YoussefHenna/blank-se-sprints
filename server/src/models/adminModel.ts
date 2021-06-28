@@ -5,7 +5,6 @@ const adminSchema = new mongoose.Schema({
   lastName: { type: String, require: true },
   username: { type: String, required: true, unique: true },
   passwordHash: { type: String, require: true },
-  coursesId: { type: Array },
 });
 
 const Admin = mongoose.model("admin", adminSchema);

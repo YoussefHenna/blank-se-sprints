@@ -70,7 +70,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
+#.env temporarily included 
 .env.test
 .env.production
 

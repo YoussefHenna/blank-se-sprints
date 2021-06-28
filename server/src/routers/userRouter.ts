@@ -77,6 +77,7 @@ router.post("/", async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     let savedUser;
+    let userRole;
 
     switch (key) {
       case "Student":
@@ -90,10 +91,11 @@ router.post("/", async (req, res) => {
           semester,
           enrolledCoursesId,
         });
+        userRole = "Student"
 
         savedUser = await newStudent.save();
         break;
-      case "Teacher":
+      case "Instructor":
         const newInstructor = new Instructor({
           firstName,
           lastName,
@@ -102,6 +104,7 @@ router.post("/", async (req, res) => {
           facultyID,
           coursesId,
         });
+        userRole = "Instructor"
 
         savedUser = await newInstructor.save();
         break;
@@ -111,8 +114,8 @@ router.post("/", async (req, res) => {
           lastName,
           username,
           passwordHash,
-          coursesId,
         });
+        userRole = "Admin"
 
         savedUser = await newAdmin.save();
         break;
@@ -125,6 +128,7 @@ router.post("/", async (req, res) => {
     const token = jwt.sign(
       {
         user: savedUser._id,
+        role : userRole,
       },
       process.env.JWT_SECRET
     );
@@ -136,7 +140,7 @@ router.post("/", async (req, res) => {
         httpOnly: true,
         expires: new Date(2040, 5),
       })
-      .send();
+      .send({ role: userRole });
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -164,38 +168,40 @@ router.post("/login", async (req, res) => {
         .status(400)
         .json({ errMsg: "Please enter in all the required fields" });
 
-    if (key === "") {
-      return res.status(400).json({ errMsg: "Please enter a valid user key" });
-    }
-
     let existingUser;
-    switch (key) {
-      case "Student":
-        existingUser = await Student.findOne({ username });
-        if (!existingUser) {
-          return res.status(401).json({ errMsg: "Wrong email/password" });
-        }
+    let userRole;
+
+    do {
+      existingUser = await Student.findOne({ username });
+
+      if (existingUser) {
+        userRole = "Student";
         break;
-      case "Teacher":
-        existingUser = await Instructor.findOne({ username }, "passwordHash");
-        if (!existingUser) {
-          return res.status(401).json({ errMsg: "Wrong email/password" });
-        }
+      }
+
+      existingUser = await Admin.findOne({ username });
+
+      if (existingUser) {
+        userRole = "Admin";
         break;
-      case "Admin":
-        existingUser = await Admin.findOne({ username });
-        if (!existingUser) {
-          return res.status(401).json({ errMsg: "Wrong email/password" });
-        }
+      }
+
+      existingUser = await Instructor.findOne({ username });
+
+      if (existingUser) {
+        userRole = "Instructor";
         break;
-      default:
-        console.error("Please Enter the a valid user key");
-    }
+      }
+
+      return res.status(401).json({ errMsg: "Wrong email/password" });
+
+    } while (0);
 
     const passwordCorrect = await bcrypt.compare(
       password,
       existingUser.passwordHash
     );
+
     if (!passwordCorrect) {
       return res.status(401).json({ errMsg: "Wrong email/password" });
     }
@@ -203,15 +209,18 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       {
         user: existingUser._id,
+        role : userRole
       },
       process.env.JWT_SECRET
     );
+
+    console.log("user role : ", userRole);
 
     res
       .cookie("token", token, {
         httpOnly: true,
       })
-      .send();
+      .send({role : userRole});
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -233,15 +242,13 @@ router.get("/loggedIn", (req, res) => {
   try {
     const token = req.cookies.token;
 
-    const JWT_SECRET = "thH],!aQ?$n]J*^L!4^8sR.p*/Kaz{EY)7eqdJP$";
-
     if (!token) return res.json(false);
 
     type MyToken = {
       user: String;
     };
 
-    const verified = jwt.verify(token, JWT_SECRET) as MyToken;
+    const verified = jwt.verify(token, process.env.JWT_SECRET,{algorithms : ['HS256']}) as MyToken;
 
     const user = verified.user;
 

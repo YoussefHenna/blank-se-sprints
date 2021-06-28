@@ -14,7 +14,7 @@ function AuthContextProvider(props: any) {
     const { data: loggedInRes } = await axios.get(
       "http://localhost:3500/auth/loggedIn",
       {
-        withCredentials: true,
+        //        withCredentials: true,
       }
     );
     // const { bool, jwt: usery } = loggedInRes;

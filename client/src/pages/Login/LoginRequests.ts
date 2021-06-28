@@ -5,3 +5,8 @@ import axios from "../../util/Axios";
  *
  * sample request: axios.get('/user?ID=12345')
  */
+
+export const requestLogin = async (loginData : {username : string,password : string})=>{
+  const result = await axios.post("http://localhost:3500/auth/login", loginData);
+  return result.data
+}
