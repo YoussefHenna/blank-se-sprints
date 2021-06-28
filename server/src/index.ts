@@ -6,9 +6,11 @@ import scheduleAPIs from "./schedule/apis";
 import editCourseAPIs from "./editcourse/apis";
 import gradesAPIs from "./grades/apis";
 import miscellaneousAPIs from "./misc/apis";
+import publicMiscellaneousAPIs from "./miscPublic/apis";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import applyApis from "./apply/apis";
+import jwt from "jsonwebtoken";
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -16,6 +18,8 @@ import applyApis from "./apply/apis";
  * Include any database operations in the database.ts file, and export functions to use here
  */
 const app = express();
+app.use(express.json());
+app.use(cookieParser());
 
 const publicRouters = express.Router(); //routers that don't need token authentication (what you can do when not logged in (guest) ) , apply, sign in, register. etc..
 const restrictedRouters = express.Router(); //routers that require token authentication (what you can do only as a logged in user ), student and admin APIs like schedule, grades, etc
@@ -31,8 +35,37 @@ app.use(
 );
 
 //setting up routes
-app.use(publicRouters);
-app.use(restrictedRouters);
+app.use(
+  cors({
+    credentials: true,
+    origin: "http://localhost:3000",
+  })
+);
+app.use("/public", publicRouters);
+app.use("/restricted", restrictedRouters);
+restrictedRouters.use((req, res, next) => {
+  console.log(req.headers);
+  if (!req.cookies.token) {
+    res.status(401).send({ msg: "could not verify token" });
+    return;
+  }
+
+  jwt.verify(req.cookies.token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      console.error(err);
+      res.status(401).send({ msg: "could not verify token" });
+      return;
+    }
+
+    next();
+  });
+});
+
+//app.use((req,res,next)=>{
+// res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3500');
+//  next()
+//})
+
 app.use("/auth", require("./routers/userRouter"));
 //app.use("/test", require("./routers/testRouter"));
 
@@ -50,9 +83,11 @@ cl.connect().then(() => {
   scheduleAPIs(restrictedRouters, cl);
   gradesAPIs(restrictedRouters, cl);
   miscellaneousAPIs(restrictedRouters, cl);
+  publicMiscellaneousAPIs(publicRouters, cl);
   console.log(`Server running at http://localhost:${port}`);
   app.listen(port);
 });
+
 ////////////////////////////////////////////////////////////////////
 
 //Setup for APIs that use Mongoose library////////////////////
@@ -64,6 +99,6 @@ mongoose.connect(
   },
   (err) => {
     if (err) return console.error(err);
-    console.log("Connected To MongGod...");
+    console.log("Connected to database...");
   }
 );

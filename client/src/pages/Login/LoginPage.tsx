@@ -24,30 +24,11 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
   const classes = useStyles();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [key, setKey] = useState("Student");
+  const [role, setRole] = useState("");
 
   // const handleRedirect = () => {
   //   history.push("/student/major");
   // };
-
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    const target = e.currentTarget as Element;
-    const value = target.id;
-    switch (value) {
-      case "btn1":
-        setKey("Student");
-        break;
-      case "btn2":
-        setKey("Teacher");
-
-        break;
-      case "btn3":
-        setKey("Admin");
-        break;
-      default:
-        setKey("");
-    }
-  };
 
   async function login(e: any) {
     e.preventDefault();
@@ -56,14 +37,11 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
       const loginData = {
         username,
         password,
-        key,
       };
 
-      await axios.post("http://localhost:3500/auth/login", loginData, {
-        withCredentials: true,
-      });
+      const { role } = await api.requestLogin(loginData);
 
-      switch (key) {
+      switch (role) {
         case "Student":
           history.replace("/student/courses");
           break;
@@ -109,62 +87,6 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                 <Typography variant="h3" className={classes.logIn}>
                   Log In
                 </Typography>
-                <ButtonGroup
-                  size="medium"
-                  variant="outlined"
-                  style={{
-                    display: "flex",
-                    justifyContent: "initial",
-                    marginBottom: "25px",
-                    marginTop: "25px",
-                    color: "#B6B6B6",
-                    borderColor: "#B6B6B6",
-                    maxWidth: "300px",
-                    width: "70%",
-                  }}
-                >
-                  <Button
-                    className={classes.buttonStyle}
-                    id="btn1"
-                    variant={key === "Student" ? "contained" : undefined}
-                    style={
-                      key === "Student"
-                        ? { color: "white", background: "#DB3B38" }
-                        : undefined
-                    }
-                    onClick={handleClick}
-                  >
-                    Student
-                  </Button>
-                  <Button
-                    className={classes.buttonStyle}
-                    id="btn2"
-                    variant={key === "Teacher" ? "contained" : undefined}
-                    style={
-                      key === "Teacher"
-                        ? { color: "white", background: "#DB3B38" }
-                        : undefined
-                    }
-                    onClick={handleClick}
-                  >
-                    {" "}
-                    Ta{" "}
-                  </Button>
-                  <Button
-                    className={classes.buttonStyle}
-                    id="btn3"
-                    variant={key === "Admin" ? "contained" : undefined}
-                    style={
-                      key === "Admin"
-                        ? { color: "white", background: "#DB3B38" }
-                        : undefined
-                    }
-                    onClick={handleClick}
-                  >
-                    {" "}
-                    Admin{" "}
-                  </Button>
-                </ButtonGroup>
                 <Grid
                   container
                   direction="column"

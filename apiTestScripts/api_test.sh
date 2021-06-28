@@ -48,15 +48,14 @@ getRequest(){
 postRequest(){
   local json=$(jq -c . "${1}" )
   local url="${2}"
-  echo $json
 
-    result=$(curl -X POST \
+    result=$(curl -X POST -v \
     -H "Content-Type: application/json" \
     -d "$json" $url)
 
   if [[ -z $3 ]] 
   then
-    echo $result | jq '.'
+    echo $result  | jq '.'
   else
     echo $result | jq ${3}
   fi
@@ -92,6 +91,9 @@ deleteRequest(){
 #getRequest "http://localhost:3500/schedule/instructor/60cc8e35111a71a2f67da393"
 #deleteRequest './deleteSessionsTest.json' "http://localhost:3500/sessions"
 #getRequest "http://localhost:3500/instructors"
-getRequest "http://localhost:3500/student-groups"
-
+#getRequest "http://localhost:3500/student-groups"
+#postRequest './registerNewStudentTest.json' 'http://localhost:3500/auth/'
+#postRequest './loginStudentTest.json' 'http://localhost:3500/auth/'
+#postRequest './registerNewAdminTest.json' 'http://localhost:3500/auth/'
+postRequest './loginAdminTest.json' 'http://localhost:3500/auth/login'
 exit 0

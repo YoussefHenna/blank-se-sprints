@@ -19,25 +19,6 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
   //Temporary hardcoded, till authentication is implemented
   const adminId = "60cc8175111a71a2f67da386";
 
-  router.get("/faculties", async (req, res) => {
-    try {
-      await Operations.getFaculties()
-        .then(
-          (value) => {
-            res.send({ faculties: value });
-          },
-          (error) => {
-            res.status(400).send({ error });
-          }
-        )
-        .catch((e) => {
-          res.status(500).send({ error: "Server error" });
-        });
-    } catch (e) {
-      res.status(500).send({ error: "Server error" });
-    }
-  });
-
   router.get("/courses/:facId", async (req, res) => {
     try {
       await Operations.getCourses(req.params.facId)

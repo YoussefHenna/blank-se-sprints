@@ -1,6 +1,5 @@
 import DatabaseClient from "../database";
 import { Course } from "../../../SharedObjects/course";
-import { Faculty } from "../../../SharedObjects/faculty";
 import { ObjectId, Db } from "mongodb";
 
 let db: Db;
@@ -15,19 +14,6 @@ function generateDarkColorRgb() {
   const blue = Math.floor((Math.random() * 256) / 2);
   return "rgb(" + red + ", " + green + ", " + blue + ")";
 }
-
-export const getFaculties = async (): Promise<Faculty[]> => {
-  return new Promise(async (resolve, reject) => {
-    const all: Faculty[] = [];
-    await db
-      .collection("faculties")
-      .find()
-      .forEach((item) => {
-        all.push(item);
-      });
-    resolve(all);
-  });
-};
 
 export const getCourses = async (facId: string): Promise<Course[]> => {
   return new Promise(async (resolve, reject) => {
