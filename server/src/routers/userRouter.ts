@@ -4,8 +4,10 @@ import Instructor from "../models/instructorModel";
 import Admin from "../models/adminModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import dotenv from 'dotenv'
-dotenv.config()
+import dotenv from "dotenv";
+dotenv.config();
+import mongoose from "mongoose";
+import { getStudentCourses } from "../test/dbOperations";
 
 const router = express.Router();
 
@@ -171,19 +173,19 @@ router.post("/login", async (req, res) => {
       case "Student":
         existingUser = await Student.findOne({ username });
         if (!existingUser) {
-          return res.status(401).json({ errMsg: "Wrong email/password0" });
+          return res.status(401).json({ errMsg: "Wrong email/password" });
         }
         break;
       case "Teacher":
         existingUser = await Instructor.findOne({ username }, "passwordHash");
         if (!existingUser) {
-          return res.status(401).json({ errMsg: "Wrong email/password1" });
+          return res.status(401).json({ errMsg: "Wrong email/password" });
         }
         break;
       case "Admin":
         existingUser = await Admin.findOne({ username });
         if (!existingUser) {
-          return res.status(401).json({ errMsg: "Wrong email/password2" });
+          return res.status(401).json({ errMsg: "Wrong email/password" });
         }
         break;
       default:
@@ -195,7 +197,7 @@ router.post("/login", async (req, res) => {
       existingUser.passwordHash
     );
     if (!passwordCorrect) {
-      return res.status(401).json({ errMsg: "Wrong email/password3" });
+      return res.status(401).json({ errMsg: "Wrong email/password" });
     }
 
     const token = jwt.sign(
@@ -224,6 +226,118 @@ router.get("/logout", (req, res) => {
       expires: new Date(0),
     })
     .send();
+});
+
+// check logged In
+router.get("/loggedIn", (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    const JWT_SECRET = "thH],!aQ?$n]J*^L!4^8sR.p*/Kaz{EY)7eqdJP$";
+
+    if (!token) return res.json(false);
+
+    type MyToken = {
+      user: String;
+    };
+
+    const verified = jwt.verify(token, JWT_SECRET) as MyToken;
+
+    const user = verified.user;
+
+    // res.json({
+    //   bool: true,
+    //   jwt: user,
+    // });
+    res.send(true);
+  } catch (err) {
+    res.json(false);
+  }
+});
+
+// change password
+router.post("/changePassword", async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      username,
+      password,
+      passwordConfirm,
+      facultyID,
+      admissionYear,
+      enrolledCoursesId,
+      semester,
+      coursesId,
+      key,
+    } = req.body;
+
+    // Verification
+    if (!username || !password || !passwordConfirm)
+      return res
+        .status(400)
+        .json({ errMsg: "Please enter all the required fields" });
+
+    if (password.length < 8)
+      return res
+        .status(400)
+        .json({ errMsg: "Please enter in a password more than 8 characters" });
+
+    if (password != passwordConfirm)
+      return res
+        .status(400)
+        .json({ errMsg: "Please enter the same password twice" });
+
+    if (key === "") {
+      return res.status(400).json({ errMsg: "Please enter a valid user key" });
+    }
+
+    // Password Hashing
+
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(password, salt);
+
+    // Change password in DB
+
+    let update;
+
+    switch (key) {
+      case "Student":
+        update = await Student.findOneAndUpdate({ username }, { passwordHash });
+        if (!update) {
+          return res.status(401).json({ errMsg: "Not Done brother" });
+        }
+        break;
+      case "Teacher":
+        update = await Instructor.findOneAndUpdate(
+          { username },
+          { passwordHash }
+        );
+        if (!update) {
+          return res.status(401).json({ errMsg: "Not Done brother" });
+        }
+        break;
+      case "Admin":
+        update = await Admin.findOneAndUpdate({ username }, { passwordHash });
+        if (!update) {
+          return res.status(401).json({ errMsg: "Not Done brother" });
+        }
+        break;
+      default:
+        console.error("Please Enter the a valid user key");
+    }
+
+    // clear the user's token (log-out)
+    res
+      .cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(0),
+      })
+      .send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
 });
 
 module.exports = router;

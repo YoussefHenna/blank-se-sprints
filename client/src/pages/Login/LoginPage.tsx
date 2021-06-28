@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import TextField from "@material-ui/core/TextField";
+import { MouseEvent } from "react";
+import axios from "../../util/Axios";
 
 interface LoginPageProps {}
 
@@ -20,115 +22,200 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
 
   //Use like this <div className={classes.whateverStyle}/>
   const classes = useStyles();
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [key, setKey] = useState("");
+
+  // const handleRedirect = () => {
+  //   history.push("/student/major");
+  // };
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    const target = e.currentTarget as Element;
+    const value = target.id;
+    switch (value) {
+      case "btn1":
+        setKey("Student");
+        break;
+      case "btn2":
+        setKey("Teacher");
+
+        break;
+      case "btn3":
+        setKey("Admin");
+        break;
+      default:
+        setKey("");
+    }
+  };
+
+  async function login(e: any) {
+    e.preventDefault();
+
+    try {
+      const loginData = {
+        username,
+        password,
+        key,
+      };
+
+      await axios.post("http://localhost:3500/auth/login", loginData, {
+        withCredentials: true,
+      });
+
+      switch (key) {
+        case "Student":
+          history.replace("/student/courses");
+          break;
+        case "Teacher":
+          history.replace("/instructor/classes");
+          break;
+        case "Admin":
+          history.replace("/admin/courses");
+          break;
+        default:
+          history.replace("/login");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <>
-      <Grid container className={classes.flexContainer}>
-        <Grid container className={classes.greyBox}>
-          <TopBar title="Online Student Portal" />
-          <LaptopLogo
-            style={{
-              display: "block",
-              width: "65%",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          />
-        </Grid>
-        <Grid container className={classes.redBox}>
-          <Container>
-            <Grid
-              container
-              className={classes.formBox}
-              justify="center"
-              direction="column"
-              alignItems="center"
-            >
-              <Typography variant="h3" className={classes.logIn}>
-                Log In
-              </Typography>
-              <ButtonGroup
-                size="medium"
-                variant="outlined"
-                style={{
-                  display: "flex",
-                  justifyContent: "initial",
-                  marginBottom: "25px",
-                  marginTop: "25px",
-                  color: "#B6B6B6",
-                  borderColor: "#B6B6B6",
-                  maxWidth: "300px",
-                  width: "70%",
-                }}
-              >
-                <Button className={classes.buttonStyle}>Student</Button>
-                <Button className={classes.buttonStyle}> Ta </Button>
-                <Button className={classes.buttonStyle}> Admin </Button>
-              </ButtonGroup>
+      <form onSubmit={login}>
+        <Grid container className={classes.flexContainer}>
+          <Grid container className={classes.greyBox}>
+            <TopBar title="Online Student Portal" />
+            <LaptopLogo
+              style={{
+                display: "block",
+                width: "65%",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            />
+          </Grid>
+          <Grid container className={classes.redBox}>
+            <Container>
               <Grid
                 container
+                className={classes.formBox}
+                justify="center"
                 direction="column"
-                justify="space-between"
                 alignItems="center"
-                style={{
-                  width: "80%",
-                  maxWidth: "400px",
-                }}
               >
-                <TextField
-                  label="Username"
-                  margin="dense"
-                  variant="filled"
+                <Typography variant="h3" className={classes.logIn}>
+                  Log In
+                </Typography>
+                <ButtonGroup
+                  size="medium"
+                  variant="outlined"
                   style={{
-                    width: "100%",
-                  }}
-                ></TextField>
-                <TextField
-                  type="password"
-                  label="Password"
-                  margin="normal"
-                  variant="filled"
-                  style={{
-                    width: "100%",
-                  }}
-                ></TextField>
-              </Grid>
-              <Grid
-                item
-                style={{
-                  display: "inline",
-                  width: "80%",
-                  maxWidth: "400px",
-                  justifyContent: "center",
-                  marginTop: "40px",
-                }}
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{
-                    width: "100%",
+                    display: "flex",
+                    justifyContent: "initial",
+                    marginBottom: "25px",
+                    marginTop: "25px",
+                    color: "#B6B6B6",
+                    borderColor: "#B6B6B6",
+                    maxWidth: "300px",
+                    width: "70%",
                   }}
                 >
-                  Log In
-                </Button>
-              </Grid>
-              <Grid container direction="column" alignItems="center">
-                <Grid item>
-                  <Button className={classes.buttonPassword}>
-                    Don't have an account?
+                  <Button
+                    className={classes.buttonStyle}
+                    id="btn1"
+                    onClick={handleClick}
+                  >
+                    Student
+                  </Button>
+                  <Button
+                    className={classes.buttonStyle}
+                    id="btn2"
+                    onClick={handleClick}
+                  >
+                    {" "}
+                    Ta{" "}
+                  </Button>
+                  <Button
+                    className={classes.buttonStyle}
+                    id="btn3"
+                    onClick={handleClick}
+                  >
+                    {" "}
+                    Admin{" "}
+                  </Button>
+                </ButtonGroup>
+                <Grid
+                  container
+                  direction="column"
+                  justify="space-between"
+                  alignItems="center"
+                  style={{
+                    width: "80%",
+                    maxWidth: "400px",
+                  }}
+                >
+                  <TextField
+                    label="Username"
+                    margin="dense"
+                    variant="filled"
+                    onChange={(e) => setUserName(e.target.value)}
+                    value={username}
+                    style={{
+                      width: "100%",
+                    }}
+                  ></TextField>
+                  <TextField
+                    type="password"
+                    label="Password"
+                    margin="normal"
+                    variant="filled"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    style={{
+                      width: "100%",
+                    }}
+                  ></TextField>
+                </Grid>
+                <Grid
+                  item
+                  style={{
+                    display: "inline",
+                    width: "80%",
+                    maxWidth: "400px",
+                    justifyContent: "center",
+                    marginTop: "40px",
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    Log In
                   </Button>
                 </Grid>
-                {/* <Grid item>
+                <Grid container direction="column" alignItems="center">
+                  <Grid item>
+                    <Button className={classes.buttonPassword}>
+                      Don't have an account?
+                    </Button>
+                  </Grid>
+                  {/* <Grid item>
                   <Button className={classes.buttonPassword}>
                     Forgot Password?
                   </Button>
                 </Grid> */}
+                </Grid>
               </Grid>
-            </Grid>
-          </Container>
+            </Container>
+          </Grid>
         </Grid>
-      </Grid>
+      </form>
     </>
   );
 };

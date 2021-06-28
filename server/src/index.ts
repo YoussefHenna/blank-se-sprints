@@ -17,17 +17,16 @@ import applyApis from "./apply/apis";
  */
 const app = express();
 
-const publicRouters = express.Router() //routers that don't need token authentication (what you can do when not logged in (guest) ) , apply, sign in, register. etc..
-const restrictedRouters = express.Router() //routers that require token authentication (what you can do only as a logged in user ), student and admin APIs like schedule, grades, etc
+const publicRouters = express.Router(); //routers that don't need token authentication (what you can do when not logged in (guest) ) , apply, sign in, register. etc..
+const restrictedRouters = express.Router(); //routers that require token authentication (what you can do only as a logged in user ), student and admin APIs like schedule, grades, etc
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
-
 //setting up routes
-app.use(publicRouters)
-app.use(restrictedRouters)
+app.use(publicRouters);
+app.use(restrictedRouters);
 app.use("/auth", require("./routers/userRouter"));
 //app.use("/test", require("./routers/testRouter"));
 
