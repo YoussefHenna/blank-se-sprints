@@ -13,12 +13,16 @@ import TAViewClassesPage from "../../pages/TAViewClasses/TAViewClassesPage";
 import ApplyToUniPage from "../../pages/ApplyToUni/ApplyToUniPage";
 import { Typography } from "@material-ui/core";
 import { useStyles } from "../../AppStyles";
+import { useContext } from "react";
+import AuthContext from "../Context/Authcontext";
 
 interface NavigationRoutesProps {
   setUserType: (type: "student" | "TA" | "admin") => void;
 }
 const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
   const classes = useStyles();
+  const { loggedIn, user } = useContext(AuthContext);
+
   return (
     <div className={classes.background}>
       <Switch>
@@ -26,18 +30,27 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
         <Route exact path="/">
           <HomePage />
         </Route>
-        <Route path="/apply">
-          <ApplyToUniPage />
-        </Route>
-        <Route path="/login">
-          <LoginPage />
-        </Route>
-        <Route path="/register">
-          <RegisterPage />
-        </Route>
-        <Route path="/change-password">
-          <ChangePasswordPage />
-        </Route>
+        {loggedIn === false && (
+          <>
+            <Route path="/apply">
+              <ApplyToUniPage />
+            </Route>
+            <Route path="/register">
+              <RegisterPage />
+            </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+          </>
+        )}
+        {loggedIn === true && (
+          <>
+            <Route path="/change-password">
+              <ChangePasswordPage />
+            </Route>
+          </>
+        )}
+
         {/* ////////////////////// */}
 
         {/* Routes for students */}

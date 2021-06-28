@@ -8,6 +8,9 @@ import {
 } from "./components/Navigation/Navigation";
 import { useStyles } from "./AppStyles";
 import { useEffect, useState } from "react";
+// import axios from "axios";
+
+// axios.defaults.withCredentials = true;
 
 //Theme that will be used on all Material UI components
 const theme = createMuiTheme({
