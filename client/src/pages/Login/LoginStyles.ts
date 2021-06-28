@@ -32,7 +32,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   redBox: {
     backgroundColor: "#DB3B38",
-    flex: 4,
+    flex: 5,
     minWidth: 400,
     minHeight: 850,
     overflow: "hidden",
@@ -51,6 +51,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "31%",
     marginTop: "20px",
+    marginBottom: "50px",
     fontWeight: "bold",
     fontSize: "40px",
     justifyContent: "center",

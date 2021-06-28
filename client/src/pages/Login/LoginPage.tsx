@@ -69,7 +69,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
             <LaptopLogo
               style={{
                 display: "block",
-                width: "65%",
+                width: "85%",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
@@ -87,6 +87,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                 <Typography variant="h3" className={classes.logIn}>
                   Log In
                 </Typography>
+
                 <Grid
                   container
                   direction="column"
