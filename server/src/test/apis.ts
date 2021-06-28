@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Router } from "express";
 import DatabaseClient from "./../database";
 import * as Operations from "./dbOperations";
 import { ObjectId } from "mongodb";
@@ -9,8 +9,8 @@ import { ObjectId } from "mongodb";
 
 // you can also follow this as a guide for other APIs
 
-const testAPIs = (app: Express, cl: DatabaseClient) => {
-  app.get("/student-courses/:sid", async (req, res) => {
+const testAPIs = (router: Router, cl: DatabaseClient) => {
+  router.get("/student-courses/:sid", async (req, res) => {
     try {
       const sid = new ObjectId(req.params.sid); //extract student id from the url and convert it to an ObjectId
       const courses = await Operations.getStudentCourses(cl, sid);
@@ -24,7 +24,7 @@ const testAPIs = (app: Express, cl: DatabaseClient) => {
     }
   });
 
-  app.get("/students-test", async (req, res) => {
+  router.get("/students-test", async (req, res) => {
     try {
       const students = await Operations.getAllStudents(cl);
       res.statusCode = 200;

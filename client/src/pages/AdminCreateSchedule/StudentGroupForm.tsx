@@ -1,36 +1,53 @@
 import React from 'react'
 import {
-  Radio,
-  RadioGroup,
   FormControl,
-  FormControlLabel,
-  FormLabel,
   makeStyles,
   Theme,
-  TextField
+  TextField,
+  InputAdornment,
+  Input,
+  InputLabel,
+  FormHelperText
 } from "@material-ui/core";
 import {Autocomplete} from "@material-ui/lab";
 import { useStyles } from './AdminCreateScheduleStyles'
-import {StudentGroup} from '../../../../SharedObjects/users'
-import { getStudentGroups } from "./AdminCreateScheduleRequests";
+//import {StudentGroup} from '../../../../SharedObjects/users'
+//import { getStudentGroups } from "./AdminCreateScheduleRequests";
 import _ from 'lodash'
+import SearchIcon from '@material-ui/icons/Search';
+import {ClassNameMap} from '@material-ui/core/styles/withStyles';
 interface Props {
 
+}
+
+const groupSearch = (classes : ClassNameMap) => {
+
+
+  return (
+      <FormControl className={classes.margin}>
+        <InputLabel>search for student group</InputLabel>
+        <Input
+          id="admin-schedule-student-group-search"
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+        />
+        <FormHelperText>
+          .e.g. Computer Science 2019 
+        </FormHelperText>
+      </FormControl>
+  )
 }
 
 
 const StudentGroupForm : React.FC<Props> = () => {
 
-  const [studentGroups, setStudentGroups] = React.useState<StudentGroup[]>([]);
-  const [admissionYear, setAdmissionYear] = React.useState<number>(0);
-  const [semester, setSemester] = React.useState<number>(0);
-  const [facultyId, setFacultyId] = React.useState<string>("");
-  const [selectedStudentGroupId, setSelectedStudentGroupId] = React.useState<string>("");
 
   React.useEffect(()=>{
 
     const fetchData = async () => {
-      setStudentGroups(await getStudentGroups())
     }
 
     fetchData()
@@ -40,30 +57,7 @@ const StudentGroupForm : React.FC<Props> = () => {
   const classes = useStyles()
   return (
       <form >
-    <Autocomplete
-      className={classes.formComponent}
-      options={_.uniq(studentGroups.map(s=>s.admissionYear.toString()))}
-      getOptionLabel={(option: any) => option}
-      renderInput={(params) => (
-        <TextField required {...params} label="Select admission year" variant="outlined" />
-      )}
-    />
-    <Autocomplete
-      className={classes.formComponent}
-      options={_.uniq(studentGroups.map(s=>s.semester.toString()))}
-      getOptionLabel={(option: any) => option}
-      renderInput={(params) => (
-        <TextField required {...params} label="Select semester" variant="outlined" />
-      )}
-    />
-    <Autocomplete
-      className={classes.formComponent}
-      options={_.uniq(studentGroups.map(s=>s.facultyName))}
-      getOptionLabel={(option: any) => option}
-      renderInput={(params) => (
-        <TextField required {...params} label="Select faculty" variant="outlined" />
-      )}
-    />
+        {groupSearch(classes)}
       </form>
     )
 }

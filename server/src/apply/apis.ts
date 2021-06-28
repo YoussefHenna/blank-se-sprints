@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Router } from "express";
 import DatabaseClient from "../database";
 import * as Operations from "./dbOperations";
 
@@ -10,10 +10,10 @@ const containsApplyData = (obj: any) => {
   );
 };
 
-const applyApis = (app: Express, cl: DatabaseClient) => {
+const applyApis = (router: Router, cl: DatabaseClient) => {
   Operations.init(cl);
 
-  app.post("/apply", async (req, res) => {
+  router.post("/apply", async (req, res) => {
     try {
       const body = req.body;
       if (!containsApplyData(body)) {

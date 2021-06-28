@@ -4,6 +4,8 @@ import Instructor from "../models/instructorModel";
 import Admin from "../models/adminModel";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import dotenv from 'dotenv'
+dotenv.config()
 
 const router = express.Router();
 
@@ -118,12 +120,11 @@ router.post("/", async (req, res) => {
 
     // Sign the Token
 
-    const JWT_SECRET = "thH],!aQ?$n]J*^L!4^8sR.p*/Kaz{EY)7eqdJP$";
     const token = jwt.sign(
       {
         user: savedUser._id,
       },
-      JWT_SECRET
+      process.env.JWT_SECRET
     );
 
     // Send the token in HTTP-only cookie
@@ -197,12 +198,11 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ errMsg: "Wrong email/password3" });
     }
 
-    const JWT_SECRET = "thH],!aQ?$n]J*^L!4^8sR.p*/Kaz{EY)7eqdJP$";
     const token = jwt.sign(
       {
         user: existingUser._id,
       },
-      JWT_SECRET
+      process.env.JWT_SECRET
     );
 
     res

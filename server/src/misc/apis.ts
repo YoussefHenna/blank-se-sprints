@@ -1,10 +1,10 @@
-import { Express } from "express";
+import { Router } from "express";
 import { Instructor, StudentGroup } from "../../../SharedObjects/users";
 import * as Operations from "./dbOperations";
 import DatabaseClient from "./../database";
 
-const miscellaneousAPIs = (app: Express, cl: DatabaseClient) => {
-  app.get("/student-groups", async (req, res) => {
+const miscellaneousAPIs = (router: Router, cl: DatabaseClient) => {
+  router.get("/student-groups", async (req, res) => {
     try {
       const studentGroups: StudentGroup[] = await Operations.getStudentGroups(
         cl
@@ -17,7 +17,7 @@ const miscellaneousAPIs = (app: Express, cl: DatabaseClient) => {
       res.send({ msg: "internal server error" });
     }
   });
-  app.get("/instructors", async (req, res) => {
+  router.get("/instructors", async (req, res) => {
     try {
       const instructors: Instructor[] = await Operations.getAllInstructors(cl);
       res.statusCode = 200;

@@ -1,4 +1,4 @@
-import { Express } from "express";
+import { Router } from "express";
 import DatabaseClient from "../database";
 // import * as Operations from "./dbOperations";
 // import * as Exceptions from "./exceptions";
@@ -6,11 +6,11 @@ import { ObjectID, ObjectId } from "mongodb";
 import Student from "../models/studentModel";
 import { CourseGrade } from "../../../SharedObjects/course";
 
-const gradesAPIs = (app: Express, cl: DatabaseClient) => {
+const gradesAPIs = (router: Router, cl: DatabaseClient) => {
   //For now use this student ID, change to use value in cookie later (after auth finished)
   const studentId = "60cc811b111a71a2f67da382";
 
-  app.get("/student/grades", async (req, res) => {
+  router.get("/student/grades", async (req, res) => {
     try {
       //First find the student with the given ID
       //Check models/studentModel.ts - I updated it to include array of grades
@@ -35,7 +35,7 @@ const gradesAPIs = (app: Express, cl: DatabaseClient) => {
     }
   });
 
-  app.patch("/student/grades", async (req, res) => {
+  router.patch("/student/grades", async (req, res) => {
     try {
       //Request should include these in the body, to know which course grade to change
       //and to which student
