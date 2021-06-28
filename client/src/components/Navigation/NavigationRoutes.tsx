@@ -14,7 +14,7 @@ import ApplyToUniPage from "../../pages/ApplyToUni/ApplyToUniPage";
 import { Typography } from "@material-ui/core";
 import { useStyles } from "../../AppStyles";
 import { useContext } from "react";
-import { AuthContext } from "../Context/AuthContext";
+import { AuthContext } from "../Context/Authcontext";
 
 interface NavigationRoutesProps {
   setUserType: (type: "student" | "TA" | "admin") => void;
