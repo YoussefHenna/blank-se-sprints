@@ -24,7 +24,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
   const classes = useStyles();
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState("Student");
 
   // const handleRedirect = () => {
   //   history.push("/student/major");
@@ -76,6 +76,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
         default:
           history.replace("/login");
       }
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -125,6 +126,12 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                   <Button
                     className={classes.buttonStyle}
                     id="btn1"
+                    variant={key === "Student" ? "contained" : undefined}
+                    style={
+                      key === "Student"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     onClick={handleClick}
                   >
                     Student
@@ -132,6 +139,12 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                   <Button
                     className={classes.buttonStyle}
                     id="btn2"
+                    variant={key === "Teacher" ? "contained" : undefined}
+                    style={
+                      key === "Teacher"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     onClick={handleClick}
                   >
                     {" "}
@@ -140,6 +153,12 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                   <Button
                     className={classes.buttonStyle}
                     id="btn3"
+                    variant={key === "Admin" ? "contained" : undefined}
+                    style={
+                      key === "Admin"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     onClick={handleClick}
                   >
                     {" "}
@@ -201,7 +220,12 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
                 </Grid>
                 <Grid container direction="column" alignItems="center">
                   <Grid item>
-                    <Button className={classes.buttonPassword}>
+                    <Button
+                      className={classes.buttonPassword}
+                      onClick={() => {
+                        history.replace("/register");
+                      }}
+                    >
                       Don't have an account?
                     </Button>
                   </Grid>

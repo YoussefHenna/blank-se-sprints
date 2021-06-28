@@ -13,12 +13,16 @@ import TAViewClassesPage from "../../pages/TAViewClasses/TAViewClassesPage";
 import ApplyToUniPage from "../../pages/ApplyToUni/ApplyToUniPage";
 import { Typography } from "@material-ui/core";
 import { useStyles } from "../../AppStyles";
+import { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
 interface NavigationRoutesProps {
   setUserType: (type: "student" | "TA" | "admin") => void;
 }
 const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
   const classes = useStyles();
+  const authContext = useContext(AuthContext);
+  console.log(authContext);
 
   return (
     <div className={classes.background}>

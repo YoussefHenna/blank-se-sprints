@@ -8,9 +8,10 @@ import dotenv from "dotenv";
 dotenv.config();
 import mongoose from "mongoose";
 import { getStudentCourses } from "../test/dbOperations";
+import { ObjectID } from "mongodb";
+import cors from "cors";
 
 const router = express.Router();
-
 // Register Users
 
 router.post("/", async (req, res) => {
@@ -121,7 +122,6 @@ router.post("/", async (req, res) => {
     }
 
     // Sign the Token
-
     const token = jwt.sign(
       {
         user: savedUser._id,
@@ -229,31 +229,52 @@ router.get("/logout", (req, res) => {
 });
 
 // check logged In
-router.get("/loggedIn", (req, res) => {
+router.get("/loggedIn", async (req, res) => {
   try {
     const token = req.cookies.token;
 
-    const JWT_SECRET = "thH],!aQ?$n]J*^L!4^8sR.p*/Kaz{EY)7eqdJP$";
-
-    if (!token) return res.json(false);
+    const JWT_SECRET = process.env.JWT_SECRET;
+    if (!token) {
+      res.json({ jwt: undefined, isSignedIn: false });
+      return;
+    }
 
     type MyToken = {
-      user: String;
+      user: string;
     };
 
     const verified = jwt.verify(token, JWT_SECRET) as MyToken;
 
     const user = verified.user;
-
-    // res.json({
-    //   bool: true,
-    //   jwt: user,
-    // });
-    res.send(true);
+    const userType = await findUserType(user);
+    res.json({ jwt: token, isSignedIn: true, userType });
   } catch (err) {
-    res.json(false);
+    res.json({ jwt: undefined, isSignedIn: false });
   }
 });
+
+const findUserType = async (
+  id: string
+): Promise<"student" | "admin" | "intructor"> => {
+  return new Promise(async (resolve, reject) => {
+    const inst = await Instructor.findOne({ _id: new ObjectID(id) });
+    if (inst) {
+      resolve("intructor");
+    }
+
+    const student = await Student.findOne({ _id: new ObjectID(id) });
+    if (student) {
+      resolve("student");
+    }
+
+    const admin = await Admin.findOne({ _id: new ObjectID(id) });
+    if (admin) {
+      resolve("admin");
+    }
+
+    reject();
+  });
+};
 
 // change password
 router.post("/changePassword", async (req, res) => {

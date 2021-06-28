@@ -23,7 +23,7 @@ const ChangePasswordPage: React.FC = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState("Student");
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget as Element;
@@ -112,6 +112,12 @@ const ChangePasswordPage: React.FC = () => {
                   <Button
                     className={classes.buttonStyle}
                     id="btn1"
+                    variant={key === "Student" ? "contained" : undefined}
+                    style={
+                      key === "Student"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     onClick={handleClick}
                   >
                     Student
@@ -119,6 +125,12 @@ const ChangePasswordPage: React.FC = () => {
                   <Button
                     className={classes.buttonStyle}
                     id="btn2"
+                    variant={key === "Teacher" ? "contained" : undefined}
+                    style={
+                      key === "Teacher"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     onClick={handleClick}
                   >
                     {" "}
@@ -127,6 +139,12 @@ const ChangePasswordPage: React.FC = () => {
                   <Button
                     className={classes.buttonStyle}
                     id="btn3"
+                    variant={key === "Admin" ? "contained" : undefined}
+                    style={
+                      key === "Admin"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     onClick={handleClick}
                   >
                     {" "}

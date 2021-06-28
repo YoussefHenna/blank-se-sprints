@@ -8,6 +8,7 @@ import {
 } from "./components/Navigation/Navigation";
 import { useStyles } from "./AppStyles";
 import { useEffect, useState } from "react";
+import { AuthContextProvider } from "./components/Context/AuthContext";
 // import axios from "axios";
 
 // axios.defaults.withCredentials = true;
@@ -84,13 +85,15 @@ const App: React.FC = () => {
   const navItems = getNavigationItems(userType);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className={classes.appMainContainer}>
-        {navItems && <NavigationBar navItems={navItems} />}
-        <NavigationRoutes setUserType={setUserType} />
-      </div>
-    </ThemeProvider>
+    <AuthContextProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className={classes.appMainContainer}>
+          {navItems && <NavigationBar navItems={navItems} />}
+          <NavigationRoutes setUserType={setUserType} />
+        </div>
+      </ThemeProvider>
+    </AuthContextProvider>
   );
 };
 

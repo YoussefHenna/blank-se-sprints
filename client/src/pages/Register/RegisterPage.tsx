@@ -28,7 +28,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState("Student");
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget as Element;
@@ -66,6 +66,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
         withCredentials: true,
       });
       history.replace("/login");
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
@@ -114,6 +115,12 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                 >
                   <Button
                     id="btn1"
+                    variant={key === "Student" ? "contained" : undefined}
+                    style={
+                      key === "Student"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     className={classes.buttonStyle}
                     onClick={handleClick}
                   >
@@ -121,6 +128,12 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                   </Button>
                   <Button
                     id="btn2"
+                    variant={key === "Teacher" ? "contained" : undefined}
+                    style={
+                      key === "Teacher"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     className={classes.buttonStyle}
                     onClick={handleClick}
                   >
@@ -129,6 +142,12 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                   </Button>
                   <Button
                     id="btn3"
+                    variant={key === "Admin" ? "contained" : undefined}
+                    style={
+                      key === "Admin"
+                        ? { color: "white", background: "#DB3B38" }
+                        : undefined
+                    }
                     className={classes.buttonStyle}
                     onClick={handleClick}
                   >
@@ -219,6 +238,18 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                     }}
                   >
                     Register
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid container direction="column" alignItems="center">
+                <Grid item>
+                  <Button
+                    className={classes.buttonPassword}
+                    onClick={() => {
+                      history.replace("/login");
+                    }}
+                  >
+                    Already have an account?
                   </Button>
                 </Grid>
               </Grid>

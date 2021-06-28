@@ -22,7 +22,13 @@ const restrictedRouters = express.Router(); //routers that require token authent
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+//TODO: change with url of hosted react project
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 //setting up routes
 app.use(publicRouters);

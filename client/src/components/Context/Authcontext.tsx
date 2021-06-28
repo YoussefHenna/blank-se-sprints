@@ -1,37 +1,50 @@
 import axios from "axios";
-import React from "react";
+import React, { ReactChild, ReactFragment, ReactPortal } from "react";
 import { createContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 
-let defaultValue: any;
-const AuthContext = createContext(defaultValue);
-let user: any;
-function AuthContextProvider(props: any) {
-  const [loggedIn, setLoggedIn] = useState(undefined);
+interface AuthContextProviderProps {
+  children: React.ReactNode;
+}
 
-  async function getLoggedIn() {
-    const { data: loggedInRes } = await axios.get(
-      "http://localhost:3500/auth/loggedIn",
-      {
-        withCredentials: true,
-      }
-    );
-    // const { bool, jwt: usery } = loggedInRes;
-    // user = usery;
-    setLoggedIn(loggedInRes);
-  }
+interface AuthContextType {
+  jwt: string | undefined;
+  isSignedIn: boolean;
+  userType: "student" | "admin" | "intructor" | undefined;
+}
+const AuthContext = createContext<AuthContextType>({
+  jwt: undefined,
+  isSignedIn: false,
+  userType: undefined,
+});
+
+const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
+  children,
+}) => {
+  const [currentAuthContextState, setAuthContextState] =
+    useState<AuthContextType>({
+      jwt: undefined,
+      isSignedIn: false,
+      userType: undefined,
+    });
+
+  const getLoggedIn = async () => {
+    const { data } = await axios.get("http://localhost:3500/auth/loggedIn", {
+      withCredentials: true,
+    });
+    setAuthContextState(data as unknown as AuthContextType);
+  };
 
   useEffect(() => {
     getLoggedIn();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ loggedIn, getLoggedIn, user }}>
-      {props.children}
+    <AuthContext.Provider value={currentAuthContextState}>
+      {children}
     </AuthContext.Provider>
   );
-}
+};
 
-export default AuthContext;
-export { AuthContextProvider };
+export { AuthContextProvider, AuthContext };
