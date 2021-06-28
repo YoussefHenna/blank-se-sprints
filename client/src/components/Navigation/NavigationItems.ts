@@ -1,4 +1,4 @@
-import { NavigationItem } from "./NavigationBar";
+import type { NavigationItem } from "./NavigationBar";
 import MajorInfoIcon from "@material-ui/icons/LibraryBooks";
 import GradesIcon from "@material-ui/icons/Spellcheck";
 import ScheduleIcon from "@material-ui/icons/Schedule";

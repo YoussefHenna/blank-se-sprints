@@ -1,51 +1,18 @@
-import InstructorForm from './InstructorForm'
-import StudentGroupForm from './StudentGroupForm'
-import { useStyles } from './AdminCreateScheduleStyles'
-import React from "react";
-import {
-  Radio,
-  RadioGroup,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  makeStyles,
-  Theme,
-  TextField
-} from "@material-ui/core";
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import React from 'react'
+import {Fab,Tab,Tabs} from "@material-ui/core";
+import {ClassNameMap} from '@material-ui/core/styles/withStyles';
 
+interface Props {
+  classes : ClassNameMap
+}
 
-interface Props {}
-
-
-const ScheduleSearch: React.FC<Props> = () => {
-  const [scheduleType,setScheduleType] = React.useState("student")
-  const classes = useStyles()
+const ScheduleSearch : React.FC<Props> = () => {
   return (
-    <div className={classes.scheduleForm}>
+    <>
+      <Tabs>
+      </Tabs>
+    </>
+    )
+}
 
-        <FormControl>
-          <RadioGroup className={classes.formComponent} name="schedule-select" onChange={e=>setScheduleType(e.target.value)}>
-            <FormLabel>schedule type</FormLabel>
-            <FormControlLabel
-              value="instructor"
-              control={<Radio />}
-              label="Instructor"
-            />
-            <FormControlLabel
-              value="studentGroup"
-              control={<Radio />}
-              label="Student group"
-            />
-          </RadioGroup>
-        </FormControl>
-
-      
-        {scheduleType==='instructor' && (<InstructorForm/>)}
-        {scheduleType==='studentGroup' && (<StudentGroupForm/>)}
-    </div>
-  );
-};
-
-export default ScheduleSearch;
+export default ScheduleSearch

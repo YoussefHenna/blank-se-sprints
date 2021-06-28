@@ -1,33 +1,20 @@
-import * as api from "./TAUpdateGradeRequests";
+import * as api from "../GradesRequests";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./TAUpdateGradeStyles";
-import { updateGrades } from "./TAUpdateGradeRequests";
+import { updateGrades } from "../GradesRequests";
 import { useState } from "react";
 import { useEffect } from "react";
-
-
-
+import GradesPage from '../GragesPage';
 
 const TAUpdateGradePage: React.FC = () => {
   const history = useHistory();
   //Use this to navigate to different screens
   //Example: history.replace("/student/schedule") to navigate to student schedule page
-
   //Use like this <div className={classes.whateverStyle}/>
-
-  const [grades, setGrades] = useState({})
-
-  useEffect(() => {
-    setGrades(updateGrades())
-  }, []);
-  
-  
-  
 
   const classes = useStyles();
 
-  return <div>{/** Put ui elements here */}</div>;
+  return <GradesPage isTA/>;
 }
-  ;
 
 export default TAUpdateGradePage;

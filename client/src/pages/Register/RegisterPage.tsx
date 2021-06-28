@@ -49,14 +49,11 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
               </Typography>
               <ButtonGroup
                 size="medium"
-                variant="outlined"
                 style={{
                   display: "flex",
                   justifyContent: "initial",
-                  marginBottom: "25px",
-                  marginTop: "25px",
-                  color: "#B6B6B6",
-                  borderColor: "#B6B6B6",
+                  marginBottom: "1em",
+                  marginTop: "1em",
                   maxWidth: "300px",
                   width: "70%",
                 }}

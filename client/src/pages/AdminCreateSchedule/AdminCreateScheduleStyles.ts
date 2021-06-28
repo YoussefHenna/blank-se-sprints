@@ -15,16 +15,6 @@ export const useStyles = makeStyles((theme) => ({
   scheduleSearchTabs : {
     background : '#ffffff',
   },
-  scheduleForm: {
-    display : 'flex',
-    margin: "20px",
-    flexDirection : 'column',
-    height : '50vh'
-  },
-  formComponent : {
-    margin : '20px 0px',
-    width : 300
-  }
+
 
 }));
-

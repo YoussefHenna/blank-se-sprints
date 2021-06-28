@@ -50,6 +50,7 @@ const App: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
 
+  // TODO: remove this, and use authentication
   const setTypeFromRoute = (path: string) => {
     if (path.includes("student") && userType != "student") {
       setUserType("student");
