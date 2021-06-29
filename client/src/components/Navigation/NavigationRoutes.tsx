@@ -11,7 +11,6 @@ import ChangePasswordPage from "../../pages/ChangePassword/ChangePasswordPage";
 import TAUpdateGradePage from "../../pages/Grades/TAUpdateGrade/TAUpdateGradePage";
 import TAViewClassesPage from "../../pages/TAViewClasses/TAViewClassesPage";
 import ApplyToUniPage from "../../pages/ApplyToUni/ApplyToUniPage";
-import { Typography } from "@material-ui/core";
 import { useStyles } from "../../AppStyles";
 import { useContext } from "react";
 import { AuthContext } from "../Context/Authcontext";
@@ -21,33 +20,26 @@ interface NavigationRoutesProps {
 }
 const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
   const classes = useStyles();
-  const authContext = useContext(AuthContext);
-  console.log(authContext);
+  const { isSignedIn, userType } = useContext(AuthContext);
+  console.log("Signed in", isSignedIn);
+  console.log("User type", userType);
+  let AvaiableRoutes = <></>;
 
-  return (
-    <div className={classes.background}>
-      <Switch>
-        {/* Routes for all users */}
-        <Route exact path="/">
-          <HomePage />
-        </Route>
-
-        <Route path="/apply">
-          <ApplyToUniPage />
-        </Route>
+  if (!isSignedIn) {
+    AvaiableRoutes = (
+      <>
         <Route path="/register">
           <RegisterPage />
         </Route>
         <Route path="/login">
           <LoginPage />
         </Route>
-        <Route path="/change-password">
-          <ChangePasswordPage />
-        </Route>
-
-        {/* ////////////////////// */}
-
-        {/* Routes for students */}
+        <Redirect exact to="/login" />
+      </>
+    );
+  } else if (userType === "student") {
+    AvaiableRoutes = (
+      <>
         <Route path="/student/major">
           <StudentMajorInfoPage />
         </Route>
@@ -57,31 +49,57 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
         <Route path="/student/schedule">
           <StudentViewSchedule />
         </Route>
-        {/* ////////////////////// */}
-
-        {/* Routes for admin */}
-        <Route path="/admin/courses">
-          <AdminCourseEditPage />
+        <Route path="/change-password">
+          <ChangePasswordPage />
         </Route>
-        <Route path="/admin/schedule">
-          <AdminCreateSchedulePage />
-        </Route>
-        {/* ////////////////////// */}
-
-        {/* Routes for TAs */}
+        <Redirect exact to="/student/major" />
+      </>
+    );
+  } else if (userType === "instructor") {
+    AvaiableRoutes = (
+      <>
         <Route path="/instructor/grades">
           <TAUpdateGradePage />
         </Route>
         <Route path="/instructor/classes">
           <TAViewClassesPage />
         </Route>
-        {/* ////////////////////// */}
+        <Route path="/change-password">
+          <ChangePasswordPage />
+        </Route>
+        <Redirect exact to="/instructor/grades" />
+      </>
+    );
+  } else if (userType === "admin") {
+    AvaiableRoutes = (
+      <>
+        <Route path="/admin/courses">
+          <AdminCourseEditPage />
+        </Route>
+        <Route path="/admin/schedule">
+          <AdminCreateSchedulePage />
+        </Route>
+        <Route path="/change-password">
+          <ChangePasswordPage />
+        </Route>
+        <Redirect exact to="/admin/courses" />
+      </>
+    );
+  }
 
-        <Route
-          path="*"
-          exact={true}
-          component={() => <Typography>Page not found</Typography>}
-        />
+  return (
+    <div className={classes.background}>
+      <Switch>
+        {/* Routes open to everyone */}
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+
+        <Route path="/apply">
+          <ApplyToUniPage />
+        </Route>
+
+        {AvaiableRoutes}
       </Switch>
     </div>
   );

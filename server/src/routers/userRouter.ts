@@ -265,11 +265,11 @@ router.get("/loggedIn", async (req, res) => {
 
 const findUserType = async (
   id: string
-): Promise<"student" | "admin" | "intructor"> => {
+): Promise<"student" | "admin" | "instructor"> => {
   return new Promise(async (resolve, reject) => {
     const inst = await Instructor.findOne({ _id: new ObjectID(id) });
     if (inst) {
-      resolve("intructor");
+      resolve("instructor");
     }
 
     const student = await Student.findOne({ _id: new ObjectID(id) });

@@ -42,7 +42,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
 
   useEffect(() => {
     if (history) {
-      history.listen((loc) => {
+      return history.listen((loc) => {
         setCurrentLocation(loc.pathname.toString());
       });
     }
