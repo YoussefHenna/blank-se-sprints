@@ -31,7 +31,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   redBox: {
     backgroundColor: "#DB3B38",
-    flex: 4,
+    flex: 5,
     minWidth: 400,
     minHeight: 850,
     overflow: "hidden",
@@ -50,6 +50,7 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "31%",
     marginTop: "20px",
+    marginBottom: "10px",
     fontWeight: "bold",
     fontSize: "40px",
     justifyContent: "center",
@@ -75,7 +76,7 @@ export const useStyles = makeStyles((theme) => ({
   buttonPassword: {
     color: "#E65F62",
     borderColor: "#E65F62",
-    marginTop: "20px",
+    marginTop: "10px",
   },
   buttonHold: {
     color: "#E65F62",
