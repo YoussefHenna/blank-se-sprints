@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useStyles } from "./NavigationStyles";
 import { useRef } from "react";
+import axios from "../../util/Axios";
 
 export interface NavigationItem {
   icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
@@ -47,6 +48,11 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
       });
     }
   }, [history]);
+
+  const logOut = async () => {
+    await axios.get("/auth/logout");
+    window.location.reload();
+  };
 
   return (
     <div
@@ -116,6 +122,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
           <MenuItem
             onClick={() => {
               setMenuShown(false);
+              logOut();
             }}
           >
             Log out

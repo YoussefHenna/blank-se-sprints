@@ -21,8 +21,6 @@ interface NavigationRoutesProps {
 const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
   const classes = useStyles();
   const { isSignedIn, userType } = useContext(AuthContext);
-  console.log("Signed in", isSignedIn);
-  console.log("User type", userType);
   let AvaiableRoutes = <></>;
 
   if (!isSignedIn) {
