@@ -5,7 +5,7 @@ import { useState } from "react";
 import TopBar from "../../components/TopBar/TopBar";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import { ReactComponent as LaptopLogo } from "./components/svg/laptopAnimation.svg";
+import { ReactComponent as LoginLogo } from "./components/svg/loginAnimation.svg";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -66,10 +66,10 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />
-            <LaptopLogo
+            <LoginLogo
               style={{
                 display: "block",
-                width: "65%",
+                width: "80%",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}

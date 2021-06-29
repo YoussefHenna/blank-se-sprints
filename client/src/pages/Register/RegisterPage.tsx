@@ -6,7 +6,7 @@ import { useState } from "react";
 import TopBar from "../../components/TopBar/TopBar";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import { ReactComponent as LaptopLogo } from "./components/svg/laptopAnimation.svg";
+import { ReactComponent as RegisterLogo } from "./components/svg/SignUpAnimation.svg";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
@@ -78,10 +78,10 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />
-            <LaptopLogo
+            <RegisterLogo
               style={{
                 display: "block",
-                width: "65%",
+                width: "85%",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
@@ -235,6 +235,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                     type="submit"
                     style={{
                       width: "100%",
+                      marginBottom: "35px",
                     }}
                   >
                     Register
