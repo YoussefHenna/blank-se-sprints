@@ -57,6 +57,8 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     marginTop: "20px",
+    marginBottom: "50px",
+
     fontWeight: "bold",
     fontSize: "30px",
     justifyContent: "center",

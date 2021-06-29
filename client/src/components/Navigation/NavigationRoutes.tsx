@@ -48,7 +48,7 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
           <StudentViewSchedule />
         </Route>
         <Route path="/change-password">
-          <ChangePasswordPage />
+          <ChangePasswordPage userType={userType} />
         </Route>
         <Redirect exact to="/student/major" />
       </>
@@ -63,7 +63,7 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
           <TAViewClassesPage />
         </Route>
         <Route path="/change-password">
-          <ChangePasswordPage />
+          <ChangePasswordPage userType={userType} />
         </Route>
         <Redirect exact to="/instructor/grades" />
       </>
@@ -78,7 +78,7 @@ const NavigationRoutes: React.FC<NavigationRoutesProps> = (props) => {
           <AdminCreateSchedulePage />
         </Route>
         <Route path="/change-password">
-          <ChangePasswordPage />
+          <ChangePasswordPage userType={userType} />
         </Route>
         <Redirect exact to="/admin/courses" />
       </>
