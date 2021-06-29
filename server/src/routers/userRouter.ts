@@ -337,7 +337,7 @@ router.post("/changePassword", async (req, res) => {
           return res.status(401).json({ errMsg: "Not Done brother" });
         }
         break;
-      case "Teacher":
+      case "Instructor":
         update = await Instructor.findOneAndUpdate(
           { username },
           { passwordHash }

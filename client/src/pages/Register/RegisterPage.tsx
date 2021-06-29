@@ -38,7 +38,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
         setKey("Student");
         break;
       case "btn2":
-        setKey("Teacher");
+        setKey("Instructor");
 
         break;
       case "btn3":
@@ -128,9 +128,9 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                   </Button>
                   <Button
                     id="btn2"
-                    variant={key === "Teacher" ? "contained" : undefined}
+                    variant={key === "Instructor" ? "contained" : undefined}
                     style={
-                      key === "Teacher"
+                      key === "Instructor"
                         ? { color: "white", background: "#DB3B38" }
                         : undefined
                     }

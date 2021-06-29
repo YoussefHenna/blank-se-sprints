@@ -34,7 +34,7 @@ const ChangePasswordPage: React.FC<ChangePasswordProps> = (props) => {
       case "admin":
         return "Admin";
       case "instructor":
-        return "Teacher";
+        return "Instructor";
     }
   };
   const key = toKeyValue(props.userType);
