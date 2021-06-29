@@ -6,12 +6,33 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
-import mongoose from "mongoose";
-import { getStudentCourses } from "../test/dbOperations";
 import { ObjectID } from "mongodb";
-import cors from "cors";
 
 const router = express.Router();
+
+const findUserType = async (
+  id: string
+): Promise<"student" | "admin" | "instructor"> => {
+  return new Promise(async (resolve, reject) => {
+    const inst = await Instructor.findOne({ _id: new ObjectID(id) });
+    if (inst) {
+      resolve("instructor");
+    }
+
+    const student = await Student.findOne({ _id: new ObjectID(id) });
+    if (student) {
+      resolve("student");
+    }
+
+    const admin = await Admin.findOne({ _id: new ObjectID(id) });
+    if (admin) {
+      resolve("admin");
+    }
+
+    reject();
+  });
+};
+
 // Register Users
 
 router.post("/", async (req, res) => {
@@ -262,29 +283,6 @@ router.get("/loggedIn", async (req, res) => {
     res.json({ jwt: undefined, isSignedIn: false });
   }
 });
-
-const findUserType = async (
-  id: string
-): Promise<"student" | "admin" | "instructor"> => {
-  return new Promise(async (resolve, reject) => {
-    const inst = await Instructor.findOne({ _id: new ObjectID(id) });
-    if (inst) {
-      resolve("instructor");
-    }
-
-    const student = await Student.findOne({ _id: new ObjectID(id) });
-    if (student) {
-      resolve("student");
-    }
-
-    const admin = await Admin.findOne({ _id: new ObjectID(id) });
-    if (admin) {
-      resolve("admin");
-    }
-
-    reject();
-  });
-};
 
 // change password
 router.post("/changePassword", async (req, res) => {

@@ -1,8 +1,9 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import DatabaseClient from "../database";
 import * as Operations from "./dbOperations";
 import { ObjectId } from "mongodb";
 import { Course } from "../../../SharedObjects/course";
+import Aauth from "../middleware/Aauth";
 
 const containsCourseData = (obj: any): obj is Course => {
   return (
@@ -13,13 +14,26 @@ const containsCourseData = (obj: any): obj is Course => {
   );
 };
 
+const checkIsAdmin = (res: Response): string | undefined => {
+  const adminId = res.locals["id"];
+  if (!adminId) {
+    res.send({ error: "Unauthroized request" });
+    return;
+  }
+  return adminId;
+};
+
 const editCourseApis = (router: Router, cl: DatabaseClient) => {
   Operations.init(cl);
 
-  //Temporary hardcoded, till authentication is implemented
-  const adminId = "60cc8175111a71a2f67da386";
+  //Use admin auth on all these routes
+  router.use(["/courses/:facId", "/course", "/course/:courseId"], Aauth);
 
   router.get("/courses/:facId", async (req, res) => {
+    const adminId = checkIsAdmin(res);
+    if (!adminId) {
+      return;
+    }
     try {
       await Operations.getCourses(req.params.facId)
         .then(
@@ -39,6 +53,10 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
   });
 
   router.post("/course", async (req, res) => {
+    const adminId = checkIsAdmin(res);
+    if (!adminId) {
+      return;
+    }
     try {
       const body = req.body;
       if (!containsCourseData(body)) {
@@ -70,6 +88,10 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
   });
 
   router.put("/course/:courseId", async (req, res) => {
+    const adminId = checkIsAdmin(res);
+    if (!adminId) {
+      return;
+    }
     try {
       if (!req.params.courseId) {
         res.status(400).send({ error: "Missing course id" });
@@ -96,6 +118,10 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
   });
 
   router.delete("/course/:courseId", async (req, res) => {
+    const adminId = checkIsAdmin(res);
+    if (!adminId) {
+      return;
+    }
     try {
       if (!req.params.courseId) {
         res.status(400).send({ error: "Missing course id" });
