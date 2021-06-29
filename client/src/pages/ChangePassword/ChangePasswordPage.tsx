@@ -70,7 +70,7 @@ const ChangePasswordPage: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={changePassword}>
+      <form className={classes.formContainer} onSubmit={changePassword}>
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />

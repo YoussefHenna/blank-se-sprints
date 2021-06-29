@@ -62,14 +62,14 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
 
   return (
     <>
-      <form onSubmit={login}>
+      <form className={classes.formContainer} onSubmit={login}>
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />
             <LaptopLogo
               style={{
                 display: "block",
-                width: "85%",
+                width: "65%",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}

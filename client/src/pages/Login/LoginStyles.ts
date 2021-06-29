@@ -11,6 +11,13 @@ import { findByLabelText } from "@testing-library/react";
  */
 
 export const useStyles = makeStyles((theme) => ({
+  formContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+  },
   formBox: {
     backgroundColor: "#FFFFFF",
     height: "65%",
@@ -32,7 +39,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   redBox: {
     backgroundColor: "#DB3B38",
-    flex: 5,
+    flex: 4,
     minWidth: 400,
     minHeight: 850,
     overflow: "hidden",

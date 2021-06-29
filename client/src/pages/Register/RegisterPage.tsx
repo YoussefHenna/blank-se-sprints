@@ -74,7 +74,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
 
   return (
     <>
-      <form onSubmit={register}>
+      <form className={classes.formContainer} onSubmit={register}>
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />
