@@ -45,7 +45,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
         case "Student":
           history.replace("/student/courses");
           break;
-        case "Teacher":
+        case "Instructor":
           history.replace("/instructor/classes");
           break;
         case "Admin":
