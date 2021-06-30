@@ -5,6 +5,7 @@
   "main": "dist/server/src/index.js",
   "scripts": {
     "start": "nodemon",
+    "startHeroku": "tsc && node dist/server/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
