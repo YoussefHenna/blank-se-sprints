@@ -239,6 +239,7 @@ router.post("/login", async (req, res) => {
     res
       .cookie("token", token, {
         httpOnly: true,
+        expires: new Date(2040, 5),
       })
       .send({ role: userRole });
   } catch (err) {
