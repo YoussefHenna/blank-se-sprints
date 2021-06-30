@@ -9,4 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
  * Same as css names but use camelCase (ex: font-weight -> fontWeight)
  */
 
-export const useStyles = makeStyles((theme) => ({}));
+export const useStyles = makeStyles((theme) => ({
+  table: {
+    minWidth: 650,
+  },
+}));
