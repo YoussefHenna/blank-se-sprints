@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles((theme) => ({
   parent: {
     width: "100%",
-    height: "90%",
+    height: "89%",
     marginTop: 88,
   },
 
@@ -22,6 +22,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "80%",
     overflow: "hidden",
     paddingLeft: 30,
+    paddingRight: 30,
     paddingTop: 20,
   },
 
@@ -71,10 +72,13 @@ export const useStyles = makeStyles((theme) => ({
   },
 
   blockHolder: {
-    display: "flex",
+    display: "inline-flex",
     flexDirection: "row",
     overflowY: "auto",
     gap: 30,
+    width: "100%",
+    justifyContent: "space-between",
+    height: "90%",
   },
 
   blockConfirmContainer: {
