@@ -19,7 +19,7 @@ export const useStyles = makeStyles((theme) => ({
 
   subPageParent: {
     width: "100%",
-    height: "70%",
+    height: "80%",
     overflow: "hidden",
     paddingLeft: 30,
     paddingTop: 20,

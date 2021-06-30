@@ -160,6 +160,7 @@ router.post("/", async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         sameSite: "none",
+        secure: true,
         expires: new Date(2040, 5),
       })
       .send({ role: userRole });
@@ -241,6 +242,7 @@ router.post("/login", async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
         sameSite: "none",
+        secure: true,
         expires: new Date(2040, 5),
       })
       .send({ role: userRole });
@@ -256,6 +258,7 @@ router.get("/logout", (req, res) => {
     .cookie("token", "", {
       httpOnly: true,
       sameSite: "none",
+      secure: true,
       expires: new Date(0),
     })
     .send();
@@ -365,6 +368,7 @@ router.post("/changePassword", async (req, res) => {
       .cookie("token", "", {
         httpOnly: true,
         sameSite: "none",
+        secure: true,
         expires: new Date(0),
       })
       .send();
