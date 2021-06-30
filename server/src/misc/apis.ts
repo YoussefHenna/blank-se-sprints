@@ -6,11 +6,16 @@ import DatabaseClient from "./../database";
 const miscellaneousAPIs = (router: Router, cl: DatabaseClient) => {
   router.get("/student-groups", async (req, res) => {
     try {
+
+
       const studentGroups: StudentGroup[] = await Operations.getStudentGroups(
-        cl
+        cl,
+        <string> req.query.q
       );
-      res.statusCode = 200;
+
+
       res.send(studentGroups);
+
     } catch (e) {
       console.error(e);
       res.statusCode = 500;
@@ -20,7 +25,6 @@ const miscellaneousAPIs = (router: Router, cl: DatabaseClient) => {
   router.get("/instructors", async (req, res) => {
     try {
       const instructors: Instructor[] = await Operations.getAllInstructors(cl);
-      res.statusCode = 200;
       res.send(instructors);
     } catch (e) {
       console.error(e);

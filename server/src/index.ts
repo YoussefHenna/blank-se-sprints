@@ -45,7 +45,6 @@ app.use(
 app.use("/public", publicRouters);
 app.use("/restricted", restrictedRouters);
 restrictedRouters.use((req, res, next) => {
-  console.log(req.headers);
   if (!req.cookies.token) {
     res.status(401).send({ msg: "could not verify token" });
     return;
