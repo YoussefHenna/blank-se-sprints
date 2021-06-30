@@ -1,5 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
-import axios from "axios";
+import axios from "../../util/Axios";
 import React, { ReactChild, ReactFragment, ReactPortal } from "react";
 import { createContext } from "react";
 import { useEffect } from "react";
@@ -32,7 +32,7 @@ const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const [loaded, setLoaded] = useState(false);
 
   const getLoggedIn = async () => {
-    const { data } = await axios.get("http://localhost:3500/auth/loggedIn", {
+    const { data } = await axios.get("/auth/loggedIn", {
       withCredentials: true,
     });
     setAuthContextState(data as unknown as AuthContextType);

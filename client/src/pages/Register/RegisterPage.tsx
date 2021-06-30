@@ -62,7 +62,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
         key,
       };
 
-      await axios.post("http://localhost:3500/auth/", registerData, {
+      await axios.post("/auth/", registerData, {
         withCredentials: true,
       });
       history.replace("/login");

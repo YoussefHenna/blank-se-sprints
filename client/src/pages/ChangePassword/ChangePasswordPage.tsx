@@ -50,13 +50,9 @@ const ChangePasswordPage: React.FC<ChangePasswordProps> = (props) => {
         key,
       };
 
-      await axios.post(
-        "http://localhost:3500/auth/changePassword",
-        changePasswordData,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.post("/auth/changePassword", changePasswordData, {
+        withCredentials: true,
+      });
       history.replace("/login");
     } catch (err) {
       console.error(err);
