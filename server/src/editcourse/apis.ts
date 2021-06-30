@@ -97,6 +97,9 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
         res.status(400).send({ error: "Missing course id" });
       }
       const body = req.body;
+      delete body.color;
+      delete body._id;
+      delete body.id;
       await Operations.updateCourse(req.params.courseId, {
         ...body,
         faculty: new ObjectId(body.faculty),
