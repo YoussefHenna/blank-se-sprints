@@ -25,7 +25,8 @@
     "start": "react-scripts start --max_old_space_size=2560",
     "build": "react-scripts build --max_old_space_size=2560",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "postinstall": "yarn build"
   },
   "eslintConfig": {
     "extends": [
