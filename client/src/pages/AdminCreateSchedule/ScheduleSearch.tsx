@@ -111,16 +111,16 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
 
   React.useEffect(() => {
     if (handleStudentGroupSearch) {
+      let data: StudentGroup[];
       const fetchData = async () => {
-        setStudentGroups(await api.getStudentGroups(studentGroupQueryString));
+        data = await api.getStudentGroups(studentGroupQueryString);
+        setStudentGroups(data);
+        console.log("DATA : ", data);
       };
-
       fetchData();
     }
-
-    console.log(studentGroups);
     setHandleStudentGroupSearch(false);
-  }, [handleStudentGroupSearch]);
+  }, [studentGroupQueryString, handleStudentGroupSearch]);
 
   return (
     <Container maxWidth="xl">
