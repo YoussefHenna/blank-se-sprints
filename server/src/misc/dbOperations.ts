@@ -20,33 +20,60 @@ export const getAllInstructors = async (cl: DatabaseClient) => {
   return instructors;
 };
 
-export const getStudentGroups = async (cl: DatabaseClient) =>
-  await cl.db
-    .collection("studentGroups")
-    .aggregate([
+export const getStudentGroups = async (cl: DatabaseClient, query?: string) => {
+  query = query.toLowerCase()
+  let agg: any[] = [
+    {
+      $lookup: {
+        from: "faculties",
+        localField: "facultyId",
+        foreignField: "_id",
+        as: "facultyDocs",
+      },
+    },
+    {
+      $replaceRoot: {
+        newRoot: {
+          $mergeObjects: [
+            {
+              facultyName: {
+                $arrayElemAt: ["$facultyDocs.facultyName", 0],
+              },
+            },
+            "$$ROOT",
+          ],
+        },
+      },
+    },
+  ];
+
+  if (query) {
+    agg.push(
       {
-        $lookup: {
-          from: "faculties",
-          localField: "facultyId",
-          foreignField: "_id",
-          as: "facultyDocs",
+        $addFields: {
+          admissionYearString: { $toString: "$admissionYear" },
+          facultyNameString: { $toLower: { $toString: "$facultyName" } },
         },
       },
       {
-        $replaceRoot: {
-          newRoot: {
-            $mergeObjects: [
-              { facultyName: { $arrayElemAt: ["$facultyDocs.facultyName",0] } },
-              "$$ROOT",
-            ],
-          },
+        $match: {
+          $or: [
+            { facultyNameString: { $regex: query } },
+            { admissionYearString: { $regex: query } },
+          ],
         },
-      },
-      {
-        $project: {
-          facultyDocs: 0,
-          coursesId: 0,
-        },
-      },
-    ])
-    .toArray();
+      }
+    );
+  }
+
+  agg.push({
+    $project: {
+      facultyDocs: 0,
+      coursesId: 0,
+      admissionYearString: 0,
+      facultyNameString : 0,
+    },
+  });
+
+  return await cl.db.collection("studentGroups").aggregate(agg).toArray();
+};

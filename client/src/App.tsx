@@ -16,26 +16,13 @@ import { AuthContextProvider } from "./components/Context/Authcontext";
 //Theme that will be used on all Material UI components
 const theme = createMuiTheme({
   palette: {
-    background: {
-      default: "#f3f3f3",
-    },
-    primary: {
-      main: "#db3b38",
-      dark: "#a20011",
-      light: "#ff7063",
-    },
-    secondary: {
-      main: "#f7b801",
-      dark: "#bf8900",
-      light: "#ffea4d",
-    },
+    background: { default: "#f3f3f3" },
+    primary: { main: "#db3b38", dark: "#a20011", light: "#ff7063" },
+    secondary: { main: "#f7b801", dark: "#bf8900", light: "#ffea4d" },
   },
   typography: {
     fontFamily: "Poppins",
-    subtitle1: {
-      fontWeight: 200,
-      fontSize: 14,
-    },
+    subtitle1: { fontWeight: 200, fontSize: 14 },
     fontWeightLight: 200,
     fontWeightRegular: 400,
     fontWeightMedium: 500,

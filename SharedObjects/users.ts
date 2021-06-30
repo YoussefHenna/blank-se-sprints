@@ -25,4 +25,5 @@ export interface StudentGroup {
   admissionYear: number; //the year when the student was admitted
   coursesId?: any[]; // array of ids of courses
   facultyName?: string;
+  searchStrings: string[];
 }

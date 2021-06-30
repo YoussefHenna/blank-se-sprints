@@ -9,12 +9,14 @@ import { makeStyles } from "@material-ui/core/styles";
  * Same as css names but use camelCase (ex: font-weight -> fontWeight)
  */
 export const useStyles = makeStyles((theme) => ({
-  mainContainer : {
-    margin : '10px',
+  mainContainer: {
+    margin: "10px",
   },
-  scheduleSearchTabs : {
-    background : '#ffffff',
+  scheduleSearchTabs: {
+    background: "#ffffff",
   },
-
-
+  formComponent: {
+    marginTop: "20px",
+    marginBottom: "20px",
+  },
 }));
