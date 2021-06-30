@@ -16,6 +16,7 @@ export const useStyles = makeStyles((theme) => ({
 
   logo: {
     width: 190,
+    cursor: "pointer",
   },
 
   dot: {

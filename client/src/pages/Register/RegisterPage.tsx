@@ -38,7 +38,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
         setKey("Student");
         break;
       case "btn2":
-        setKey("Teacher");
+        setKey("Instructor");
 
         break;
       case "btn3":
@@ -74,7 +74,7 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
 
   return (
     <>
-      <form onSubmit={register}>
+      <form className={classes.formContainer} onSubmit={register}>
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />
@@ -128,9 +128,9 @@ const RegisterPage: React.FC<RegisterPageProps> = (props) => {
                   </Button>
                   <Button
                     id="btn2"
-                    variant={key === "Teacher" ? "contained" : undefined}
+                    variant={key === "Instructor" ? "contained" : undefined}
                     style={
-                      key === "Teacher"
+                      key === "Instructor"
                         ? { color: "white", background: "#DB3B38" }
                         : undefined
                     }

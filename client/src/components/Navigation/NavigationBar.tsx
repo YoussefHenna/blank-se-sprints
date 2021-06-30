@@ -9,13 +9,14 @@ import {
 } from "@material-ui/core";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import { styled } from "@material-ui/styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import logoLight from "../../assets/img/logo_light.png";
 import SI from "@material-ui/icons/Settings";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useStyles } from "./NavigationStyles";
 import { useRef } from "react";
+import axios from "../../util/Axios";
 
 export interface NavigationItem {
   icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
@@ -30,23 +31,18 @@ interface NavigationProps {
 const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
   const theme = useTheme();
   const history = useHistory();
+  const location = useLocation();
+
   const SettingsIcon = styled(SI)({ color: "white" });
   const classes = useStyles();
-
-  const [currentLocation, setCurrentLocation] = useState(
-    history.location.pathname.toString()
-  );
 
   const [menuShow, setMenuShown] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (history) {
-      history.listen((loc) => {
-        setCurrentLocation(loc.pathname.toString());
-      });
-    }
-  }, [history]);
+  const logOut = async () => {
+    await axios.get("/auth/logout");
+    window.location.reload();
+  };
 
   return (
     <div
@@ -57,7 +53,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
       <div className={classes.logoSpacing} />
       {navItems.map((item) => {
         const MenuIcon = item.icon;
-        const selected = currentLocation === item.route;
+        const selected = location.pathname === item.route;
         return (
           <ButtonBase
             key={item.route}
@@ -116,6 +112,7 @@ const NavigationBar: React.FC<NavigationProps> = ({ navItems }) => {
           <MenuItem
             onClick={() => {
               setMenuShown(false);
+              logOut();
             }}
           >
             Log out

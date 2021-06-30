@@ -10,6 +10,13 @@ import { makeStyles } from "@material-ui/core/styles";
  */
 
 export const useStyles = makeStyles((theme) => ({
+  formContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+  },
   formBox: {
     backgroundColor: "#FFFFFF",
     height: "65%",
@@ -50,6 +57,8 @@ export const useStyles = makeStyles((theme) => ({
     display: "flex",
     width: "100%",
     marginTop: "20px",
+    marginBottom: "50px",
+
     fontWeight: "bold",
     fontSize: "30px",
     justifyContent: "center",

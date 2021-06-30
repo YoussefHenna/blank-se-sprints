@@ -13,7 +13,11 @@ import TextField from "@material-ui/core/TextField";
 import { MouseEvent } from "react";
 import axios from "../../util/Axios";
 
-const ChangePasswordPage: React.FC = () => {
+interface ChangePasswordProps {
+  userType: "student" | "admin" | "instructor";
+}
+
+const ChangePasswordPage: React.FC<ChangePasswordProps> = (props) => {
   const history = useHistory();
   //Use this to navigate to different screens
   //Example: history.replace("/student/schedule") to navigate to student schedule page
@@ -23,26 +27,17 @@ const ChangePasswordPage: React.FC = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [key, setKey] = useState("Student");
-
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    const target = e.currentTarget as Element;
-    const value = target.id;
-    switch (value) {
-      case "btn1":
-        setKey("Student");
-        break;
-      case "btn2":
-        setKey("Teacher");
-
-        break;
-      case "btn3":
-        setKey("Admin");
-        break;
-      default:
-        setKey("");
+  const toKeyValue = (userType: "student" | "admin" | "instructor"): string => {
+    switch (userType) {
+      case "student":
+        return "Student";
+      case "admin":
+        return "Admin";
+      case "instructor":
+        return "Instructor";
     }
   };
+  const key = toKeyValue(props.userType);
 
   async function changePassword(e: any) {
     e.preventDefault();
@@ -70,7 +65,7 @@ const ChangePasswordPage: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={changePassword}>
+      <form className={classes.formContainer} onSubmit={changePassword}>
         <Grid container className={classes.flexContainer}>
           <Grid container className={classes.greyBox}>
             <TopBar title="Online Student Portal" />
@@ -95,62 +90,7 @@ const ChangePasswordPage: React.FC = () => {
                 <Typography variant="h3" className={classes.logIn}>
                   Change Password
                 </Typography>
-                <ButtonGroup
-                  size="medium"
-                  variant="outlined"
-                  style={{
-                    display: "flex",
-                    justifyContent: "initial",
-                    marginBottom: "25px",
-                    marginTop: "25px",
-                    color: "#B6B6B6",
-                    borderColor: "#B6B6B6",
-                    maxWidth: "300px",
-                    width: "70%",
-                  }}
-                >
-                  <Button
-                    className={classes.buttonStyle}
-                    id="btn1"
-                    variant={key === "Student" ? "contained" : undefined}
-                    style={
-                      key === "Student"
-                        ? { color: "white", background: "#DB3B38" }
-                        : undefined
-                    }
-                    onClick={handleClick}
-                  >
-                    Student
-                  </Button>
-                  <Button
-                    className={classes.buttonStyle}
-                    id="btn2"
-                    variant={key === "Teacher" ? "contained" : undefined}
-                    style={
-                      key === "Teacher"
-                        ? { color: "white", background: "#DB3B38" }
-                        : undefined
-                    }
-                    onClick={handleClick}
-                  >
-                    {" "}
-                    Ta{" "}
-                  </Button>
-                  <Button
-                    className={classes.buttonStyle}
-                    id="btn3"
-                    variant={key === "Admin" ? "contained" : undefined}
-                    style={
-                      key === "Admin"
-                        ? { color: "white", background: "#DB3B38" }
-                        : undefined
-                    }
-                    onClick={handleClick}
-                  >
-                    {" "}
-                    Admin{" "}
-                  </Button>
-                </ButtonGroup>
+
                 <Grid
                   container
                   direction="column"

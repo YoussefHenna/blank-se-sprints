@@ -10,10 +10,12 @@ const HomePage: React.FC = () => {
 
   const onApplyClick = () => {
     history.push("/apply");
+    window.location.reload();
   };
 
   const onPortalClick = () => {
     history.push("/login");
+    window.location.reload();
   };
 
   return (

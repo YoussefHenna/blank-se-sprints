@@ -1,5 +1,5 @@
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { CssBaseline } from "@material-ui/core";
 import {
   NavigationRoutes,
@@ -53,6 +53,7 @@ const App: React.FC = () => {
   >(undefined);
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
 
   // TODO: remove this, and use authentication
   const setTypeFromRoute = (path: string) => {
@@ -73,12 +74,10 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    if (history) {
-      history.listen((loc) => {
-        setTypeFromRoute(loc.pathname.toString());
-      });
+    if (location) {
+      setTypeFromRoute(location.pathname.toString());
     }
-  }, [history]);
+  }, [location]);
 
   setTypeFromRoute(history.location.pathname.toString());
 
