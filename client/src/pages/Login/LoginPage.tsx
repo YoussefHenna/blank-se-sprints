@@ -69,7 +69,7 @@ const LoginPage: React.FC<LoginPageProps> = (props) => {
             <LoginLogo
               style={{
                 display: "block",
-                width: "80%",
+                width: "70%",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}
