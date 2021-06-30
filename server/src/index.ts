@@ -23,6 +23,7 @@ app.use(cookieParser());
 
 const publicRouters = express.Router(); //routers that don't need token authentication (what you can do when not logged in (guest) ) , apply, sign in, register. etc..
 const restrictedRouters = express.Router(); //routers that require token authentication (what you can do only as a logged in user ), student and admin APIs like schedule, grades, etc
+const port = process.env.PORT || 3500;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -69,7 +70,6 @@ restrictedRouters.use((req, res, next) => {
 app.use("/auth", require("./routers/userRouter"));
 //app.use("/test", require("./routers/testRouter"));
 
-const port = 3500;
 const dbUri =
   "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority";
 const cl = new DatabaseClient(dbUri);
