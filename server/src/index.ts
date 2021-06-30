@@ -11,6 +11,8 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import applyApis from "./apply/apis";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * To start server: run command 'yarn start' from the terminal
@@ -24,13 +26,15 @@ app.use(cookieParser());
 const publicRouters = express.Router(); //routers that don't need token authentication (what you can do when not logged in (guest) ) , apply, sign in, register. etc..
 const restrictedRouters = express.Router(); //routers that require token authentication (what you can do only as a logged in user ), student and admin APIs like schedule, grades, etc
 const port = process.env.PORT || 3500;
+const clientURL = process.env.CLIENT_URL || "http://localhost:3000";
+const serverURL = process.env.URL || "http://localhost";
 
 app.use(express.json());
 app.use(cookieParser());
 //TODO: change with url of hosted react project
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: clientURL,
     credentials: true,
   })
 );
@@ -39,7 +43,7 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: clientURL,
   })
 );
 app.use("/public", publicRouters);
@@ -83,7 +87,7 @@ cl.connect().then(() => {
   gradesAPIs(restrictedRouters, cl);
   miscellaneousAPIs(restrictedRouters, cl);
   publicMiscellaneousAPIs(publicRouters, cl);
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at ${serverURL}:${port}`);
   app.listen(port);
 });
 
