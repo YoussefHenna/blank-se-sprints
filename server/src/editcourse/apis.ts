@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import DatabaseClient from "../database";
 import * as Operations from "./dbOperations";
 import { ObjectId } from "mongodb";
-import { Course } from "../../../SharedObjects/course";
+import { Course } from "../../SharedObjects/course";
 import Aauth from "../middleware/Aauth";
 
 const containsCourseData = (obj: any): obj is Course => {

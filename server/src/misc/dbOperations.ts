@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { Instructor, StudentGroup } from "../../../SharedObjects/users";
+import { Instructor, StudentGroup } from "../../SharedObjects/users";
 import DatabaseClient from "../database";
 
 export const getAllInstructors = async (cl: DatabaseClient) => {
@@ -21,7 +21,7 @@ export const getAllInstructors = async (cl: DatabaseClient) => {
 };
 
 export const getStudentGroups = async (cl: DatabaseClient, query?: string) => {
-  query = query.toLowerCase()
+  query = query.toLowerCase();
   let agg: any[] = [
     {
       $lookup: {
@@ -71,7 +71,7 @@ export const getStudentGroups = async (cl: DatabaseClient, query?: string) => {
       facultyDocs: 0,
       coursesId: 0,
       admissionYearString: 0,
-      facultyNameString : 0,
+      facultyNameString: 0,
     },
   });
 

@@ -1,4 +1,4 @@
-import { Student } from "../../../SharedObjects/users";
+import { Student } from "../../SharedObjects/users";
 import {
   FreeSlotsRequest,
   Session,
@@ -9,7 +9,7 @@ import {
   SessionsToBeAdded,
   Sessions,
   Schedule,
-} from "../../../SharedObjects/schedule";
+} from "../../SharedObjects/schedule";
 import DatabaseClient from "./../database";
 import * as Exceptions from "./exceptions";
 import { ObjectId } from "mongodb";
@@ -86,7 +86,7 @@ export const addSessionsToSlots = async (
       instructorId: new ObjectId(session.instructorId),
       locationId: new ObjectId(session.locationId),
       courseId: new ObjectId(session.courseId),
-      sessionType : session.sessionType
+      sessionType: session.sessionType,
     });
   });
 
@@ -95,13 +95,11 @@ export const addSessionsToSlots = async (
 
 export const getSchedule = async (
   cl: DatabaseClient,
-  idField : string,
+  idField: string,
   id: ObjectId
 ) => {
-
-
-  let match = {}
-  match[idField]=id
+  let match = {};
+  match[idField] = id;
 
   const agg = [
     {
@@ -166,7 +164,7 @@ export const getSchedule = async (
     .collection("sessions")
     .aggregate(agg)
     .forEach((doc) => {
-      console.log(doc)
+      console.log(doc);
       sessions[Schedule.keyString(doc.weekDay, doc.slot)] = {
         locationName: doc.locationName,
         instructorName: doc.instructorName,
@@ -182,13 +180,6 @@ export const getSchedule = async (
   return new Schedule(sessions);
 };
 
-
-
-
-export const deleteSessions = (cl : DatabaseClient, sessionIds : ObjectId[]) => {
-  cl.db.collection('sessions').deleteMany({_id : { $in : sessionIds}})
-}
-
-
-
-
+export const deleteSessions = (cl: DatabaseClient, sessionIds: ObjectId[]) => {
+  cl.db.collection("sessions").deleteMany({ _id: { $in: sessionIds } });
+};

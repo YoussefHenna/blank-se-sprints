@@ -1,9 +1,8 @@
-
 import DatabaseClient from "../database";
-import { Faculty } from "../../../SharedObjects/faculty";
-import { ObjectId,Db } from "mongodb";
+import { Faculty } from "../../SharedObjects/faculty";
+import { ObjectId, Db } from "mongodb";
 
-let db:Db
+let db: Db;
 
 export const init = (cl: DatabaseClient) => {
   db = cl.db;

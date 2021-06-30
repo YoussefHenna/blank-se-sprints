@@ -1,5 +1,5 @@
 import DatabaseClient from "../database";
-import { Course } from "../../../SharedObjects/course";
+import { Course } from "../../SharedObjects/course";
 import { ObjectId, Db } from "mongodb";
 
 let db: Db;

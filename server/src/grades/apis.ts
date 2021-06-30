@@ -4,7 +4,7 @@ import DatabaseClient from "../database";
 // import * as Exceptions from "./exceptions";
 import { ObjectID, ObjectId } from "mongodb";
 import Student from "../models/studentModel";
-import { CourseGrade } from "../../../SharedObjects/course";
+import { CourseGrade } from "../../SharedObjects/course";
 import Sauth from "../middleware/Sauth";
 import Tauth from "../middleware/Tauth";
 

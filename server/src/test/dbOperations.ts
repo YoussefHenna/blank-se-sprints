@@ -1,6 +1,6 @@
 import DatabaseClient from "../database";
-import { Course } from "../../../SharedObjects/course";
-import { Student } from "../../../SharedObjects/users";
+import { Course } from "../../SharedObjects/course";
+import { Student } from "../../SharedObjects/users";
 import { ObjectId } from "mongodb";
 
 export const addCourses = async (cl: DatabaseClient, courses: Course[]) => {};

@@ -1,4 +1,4 @@
-import { Instructor, StudentGroup } from "./../../../../SharedObjects/users";
+import { Instructor, StudentGroup } from "./../../../SharedObjects/users";
 import {
   Container,
   FormControlLabel,
