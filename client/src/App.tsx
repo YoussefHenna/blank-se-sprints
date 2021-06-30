@@ -44,17 +44,17 @@ const App: React.FC = () => {
 
   // TODO: remove this, and use authentication
   const setTypeFromRoute = (path: string) => {
-    if (path.includes("student") && userType != "student") {
+    if (path.includes("student") && userType !== "student") {
       setUserType("student");
-    } else if (path.includes("instructor") && userType != "TA") {
+    } else if (path.includes("instructor") && userType !== "TA") {
       setUserType("TA");
-    } else if (path.includes("admin") && userType != "admin") {
+    } else if (path.includes("admin") && userType !== "admin") {
       setUserType("admin");
     } else if (
       !path.includes("student") &&
       !path.includes("instructor") &&
       !path.includes("admin") &&
-      userType != undefined
+      userType !== undefined
     ) {
       setUserType(undefined);
     }
