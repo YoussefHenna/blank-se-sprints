@@ -21,13 +21,10 @@ interface Props {
   classes: ClassNameMap;
   //  steps : string[];
   //  setSteps : React.Dispatch<React.SetStateAction<string[]>>
-  handleIdSelect: (
-    id: string,
-    scheduleType: "StudentGroup" | "Instructor"
-  ) => void;
+  handleIdSelect: (id: string) => void;
 }
 
-export const studentGroupSearch = (
+const studentGroupSearch = (
   setStudentGroupQueryString: React.Dispatch<React.SetStateAction<string>>,
   handleStudentGroupSearch: React.Dispatch<React.SetStateAction<boolean>>,
   classes: ClassNameMap
@@ -49,7 +46,7 @@ export const studentGroupSearch = (
   </FormControl>
 );
 
-export const scheduleTypeSelect = (
+const scheduleTypeSelect = (
   setterFunc: React.Dispatch<React.SetStateAction<string>>,
   classes: ClassNameMap
 ) => (
@@ -58,27 +55,24 @@ export const scheduleTypeSelect = (
     <RadioGroup onChange={(e) => setterFunc(e.target.value)}>
       <FormControlLabel
         label="Student Group"
-        value="StudentGroup"
+        value="studentGroup"
         control={<Radio />}
       ></FormControlLabel>
       <FormControlLabel
         label="Instructor"
-        value="Instructor"
+        value="instructor"
         control={<Radio />}
       ></FormControlLabel>
     </RadioGroup>
   </div>
 );
 
-export const instructorSelect = (
+const instructorSelect = (
   instructors: Instructor[] | undefined,
   setterFunc: React.Dispatch<React.SetStateAction<any>>,
   selectedInstructor: Instructor | null,
   classes: ClassNameMap,
-  handleIdSelect: (
-    id: string,
-    scheduleType: "StudentGroup" | "Instructor"
-  ) => void
+  handleIdSelect: (id: string) => void
 ) => (
   <>
     <FormControl className={classes.formComponent}>
@@ -100,7 +94,7 @@ export const instructorSelect = (
       <Fab
         color="primary"
         variant="extended"
-        onClick={() => handleIdSelect(selectedInstructor._id, "Instructor")}
+        onClick={() => handleIdSelect(selectedInstructor._id)}
       >
         Select
       </Fab>
@@ -109,7 +103,7 @@ export const instructorSelect = (
 );
 
 const ScheduleSearch: React.FC<Props> = (props: Props) => {
-  const [selectedType, setSelectedType] = useState<string>("StudentGroup");
+  const [selectedType, setSelectedType] = useState<string>("studentGroup");
   const [studentGroupQueryString, setStudentGroupQueryString] =
     React.useState<string>("");
   const [instructors, setInstructors] = React.useState<
@@ -159,7 +153,7 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
     <Container maxWidth="xl">
       <h1>Search for Schedules</h1>
       {scheduleTypeSelect(setSelectedType, props.classes)}
-      {selectedType === "Instructor" &&
+      {selectedType === "instructor" &&
         instructors &&
         instructorSelect(
           instructors,
@@ -168,13 +162,13 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
           props.classes,
           props.handleIdSelect
         )}
-      {selectedType === "StudentGroup" &&
+      {selectedType === "studentGroup" &&
         studentGroupSearch(
           setStudentGroupQueryString,
           setHandleStudentGroupSearch,
           props.classes
         )}
-      {selectedType === "StudentGroup" && (
+      {selectedType === "studentGroup" && (
         <StudentGroupSelectTable
           handleIdSelect={props.handleIdSelect}
           data={studentGroups ? studentGroups : []}

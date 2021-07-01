@@ -1,0 +1,118 @@
+#mainContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.sideContainer {
+  height: 100%;
+  width: 50%;
+  transition: width 500ms;
+  transform: rotateZ(360deg);
+  position: relative;
+  cursor: pointer;
+}
+
+.backdropLayer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.textSideContainer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.titleText {
+  color: white;
+  font-weight: 500 !important;
+  font-size: 50px !important;
+  transform: rotateZ(360deg);
+  transition: font-weight 100ms;
+  transition: font-size 100ms;
+}
+
+.subText {
+  color: white;
+  font-weight: 200 !important;
+  font-size: 25px !important;
+}
+
+.sideContainer:hover {
+  height: 100%;
+  width: 67.5%;
+}
+
+.sideContainer:hover .titleText {
+  font-weight: 800 !important;
+  font-size: 60px !important;
+}
+
+#divider {
+  width: 10px;
+  height: "100%";
+  background: #db3b38;
+}
+#applyBackdrop {
+  width: 100%;
+  background: url("../../assets/img/apply_backdrop.jpeg");
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+#uniBackdrop {
+  width: 100%;
+  background: url("../../assets/img/university_backdrop.jpg");
+  height: 100%;
+  background-size: cover;
+  position: relative;
+}
+
+.backdropForeground {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#topContainer {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#topLogoContainer {
+  width: 15%;
+  height: 90px;
+  background: #db3b38;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#topLogo {
+  width: 70%;
+}

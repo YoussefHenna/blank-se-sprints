@@ -13,11 +13,6 @@ export const getInstructors = async () => {
   return result.data;
 };
 
-export const getLocaitons = async () => {
-  const result = await axios.get("/restricted/schedule/locations");
-  return result.data;
-};
-
 export const getStudentGroups = async (q: string) => {
   const result = await axios.get("/restricted/student-groups", {
     params: { q },
@@ -27,11 +22,6 @@ export const getStudentGroups = async (q: string) => {
 
 export const getInstructorSchedules = async (id: string) => {
   const result = await axios.get(`/restricted/schedule/instructor/${id}`);
-  return result.data;
-};
-
-export const getStudentGroupSchedules = async (id: string) => {
-  const result = await axios.get(`/restricted/schedule/student-group/${id}`);
   return result.data;
 };
 
