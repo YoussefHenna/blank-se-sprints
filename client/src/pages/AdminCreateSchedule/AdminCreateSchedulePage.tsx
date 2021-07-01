@@ -51,6 +51,16 @@ const AdminCreateSchedulePage: React.FC = () => {
           selectedId={selectedId} //dummy data
         />
       )}
+      {curr==='Add Sessions' && (
+
+        <AddSession onBackPressed={()=>{
+
+          setPrev(curr)
+          setCurr(prev)
+
+        }} backMsg={prev}/>
+      )}
+      {curr!=='Add Sessions' && (
       <Fab
         color="primary"
         variant="extended"
@@ -63,14 +73,6 @@ onClick={()=>{
         <AddIcon />
         add new sessions
       </Fab>
-      {curr==='Add Sessions' && (
-
-        <AddSession onBackPressed={()=>{
-
-          setPrev(curr)
-          setCurr(prev)
-
-        }} backMsg={prev}/>
       )}
 
     </div>

@@ -6,6 +6,7 @@ import {
   Schedule,
   Slot,
   SessionsToBeModified,
+  WeekDayInverse,
   SLOT_TIME_MAPPING_24H_FORMAT,
 } from "../../../SharedObjects/schedule";
 
@@ -30,7 +31,7 @@ const EditableSchedule = (props: Props) => {
   props.schedule.forEach((week, slot, session) => {
     rows.push({
       id: session._id,
-      week: week,
+      week: WeekDayInverse[week],
       time: `${SLOT_TIME_MAPPING_24H_FORMAT[slot][0]} - ${SLOT_TIME_MAPPING_24H_FORMAT[slot][1]}`,
       locationName: session.locationName,
       courseName: session.courseName,

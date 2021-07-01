@@ -1,5 +1,5 @@
 import axios from "../../util/Axios";
-import { FreeSlotsRequest, Session } from "../../SharedObjects/schedule";
+import { FreeSlotsRequest, Sessions } from "../../SharedObjects/schedule";
 
 /**
  * Use axios for http requests to the server- https://github.com/axios/axios (for docs on how to use)
@@ -10,6 +10,11 @@ import { FreeSlotsRequest, Session } from "../../SharedObjects/schedule";
 
 export const getInstructors = async () => {
   const result = await axios.get("/restricted/instructors");
+  return result.data;
+};
+
+export const addSessions = async (sessions :  Sessions) => {
+  const result = await axios.post("/restricted/sessions",{data : sessions});
   return result.data;
 };
 

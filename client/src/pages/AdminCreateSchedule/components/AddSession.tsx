@@ -38,6 +38,7 @@ export interface Location {
 const AddSession: React.FC<Props> = (props: Props) => {
   const [availableSlots, setAvailableSlots] = React.useState<WeekSlot[]>(null);
   const [sessionsLoading, setSessionsLoading] = React.useState<boolean>(false);
+  const [toBeAdded,setToBeAdded] = React.useState<string[]>(null);
 
   const [instructors, setInstructors] = React.useState<Instructor[]>(null);
   const [selectedInstructor, setSelectedInstructor] =
@@ -121,6 +122,42 @@ const AddSession: React.FC<Props> = (props: Props) => {
     selectedStudentGroup,
     readyToFetchFreeSlots,
   ]);
+
+  React.useEffect(() => {
+    let sessions : Sessions = {}
+
+
+    let data : any
+
+    const fetchData = async () => {
+
+      try {
+
+      toBeAdded.forEach(x=>{
+        sessions[x]={
+            sessionType : 1,
+            locationName : selectedLocation.name,
+            instructorName : selectedInstructor.firstName + ' ' + selectedInstructor.lastName   ,
+            instructorId : selectedInstructor._id,
+            courseName : selectedCourse.name,
+            courseId : selectedCourse._id,
+            studentGroupId : selectedStudentGroup._id,
+            locationId : selectedLocation._id,
+        }
+      })
+      setFetchingInProgress(true)
+      data = await api.addSessions(sessions)
+      setFetchingInProgress(false)
+      setSnackbarAddSuccessOpen(true)
+      }
+      catch (e){
+        console.error(e)
+      }
+    }
+
+    if (toBeAdded) fetchData()
+
+  },[toBeAdded]);
 
   React.useEffect(() => {
     let data: Location[];
@@ -245,7 +282,7 @@ const AddSession: React.FC<Props> = (props: Props) => {
       {readyToFetchFreeSlots && (
         <AddSessionTable
           handleAdd={(e) => {
-            console.log(e);
+            setToBeAdded(e)
           }}
           isLoading={fetchingInProgress}
           availableSlots={availableSlots ? availableSlots : []}
