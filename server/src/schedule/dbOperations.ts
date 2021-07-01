@@ -177,7 +177,7 @@ export const getSchedule = async (
       };
     });
 
-  return new Schedule(sessions);
+  return sessions;
 };
 
 export const deleteSessions = (cl: DatabaseClient, sessionIds: ObjectId[]) => {

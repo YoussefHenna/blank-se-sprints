@@ -21,6 +21,14 @@ export enum Slot {
   Fifth = 4,
 }
 
+export const SLOT_TIME_MAPPING_24H_FORMAT = [
+  ["8:30", "10:00"],
+  ["10:30", "12:00"],
+  ["12:00", "13:30"],
+  ["14:00", "15:30"],
+  ["16:00", "17:30"],
+];
+
 export type KeyStringInverseFunc = (str: string) => [WeekDay, Slot];
 export type Sessions = { [key: string]: Session };
 export type SessionsIterator = (
@@ -76,6 +84,7 @@ export class Schedule {
     let weekSlotTuple: [WeekDay, Slot];
 
     for (const key in this.sessions) {
+      console.log(Object.keys(this.sessions));
       weekSlotTuple = Schedule.keyStringInverse(key);
       func(weekSlotTuple[0], weekSlotTuple[1], this.sessions[key]);
     }

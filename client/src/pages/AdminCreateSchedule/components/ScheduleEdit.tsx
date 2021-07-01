@@ -22,7 +22,7 @@ const ScheduleEdit: React.FC<Props> = (props: Props) => {
     const fetchData = async () => {
       setSessionsLoading(true);
       data = await api.getInstructorSchedules(props.selectedId);
-      console.log("pang!");
+      console.log("pang! : ", data);
       setRetrievedSessions(data);
       setSessionsLoading(false);
     };
@@ -39,9 +39,9 @@ const ScheduleEdit: React.FC<Props> = (props: Props) => {
         {props.backMsg}
       </Button>
       <h1>Edit Schedule</h1>
-      <p>{props.selectedId}</p>
+      <p>{retrievedSessions ? retrievedSessions.toString() : "Loading"}</p>
       <EditableSchedule
-        isLoading={sessionsLoading}
+        isLoading={sessionsLoading || retrievedSessions === undefined}
         schedule={new Schedule(retrievedSessions)}
       />
     </>

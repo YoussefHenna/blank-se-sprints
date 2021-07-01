@@ -4,6 +4,7 @@ import {
   Schedule,
   Slot,
   SessionsToBeModified,
+  SLOT_TIME_MAPPING_24H_FORMAT,
 } from "../../../SharedObjects/schedule";
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 }
 const columns = [
   { field: "week", headerName: "Week", width: 150 },
-  { field: "slot", headerName: "time", width: 150 },
+  { field: "time", headerName: "time", width: 150 },
   { field: "locationName", headerName: "Location", width: 300 },
   { field: "courseName", headerName: "Course", width: 150 },
   { field: "instructorName", headerName: "Instructor", width: 150 },
@@ -25,8 +26,8 @@ const EditableSchedule = (props: Props) => {
     rows.push({
       id: Schedule.keyString(week, slot),
       week: week,
-      slot: slot,
-      location: session.locationName,
+      time: `${SLOT_TIME_MAPPING_24H_FORMAT[slot][0]} - ${SLOT_TIME_MAPPING_24H_FORMAT[slot][1]}`,
+      locationName: session.locationName,
       courseName: session.courseName,
       instructorName: session.instructorName,
     });

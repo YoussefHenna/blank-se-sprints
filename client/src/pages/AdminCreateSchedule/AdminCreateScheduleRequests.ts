@@ -20,6 +20,6 @@ export const getStudentGroups = async (q: string) => {
 };
 
 export const getInstructorSchedules = async (id: string) => {
-  const result = await axios.get(`/restricted/instructor/${id}`);
+  const result = await axios.get(`/restricted/schedule/instructor/${id}`);
   return result.data;
 };
