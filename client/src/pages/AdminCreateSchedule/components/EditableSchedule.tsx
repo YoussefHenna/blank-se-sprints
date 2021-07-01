@@ -6,6 +6,7 @@ import {
   Schedule,
   Slot,
   SessionsToBeModified,
+  WeekDayInverse,
   SLOT_TIME_MAPPING_24H_FORMAT,
 } from "../../../SharedObjects/schedule";
 

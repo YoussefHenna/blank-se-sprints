@@ -21,6 +21,18 @@ export enum Slot {
   Fifth = 4,
 }
 
+
+export const WeekDayInverse = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+
 export const SLOT_TIME_MAPPING_24H_FORMAT = [
   ["8:30", "10:00"],
   ["10:30", "12:00"],

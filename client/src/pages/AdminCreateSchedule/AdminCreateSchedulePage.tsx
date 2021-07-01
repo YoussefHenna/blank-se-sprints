@@ -7,16 +7,18 @@ import { Fab, Tab, Tabs } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 import ScheduleEdit from "./components/ScheduleEdit";
+import AddSession from "./components/AddSession";
 
 const AdminCreateSchedulePage: React.FC = () => {
   const adminCourseEditClasses = AdminCourseEditStyles.useStyles();
 
-  const [curr, setCurr] = React.useState<"Search Schedules" | "Edit Schedule">(
+  const [curr, setCurr] = React.useState<"Search Schedules" | "Edit Schedule" |"Add Sessions">(
     "Search Schedules"
   );
-  const [prev, setPrev] = React.useState<"Search Schedules" | "Edit Schedule">(
+  const [prev, setPrev] = React.useState<"Search Schedules"|"Edit Schedule"|"Add Sessions">(
     "Search Schedules"
-  );
+  )
+
   const [selectedId, setSelectedId] = React.useState<string>("");
 
   //  const history = useHistory();
@@ -49,14 +51,30 @@ const AdminCreateSchedulePage: React.FC = () => {
           selectedId={selectedId} //dummy data
         />
       )}
+      {curr==='Add Sessions' && (
+
+        <AddSession onBackPressed={()=>{
+
+          setPrev(curr)
+          setCurr(prev)
+
+        }} backMsg={prev}/>
+      )}
+      {curr!=='Add Sessions' && (
       <Fab
         color="primary"
         variant="extended"
         className={adminCourseEditClasses.addCourseFab}
+onClick={()=>{
+          setPrev(curr)
+          setCurr("Add Sessions")
+        }}
       >
         <AddIcon />
         add new sessions
       </Fab>
+      )}
+
     </div>
   );
 };

@@ -5,6 +5,7 @@ import {
   Slot,
   SessionsToBeModified,
   SLOT_TIME_MAPPING_24H_FORMAT,
+  WeekDayInverse,
 } from "../../../SharedObjects/schedule";
 
 interface Props {
@@ -20,13 +21,12 @@ const columns = [
   { field: "instructorName", headerName: "Instructor", width: 150 },
 ];
 
-const EditableSchedule = (props: Props) => {
-  const [deleteMode, setDeleteMode] = React.useState<boolean>(true);
+const ViewableSchedule = (props: Props) => {
   let rows = [];
   props.schedule.forEach((week, slot, session) => {
     rows.push({
       id: Schedule.keyString(week, slot),
-      week: week,
+      week:WeekDayInverse[week],
       time: `${SLOT_TIME_MAPPING_24H_FORMAT[slot][0]} - ${SLOT_TIME_MAPPING_24H_FORMAT[slot][1]}`,
       locationName: session.locationName,
       courseName: session.courseName,
@@ -44,4 +44,4 @@ const EditableSchedule = (props: Props) => {
     </div>
   );
 };
-export default EditableSchedule;
+export default ViewableSchedule;
