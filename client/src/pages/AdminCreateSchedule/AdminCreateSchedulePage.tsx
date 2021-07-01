@@ -12,16 +12,14 @@ import AddSession from "./components/AddSession";
 const AdminCreateSchedulePage: React.FC = () => {
   const adminCourseEditClasses = AdminCourseEditStyles.useStyles();
 
-  const [curr, setCurr] = React.useState<
-    "Add Sessions" | "Search Schedules" | "Edit Schedule"
-  >("Search Schedules");
-  const [prev, setPrev] = React.useState<
-    "Add Sessions" | "Search Schedules" | "Edit Schedule"
-  >("Search Schedules");
+  const [curr, setCurr] = React.useState<"Search Schedules" | "Edit Schedule" |"Add Sessions">(
+    "Search Schedules"
+  );
+  const [prev, setPrev] = React.useState<"Search Schedules"|"Edit Schedule"|"Add Sessions">(
+    "Search Schedules"
+  )
+
   const [selectedId, setSelectedId] = React.useState<string>("");
-  const [scheduleType, setScheduleType] = React.useState<
-    "StudentGroup" | "Instructor"
-  >("StudentGroup");
 
   //  const history = useHistory();
   //Use this to navigate to different screens
@@ -36,47 +34,45 @@ const AdminCreateSchedulePage: React.FC = () => {
       {curr === "Search Schedules" && (
         <ScheduleSearch
           classes={classes}
-          handleIdSelect={(id, scheduleType) => {
+          handleIdSelect={(id) => {
             setSelectedId(id);
-            setScheduleType(scheduleType);
             setCurr("Edit Schedule");
-            setPrev(curr);
+            setPrev("Search Schedules");
           }}
         />
       )}
       {curr === "Edit Schedule" && (
         <ScheduleEdit
-          backMsg={prev}
+          backMsg={"Search Schedules"}
           onBackPressed={() => {
-            setCurr(prev);
-            setPrev(curr);
+            setCurr("Search Schedules");
+            setPrev("Edit Schedule");
           }}
           selectedId={selectedId} //dummy data
-          scheduleType={scheduleType}
-        />
-      )}
-      {curr === "Add Sessions" && (
-        <AddSession
-          backMsg={prev}
-          onBackPressed={() => {
-            setCurr(prev);
-            setPrev(curr);
-          }}
         />
       )}
       <Fab
         color="primary"
         variant="extended"
         className={adminCourseEditClasses.addCourseFab}
-        onClick={() => {
-          console.log("blikk!");
-          setCurr("Add Sessions");
-          setPrev(curr);
+onClick={()=>{
+          setPrev(curr)
+          setCurr("Add Sessions")
         }}
       >
         <AddIcon />
         add new sessions
       </Fab>
+      {curr==='Add Sessions' && (
+
+        <AddSession onBackPressed={()=>{
+
+          setPrev(curr)
+          setCurr(prev)
+
+        }} backMsg={prev}/>
+      )}
+
     </div>
   );
 };

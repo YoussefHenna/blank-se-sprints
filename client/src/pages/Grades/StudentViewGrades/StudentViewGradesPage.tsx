@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useStyles } from "./StudentViewGradesStyles";
-import GradesPage from '../GragesPage';
+import GradesPage from '../GradesPage';
 
 const StudentViewGradesPage: React.FC = () => {
   const history = useHistory();

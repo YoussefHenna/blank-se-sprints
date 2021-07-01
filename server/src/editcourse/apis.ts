@@ -6,12 +6,7 @@ import { Course } from "../../SharedObjects/course";
 import Aauth from "../middleware/Aauth";
 
 const containsCourseData = (obj: any): obj is Course => {
-  return (
-    "name" in obj &&
-    "description" in obj &&
-    "faculty" in obj &&
-    "credits" in obj
-  );
+  return "name" in obj && "description" in obj && "faculty" in obj && "credits" in obj;
 };
 
 const checkIsAdmin = (res: Response): string | undefined => {
@@ -63,10 +58,7 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
         res.status(400).send({ error: "Missing Fields" });
         return;
       }
-      await Operations.addCourse(
-        { ...body, faculty: new ObjectId(body.faculty) },
-        adminId
-      )
+      await Operations.addCourse({ ...body, faculty: new ObjectId(body.faculty) }, adminId)
         .then(
           () => {
             res.send();
@@ -102,7 +94,7 @@ const editCourseApis = (router: Router, cl: DatabaseClient) => {
       delete body.id;
       await Operations.updateCourse(req.params.courseId, {
         ...body,
-        faculty: new ObjectId(body.faculty),
+        faculty: new ObjectId(body.faculty)
       })
         .then(
           () => {

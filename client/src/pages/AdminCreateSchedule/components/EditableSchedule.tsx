@@ -4,7 +4,8 @@ import { Button, Fab } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
 import {
   Schedule,
-  WeekDayInverse,
+  Slot,
+  SessionsToBeModified,
   SLOT_TIME_MAPPING_24H_FORMAT,
 } from "../../../SharedObjects/schedule";
 
@@ -20,7 +21,6 @@ const columns = [
   { field: "locationName", headerName: "Location", width: 300 },
   { field: "courseName", headerName: "Course", width: 150 },
   { field: "instructorName", headerName: "Instructor", width: 150 },
-  { field: "studentGroup", headerName: "Group", width: 340 },
 ];
 
 const EditableSchedule = (props: Props) => {
@@ -30,12 +30,11 @@ const EditableSchedule = (props: Props) => {
   props.schedule.forEach((week, slot, session) => {
     rows.push({
       id: session._id,
-      week: WeekDayInverse[week],
+      week: week,
       time: `${SLOT_TIME_MAPPING_24H_FORMAT[slot][0]} - ${SLOT_TIME_MAPPING_24H_FORMAT[slot][1]}`,
       locationName: session.locationName,
       courseName: session.courseName,
       instructorName: session.instructorName,
-      studentGroup: session.studentGroup,
     });
   });
   return (

@@ -13,7 +13,7 @@ export const getInstructors = async () => {
   return result.data;
 };
 
-export const getLocaitons = async () => {
+export const getLocations = async () => {
   const result = await axios.get("/restricted/schedule/locations");
   return result.data;
 };

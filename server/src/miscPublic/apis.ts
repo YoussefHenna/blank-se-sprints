@@ -3,10 +3,8 @@ import DatabaseClient from "../database";
 import * as Operations from "./dbOperations";
 import { ObjectId } from "mongodb";
 
-
 const publicMiscellaneousAPIs = (router: Router, cl: DatabaseClient) => {
-
-  Operations.init(cl)
+  Operations.init(cl);
 
   router.get("/faculties", async (req, res) => {
     try {
@@ -26,7 +24,6 @@ const publicMiscellaneousAPIs = (router: Router, cl: DatabaseClient) => {
       res.status(500).send({ error: "Server error" });
     }
   });
+};
 
-}
-
-export default publicMiscellaneousAPIs 
+export default publicMiscellaneousAPIs;

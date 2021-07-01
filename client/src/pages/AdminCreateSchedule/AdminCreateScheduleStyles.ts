@@ -12,10 +12,6 @@ export const useStyles = makeStyles((theme) => ({
   mainContainer: {
     margin: "10px",
   },
-
-  form: {
-    flexDirection: "column",
-  },
   scheduleSearchTabs: {
     background: "#ffffff",
   },

@@ -1,4 +1,9 @@
-import axios from "../../util/Axios";
+import axios from '../../util/Axios'
+
+import IData from '../../SharedObjects/GradesData.js'
+
+export type { IData };
+
 /**
  * Use axios for http requests to the server- https://github.com/axios/axios (for docs on how to use)
  * Export functions from this file to be used in page tsx file
@@ -6,66 +11,23 @@ import axios from "../../util/Axios";
  * sample request: axios.get('/user?ID=12345')
  */
 
-export const getGrades = async ({studentId}) => {
-  try {
-    // TODO: use studentId to get the data from the backend
-    const result = {
-      data: {
-        grades: [
-          {
-            name: "math",
-            GPA: "A",
-          },
-          {
-            name: "pythics",
-            GPA: "B",
-          },
-          {
-            name: "mechanics",
-            GPA: "A",
-          },
-          {
-            name: "circuits",
-            GPA: "A+",
-          },
-          {
-            name: "language",
-            GPA: "A-",
-          },
-          {
-            name: "cs",
-            GPA: "A",
-          },
-          {
-            name: "it",
-            GPA: "A+",
-          },
-        ],
-        student: {
-          name: "Mohamed Sameer",
-          studentId: "5000284",
-          faculty: "Computer Science",
-        },
-      },
-    };
+export const studentGetGrades = async (): Promise<IData> => {
+  const result = await axios.get('/restricted/student/grades')
+  console.log(result)
+  return result.data
+}
 
-    // const result = await axios.get("/student/grades?studentId=" + studentId);
-    // console.log(result)
-    // or localhost:3500/student/grades
-    return result.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const instructorGetGrades = async ({ studentUsername }): Promise<IData> => {
+  const result = await axios.get('/restricted/instructor/grades/' + studentUsername)
+  return result.data
+}
 
-export const updateGrades = async (data) => {
+export const instructorUpdateGrades = async (data: IData): Promise<IData> => {
   try {
-    console.log(data);
-    return;
-    const result = await axios.patch("/student/grades", data);
-    // console.log(result)// or localhost:3500/student/grades
-    return result.data.grades;
+    const result = await axios.patch('/restricted/instructor/grades', data)
+    console.log(result) // or localhost:3500/in/grades
+    return result.data
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}

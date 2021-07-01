@@ -35,7 +35,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: clientURL,
-    credentials: true,
+    credentials: true
   })
 );
 
@@ -43,7 +43,7 @@ app.use(
 app.use(
   cors({
     credentials: true,
-    origin: clientURL,
+    origin: clientURL
   })
 );
 app.use("/public", publicRouters);
@@ -73,8 +73,7 @@ restrictedRouters.use((req, res, next) => {
 app.use("/auth", require("./routers/userRouter"));
 //app.use("/test", require("./routers/testRouter"));
 
-const dbUri =
-  "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority";
+const dbUri = "mongodb+srv://BlankDb:wZPr633H2zbKyDm@cluster0.btku3.mongodb.net/blank-db?retryWrites=true&w=majority";
 const cl = new DatabaseClient(dbUri);
 
 //Connect to database first, then start server
@@ -98,7 +97,7 @@ mongoose.connect(
   dbUri,
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   },
   (err) => {
     if (err) return console.error(err);

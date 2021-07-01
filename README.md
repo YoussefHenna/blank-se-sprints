@@ -1,5 +1,25 @@
 # Blank SE Project - Sprints
 
+## **_For Grading/Evalutation:_**
+
+## [**_Full hosted website here_**](https://blank-giu-client.herokuapp.com/)
+
+### Sample Users for testing
+
+**_Admin ->_** username: youssefadmin, password: qwertyuiop  
+**_Student ->_** username: youssef, password: qwertyuiop  
+**_Instructor ->_** username: mohammed, password: password
+
+You can also create your own accounts, these just have data associated with them and will make testing easier.
+
+---
+
+---
+
+---
+
+## **_For setting up project:_**
+
 ## Initial steps:
 
 ### Node + Yarn
@@ -91,8 +111,8 @@ it is recommended to group APIs, classes or functions based
 on their purpose to facilitate separation of concerns. This also
 allows us to have nicer looking and well-organized code base.
 
-
 ## Recommended structure for the server side
+
 #### the code in the test folder in 'src' is a nice guide
 
 ├── src\
@@ -101,7 +121,6 @@ allows us to have nicer looking and well-organized code base.
 │ │ └── dbOperations.ts (where functions that query the database are stored)\
 │ │ └── (other files if needed).ts (extra files that can be included)\
 
-
-
 #### classes and interfaces that are used by both client & server is in `SharedObjects` folder
-#### NOTE : in both both folders of client and server, there is a symbolic link (shortcut) with the name `SharedObjects` which points back to the folder in the root directory 
+
+#### NOTE : in both both folders of client and server, there is a symbolic link (shortcut) with the name `SharedObjects` which points back to the folder in the root directory

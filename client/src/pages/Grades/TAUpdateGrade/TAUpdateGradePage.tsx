@@ -1,10 +1,9 @@
 import * as api from "../GradesRequests";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./TAUpdateGradeStyles";
-import { updateGrades } from "../GradesRequests";
 import { useState } from "react";
 import { useEffect } from "react";
-import GradesPage from '../GragesPage';
+import GradesPage from '../GradesPage';
 
 const TAUpdateGradePage: React.FC = () => {
   const history = useHistory();
@@ -14,7 +13,7 @@ const TAUpdateGradePage: React.FC = () => {
 
   const classes = useStyles();
 
-  return <GradesPage isTA/>;
+  return <GradesPage isTA />;
 }
 
 export default TAUpdateGradePage;

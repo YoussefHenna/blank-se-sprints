@@ -10,16 +10,17 @@ import { makeStyles } from "@material-ui/core/";
  */
 
 export const useStyles = makeStyles((theme) => {
-  console.log(theme);
-  return ({
+  return {
+
     studentDataTable: {
       gap: "1em",
       borderCollapse: "collapse",
       "& td": {
         border: "1px solid #00000040",
-        padding: "0.5em 1em",
+        padding: "0.5em 1em"
       }
     },
+    
     studentDataProp: {
       fontWeight: "bold",
       "&:after": {
@@ -30,9 +31,7 @@ export const useStyles = makeStyles((theme) => {
         marginLeft: "0.1em"
       }
     },
-    studentDataValue: {
 
-    },
     gradesContainer: {
       // WATCH: https://www.youtube.com/watch?v=qjJR3qYCd54
       display: "grid",
@@ -40,6 +39,7 @@ export const useStyles = makeStyles((theme) => {
       gridGap: "2em",
       padding: "2em"
     },
+
     grade: {
       display: "flex",
       flexFlow: "column nowrap",
@@ -49,14 +49,16 @@ export const useStyles = makeStyles((theme) => {
       padding: "1em",
       border: "1px solid " + theme.palette.grey[300]
     },
+
     gradeSubjectName: {
       fontSize: "1.5em",
       textTransform: "capitalize",
       marginBottom: "0.5em",
       padding: "0.5em 1em"
     },
-    // TODO: change color property according to the value of GPA
-    gradeGPA: (props) => (console.log("props", props), {
+
+    // TODO: change color property according to the value of it
+    gradeValue: (props) => ({
       color: theme.palette.info.main,
       padding: "0.5em 1em",
       borderRadius: "2em",
@@ -64,10 +66,16 @@ export const useStyles = makeStyles((theme) => {
     }),
 
     TAEditButtons: {
-      position: 'fixed',
-      bottom: '1em',
-      right: '2em'
-    }
+      position: "fixed",
+      bottom: "1em",
+      right: "2em"
+    },
 
-  })
+    usernameFormContainer: {
+      height: "100%",
+      display: "grid",
+      placeItems: "center"
+    }
+    
+  };
 });

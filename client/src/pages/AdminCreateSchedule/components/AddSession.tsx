@@ -22,7 +22,6 @@ import {
   FormLabel,
 } from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
-import { studentGroupSearch, instructorSelect } from "./ScheduleSearch";
 import { useStyles } from "../AdminCreateScheduleStyles";
 import AddSessionTable from "./AddSessionTable";
 
@@ -120,13 +119,14 @@ const AddSession: React.FC<Props> = (props: Props) => {
     selectedLocation,
     selectedCourse,
     selectedStudentGroup,
+    readyToFetchFreeSlots,
   ]);
 
   React.useEffect(() => {
     let data: Location[];
     const fetchData = async () => {
       setFetchingInProgress(true);
-      data = await api.getLocaitons();
+      data = await api.getLocations();
       setLocations(data);
       setFetchingInProgress(false);
     };
@@ -155,7 +155,7 @@ const AddSession: React.FC<Props> = (props: Props) => {
         {props.backMsg}
       </Button>
       <h1>Add new session</h1>
-      <Container className={classes.form} maxWidth="xl">
+      <Container  maxWidth="xl">
         <FormControl className={classes.formComponent}>
           <Autocomplete
             disabled={studentGroups == null}
