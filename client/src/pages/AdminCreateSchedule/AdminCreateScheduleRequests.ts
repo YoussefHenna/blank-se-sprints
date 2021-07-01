@@ -13,6 +13,11 @@ export const getInstructors = async () => {
   return result.data;
 };
 
+export const getLocaitons = async () => {
+  const result = await axios.get("/restricted/schedule/locations");
+  return result.data;
+};
+
 export const getStudentGroups = async (q: string) => {
   const result = await axios.get("/restricted/student-groups", {
     params: { q },

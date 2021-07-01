@@ -2,30 +2,113 @@ import BackIcon from "@material-ui/icons/ArrowBackIos";
 import React from "react";
 import EditableSchedule from "./EditableSchedule";
 import * as api from "../AdminCreateScheduleRequests";
+import * as courseApi from "../../AdminCourseEdit/AdminCourseEditRequests";
 import { Schedule, Sessions } from "../../../SharedObjects/schedule";
-import { Button, Snackbar, Container, TextField, Fab } from "@material-ui/core";
+import {
+  Instructor,
+  Student,
+  StudentGroup,
+} from "../../../SharedObjects/users";
+import { Course } from "../../../SharedObjects/course";
+
+import {
+  Button,
+  Snackbar,
+  Container,
+  TextField,
+  Fab,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+} from "@material-ui/core";
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { studentGroupSearch, instructorSelect } from "./ScheduleSearch";
+import { useStyles } from "../AdminCreateScheduleStyles";
+
 interface Props {
   onBackPressed: () => void;
   backMsg: string;
 }
 
+interface Location {
+  name: string;
+  _id: string;
+}
+
 const AddSession: React.FC<Props> = (props: Props) => {
-  const [retrievedSessions, setRetrievedSessions] = React.useState<
-    Sessions | undefined
-  >();
+  const [availableSlots, setAvailableSlots] = React.useState<Sessions>(null);
   const [sessionsLoading, setSessionsLoading] = React.useState<boolean>(false);
 
-  const [selectedInstructor, setSelectedInstructor] = React.useState<any>();
+  const [instructors, setInstructors] = React.useState<Instructor[]>(null);
+  const [selectedInstructor, setSelectedInstructor] =
+    React.useState<Instructor>(null);
 
-  //  const []
+  const [studentGroups, setStudentGroups] =
+    React.useState<StudentGroup[]>(null);
+  const [selectedStudentGroup, setSelectedStudentGroup] =
+    React.useState<StudentGroup>(null);
+
+  const [courses, setCourses] = React.useState<Course[]>(null);
+  const [selectedCourse, setSelectedCourse] = React.useState<Course>(null);
+
+  const [locations, setLocations] = React.useState<Location[]>(null);
+  const [selectedLocation, setSelectedLocation] =
+    React.useState<{ name: string; _id: string }>(null);
+
+  const [fetchingInProgress, setFetchingInProgress] =
+    React.useState<boolean>(false);
 
   const [addingInProgress, setAddingInProgress] =
     React.useState<boolean>(false);
   const [snackbarAddSuccessOpen, setSnackbarAddSuccessOpen] =
-    React.useState<any>();
-  React.useState<boolean>(false);
+    React.useState<boolean>(false);
+
+  const classes = useStyles();
+
+  React.useEffect(() => {
+    let data: StudentGroup[];
+    const fetchData = async () => {
+      setFetchingInProgress(true);
+      data = await api.getStudentGroups("");
+      setStudentGroups(data);
+      setFetchingInProgress(false);
+    };
+    if (studentGroups == null) fetchData();
+  });
+
+  React.useEffect(() => {
+    let data: Instructor[];
+    const fetchData = async () => {
+      setFetchingInProgress(true);
+      data = await api.getInstructors();
+      setInstructors(data);
+      setFetchingInProgress(false);
+    };
+    if (instructors == null) fetchData();
+  }, [selectedStudentGroup]);
+
+  React.useEffect(() => {
+    let data: Course[];
+    const fetchData = async () => {
+      setFetchingInProgress(true);
+      data = await courseApi.getCourses(selectedStudentGroup.facultyId);
+      setCourses(data);
+      setFetchingInProgress(false);
+    };
+    if (selectedStudentGroup !== null) fetchData();
+  }, [selectedStudentGroup]);
+
+  React.useEffect(() => {
+    let data: Location[];
+    console.log("loc load");
+    const fetchData = async () => {
+      setFetchingInProgress(true);
+      data = await api.getLocaitons();
+      setLocations(data);
+      setFetchingInProgress(false);
+    };
+    if (locations == null) fetchData();
+  });
 
   return (
     <>
@@ -49,8 +132,78 @@ const AddSession: React.FC<Props> = (props: Props) => {
         {props.backMsg}
       </Button>
       <h1>Add new session</h1>
-      <Container maxWidth="xl">
-        <h1>uw</h1>
+      <Container className={classes.form} maxWidth="xl">
+        <FormControl className={classes.formComponent}>
+          <Autocomplete
+            disabled={studentGroups == null}
+            id="admin-add-student-group-select"
+            options={studentGroups}
+            getOptionLabel={(option: StudentGroup) =>
+              `${option.facultyName} ${option.admissionYear} `
+            }
+            onChange={(e, v: StudentGroup) => setSelectedStudentGroup(v)}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select student group"
+                variant="outlined"
+              />
+            )}
+          />
+        </FormControl>
+        <br />
+        <FormControl className={classes.formComponent}>
+          <Autocomplete
+            disabled={instructors == null || studentGroups == null}
+            id="admin-add-schedule-instructor-select"
+            options={instructors}
+            getOptionLabel={(option: Instructor) =>
+              `${option.firstName} ${option.lastName} `
+            }
+            onChange={(e, v: Instructor) => setSelectedInstructor(v)}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select instructor"
+                variant="outlined"
+              />
+            )}
+          />
+        </FormControl>
+        <br />
+        <FormControl className={classes.formComponent}>
+          <Autocomplete
+            disabled={selectedStudentGroup == null || courses == null}
+            id="admin-add-student-group-select"
+            options={courses}
+            getOptionLabel={(option: Course) => `${option.name}`}
+            onChange={(e, v: Course) => setSelectedCourse(v)}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Select Course" variant="outlined" />
+            )}
+          />
+        </FormControl>
+        <br />
+        <FormControl className={classes.formComponent}>
+          <Autocomplete
+            disabled={locations == null || studentGroups == null}
+            id="admin-add-schedule-instructor-select"
+            options={locations}
+            getOptionLabel={(option: Location) => `${option.name}`}
+            onChange={(e, v: Location) => setSelectedLocation(v)}
+            style={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select location"
+                variant="outlined"
+              />
+            )}
+          />
+        </FormControl>
       </Container>
     </>
   );

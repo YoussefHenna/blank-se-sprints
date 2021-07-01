@@ -70,6 +70,18 @@ const scheduleAPIs = (router: Router, cl: DatabaseClient) => {
     }
   });
 
+  router.get("/schedule/locations", async (req, res) => {
+    try {
+      const result = await Operations.getLocations(cl);
+      res.statusCode = 200;
+      res.send(result);
+    } catch (e) {
+      console.error(e);
+      res.statusCode = 500;
+      res.send({ msg: "internal server error" });
+    }
+  });
+
   router.delete("/sessions", async (req, res) => {
     try {
       const sessionsId = req.body.map((sessionId) => new ObjectId(sessionId));

@@ -204,6 +204,9 @@ export const getSchedule = async (
   return sessions;
 };
 
+export const getLocations = async (cl: DatabaseClient) =>
+  await cl.db.collection("locations").find().toArray();
+
 export const deleteSessions = (cl: DatabaseClient, sessionIds: ObjectId[]) => {
   cl.db.collection("sessions").deleteMany({ _id: { $in: sessionIds } });
 };
