@@ -13,6 +13,16 @@ export enum WeekDay {
   Saturday = 6,
 }
 
+export const WeekDayInverse = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 export enum Slot {
   First = 0,
   Second = 1,
@@ -42,6 +52,7 @@ export interface Session {
   sessionType: SessionType;
   locationName: string; // Names that will be shown in the frontEnd
   instructorName: string;
+  studentGroup?: string;
   courseName: string;
   courseId: any;
   locationId: any;
@@ -90,7 +101,7 @@ export class Schedule {
   }
 }
 
-export class SessionsToBeModified extends Schedule {
+export class SessionsToBeAdded extends Schedule {
   constructor(sessions?: Sessions) {
     super(sessions);
     this.sessions = sessions || {};

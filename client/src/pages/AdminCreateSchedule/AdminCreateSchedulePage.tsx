@@ -7,17 +7,21 @@ import { Fab, Tab, Tabs } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import React from "react";
 import ScheduleEdit from "./components/ScheduleEdit";
+import AddSession from "./components/AddSession";
 
 const AdminCreateSchedulePage: React.FC = () => {
   const adminCourseEditClasses = AdminCourseEditStyles.useStyles();
 
-  const [curr, setCurr] = React.useState<"Search Schedules" | "Edit Schedule">(
-    "Search Schedules"
-  );
-  const [prev, setPrev] = React.useState<"Search Schedules" | "Edit Schedule">(
-    "Search Schedules"
-  );
+  const [curr, setCurr] = React.useState<
+    "Add Sessions" | "Search Schedules" | "Edit Schedule"
+  >("Search Schedules");
+  const [prev, setPrev] = React.useState<
+    "Add Sessions" | "Search Schedules" | "Edit Schedule"
+  >("Search Schedules");
   const [selectedId, setSelectedId] = React.useState<string>("");
+  const [scheduleType, setScheduleType] = React.useState<
+    "StudentGroup" | "Instructor"
+  >("StudentGroup");
 
   //  const history = useHistory();
   //Use this to navigate to different screens
@@ -32,27 +36,43 @@ const AdminCreateSchedulePage: React.FC = () => {
       {curr === "Search Schedules" && (
         <ScheduleSearch
           classes={classes}
-          handleIdSelect={(id) => {
+          handleIdSelect={(id, scheduleType) => {
             setSelectedId(id);
+            setScheduleType(scheduleType);
             setCurr("Edit Schedule");
-            setPrev("Search Schedules");
+            setPrev(curr);
           }}
         />
       )}
       {curr === "Edit Schedule" && (
         <ScheduleEdit
-          backMsg={"Search Schedules"}
+          backMsg={prev}
           onBackPressed={() => {
-            setCurr("Search Schedules");
-            setPrev("Edit Schedule");
+            setCurr(prev);
+            setPrev(curr);
           }}
           selectedId={selectedId} //dummy data
+          scheduleType={scheduleType}
+        />
+      )}
+      {curr === "Add Sessions" && (
+        <AddSession
+          backMsg={prev}
+          onBackPressed={() => {
+            setCurr(prev);
+            setPrev(curr);
+          }}
         />
       )}
       <Fab
         color="primary"
         variant="extended"
         className={adminCourseEditClasses.addCourseFab}
+        onClick={() => {
+          console.log("blikk!");
+          setCurr("Add Sessions");
+          setPrev(curr);
+        }}
       >
         <AddIcon />
         add new sessions

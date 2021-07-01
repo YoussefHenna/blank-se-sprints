@@ -9,7 +9,7 @@ interface Props {
   onBackPressed: () => void;
   backMsg: string;
   selectedId: string;
-  scheduleType?: "StudentGroup" | "Instructor";
+  scheduleType: "StudentGroup" | "Instructor";
 }
 
 const ScheduleEdit: React.FC<Props> = (props: Props) => {
@@ -48,7 +48,10 @@ const ScheduleEdit: React.FC<Props> = (props: Props) => {
     let data: Sessions;
     const fetchData = async () => {
       setSessionsLoading(true);
-      data = await api.getInstructorSchedules(props.selectedId);
+      if (props.scheduleType === "Instructor")
+        data = await api.getInstructorSchedules(props.selectedId);
+      else data = await api.getStudentGroupSchedules(props.selectedId);
+
       setRetrievedSessions(data);
       setSessionsLoading(false);
     };

@@ -20,10 +20,10 @@ export interface Admin extends User {
 }
 
 export interface StudentGroup {
+  _id: any;
   semester: number;
   facultyId: any;
   admissionYear: number; //the year when the student was admitted
   coursesId?: any[]; // array of ids of courses
   facultyName?: string;
-  searchStrings: string[];
 }

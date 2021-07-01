@@ -130,6 +130,14 @@ export const getSchedule = async (
       },
     },
     {
+      $lookup: {
+        from: "studentGroups",
+        localField: "studentGroupId",
+        foreignField: "_id",
+        as: "studentGroupDocs",
+      },
+    },
+    {
       $replaceRoot: {
         newRoot: {
           $mergeObjects: [
@@ -140,6 +148,18 @@ export const getSchedule = async (
                   { $arrayElemAt: ["$instructorDocs.firstName", 0] },
                   " ",
                   { $arrayElemAt: ["$instructorDocs.lastName", 0] },
+                ],
+              },
+
+              studentGroup: {
+                $concat: [
+                  { $arrayElemAt: ["$studentGroupDocs.facultyName", 0] },
+                  " ",
+                  {
+                    $toString: {
+                      $arrayElemAt: ["$studentGroupDocs.admissionYear", 0],
+                    },
+                  },
                 ],
               },
             },
@@ -154,6 +174,7 @@ export const getSchedule = async (
         courseDocs: 0,
         instructorDocs: 0,
         locationDocs: 0,
+        studentGroupDocs: 0,
       },
     },
   ];
@@ -175,9 +196,11 @@ export const getSchedule = async (
         locationId: doc.locationId,
         studentGroupId: doc.studentGroupId,
         sessionType: doc.sessionType,
+        studentGroup: doc.studentGroup,
       };
     });
 
+  console.log(sessions);
   return sessions;
 };
 

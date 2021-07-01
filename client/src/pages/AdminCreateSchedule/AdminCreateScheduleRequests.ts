@@ -25,6 +25,11 @@ export const getInstructorSchedules = async (id: string) => {
   return result.data;
 };
 
+export const getStudentGroupSchedules = async (id: string) => {
+  const result = await axios.get(`/restricted/schedule/student-group/${id}`);
+  return result.data;
+};
+
 export const deleteSessions = async (sessionsId: string[]) => {
   const result = await axios.delete("/restricted/sessions", {
     data: sessionsId,
