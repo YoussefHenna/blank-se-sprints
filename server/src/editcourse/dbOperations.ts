@@ -28,16 +28,11 @@ export const getCourses = async (facId: string): Promise<Course[]> => {
   });
 };
 
-export const addCourse = async (
-  course: Course,
-  adminId: string
-): Promise<string> => {
+export const addCourse = async (course: Course, adminId: string): Promise<string> => {
   return new Promise(async (resolve, reject) => {
     delete course._id; //to prevent id from being uses, let mongo generate one
     course.color = generateDarkColorRgb();
-    const sameName = await db
-      .collection("courses")
-      .findOne({ name: course.name });
+    const sameName = await db.collection("courses").findOne({ name: course.name });
     if (sameName) {
       reject("Course with the given code already exists");
       return;
@@ -50,8 +45,8 @@ export const addCourse = async (
         { _id: new ObjectId(adminId) },
         {
           $push: {
-            coursesId: new ObjectId(docInserted.insertedId),
-          },
+            coursesId: new ObjectId(docInserted.insertedId)
+          }
         }
       );
       resolve(undefined);
@@ -59,10 +54,7 @@ export const addCourse = async (
   });
 };
 
-export const updateCourse = async (
-  courseId: string,
-  updatedCourse: Course
-): Promise<string> => {
+export const updateCourse = async (courseId: string, updatedCourse: Course): Promise<string> => {
   return new Promise(async (resolve, reject) => {
     delete updatedCourse._id;
     if (updatedCourse.faculty != undefined) {
@@ -71,7 +63,7 @@ export const updateCourse = async (
     await db.collection("courses").updateOne(
       { _id: new ObjectId(courseId) },
       {
-        $set: { ...updatedCourse },
+        $set: { ...updatedCourse }
       }
     );
     resolve(undefined);
@@ -85,29 +77,43 @@ export const deleteCourse = (courseId: string): Promise<string> => {
       {},
       {
         $pull: {
-          coursesId: new ObjectId(courseId),
-        },
+          coursesId: new ObjectId(courseId)
+        }
+      }
+    );
+    await db.collection("instructors").updateMany(
+      {},
+      {
+        $pull: {
+          coursesId: new ObjectId(courseId)
+        }
       }
     );
     await db.collection("studentGroups").updateMany(
       {},
       {
         $pull: {
-          coursesId: new ObjectId(courseId),
-        },
+          coursesId: new ObjectId(courseId)
+        }
       }
     );
     await db.collection("students").updateMany(
       {},
       {
         $pull: {
-          enrolledCoursesId: new ObjectId(courseId),
-        },
+          enrolledCoursesId: new ObjectId(courseId)
+        }
       }
     );
-    await db
-      .collection("sessions")
-      .deleteOne({ courseId: new ObjectId(courseId) });
+    await db.collection("students").updateMany(
+      {},
+      {
+        $pull: {
+          grades: { courseId: new ObjectId(courseId) }
+        }
+      }
+    );
+    await db.collection("sessions").deleteMany({ courseId: new ObjectId(courseId) });
 
     resolve(undefined);
   });
