@@ -102,6 +102,9 @@ interface IGradeProps {
     courseId: string;
     name: string;
     grade: string;
+    description: string;
+    credits: number;
+    color: string;
   };
   index: number;
 }
@@ -118,6 +121,7 @@ const Grade: React.FC<IGradeProps> = ({ grade, index }) => {
   return (
     <div className={classes.grade}>
       <span className={classes.gradeSubjectName}>{grade.name}</span>
+      <span>{grade.description}</span>
       {(isEditing && (
         <TextField
           className={classes.gradeValueInput}
