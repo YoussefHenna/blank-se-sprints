@@ -31,7 +31,7 @@ const EditableSchedule = (props: Props) => {
   props.schedule.forEach((week, slot, session) => {
     rows.push({
       id: session._id,
-      week: WeekDayInverse[week],
+      week: week,
       time: `${SLOT_TIME_MAPPING_24H_FORMAT[slot][0]} - ${SLOT_TIME_MAPPING_24H_FORMAT[slot][1]}`,
       locationName: session.locationName,
       courseName: session.courseName,

@@ -53,7 +53,7 @@ export const useStyles = makeStyles((theme) => {
     gradeSubjectName: {
       fontSize: "1.5em",
       textTransform: "capitalize",
-      marginBottom: "0.5em",
+      
       padding: "0.5em 1em"
     },
 
@@ -62,6 +62,7 @@ export const useStyles = makeStyles((theme) => {
       color: theme.palette.info.main,
       padding: "0.5em 1em",
       borderRadius: "2em",
+      marginBottom: "0.5em",
       background: theme.palette.grey[200]
     }),
 

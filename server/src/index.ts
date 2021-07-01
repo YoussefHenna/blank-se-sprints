@@ -84,7 +84,7 @@ cl.connect().then(() => {
   testAPIs(publicRouters, cl);
   scheduleAPIs(restrictedRouters, cl);
   gradesAPIs(restrictedRouters, cl);
-  miscellaneousAPIs(restrictedRouters, cl);
+  miscellaneousAPIs(publicRouters, cl);
   publicMiscellaneousAPIs(publicRouters, cl);
   console.log(`Server running at ${serverURL}:${port}`);
   app.listen(port);

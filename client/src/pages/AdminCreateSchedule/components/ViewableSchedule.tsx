@@ -2,12 +2,15 @@ import * as React from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import {
   Schedule,
+  Slot,
+  SessionsToBeModified,
   SLOT_TIME_MAPPING_24H_FORMAT,
   WeekDayInverse,
 } from "../../../SharedObjects/schedule";
 
 interface Props {
   schedule: Schedule;
+  toBeDeleted?: SessionsToBeModified;
   isLoading: boolean;
 }
 const columns = [

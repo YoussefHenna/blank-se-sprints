@@ -216,6 +216,10 @@ const GradesPage: React.FC<{ isTA: boolean }> = ({ isTA }) => {
       api.studentGetGrades().then((data: IData) => {
         debugger;
         setData(data);
+        setNewData(data);
+        setData(data);
+        setIsLoading(false);
+
       });
     }
   }, [isUsernameEntered, studentUsername, isTA]);
