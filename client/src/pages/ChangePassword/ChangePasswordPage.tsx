@@ -54,6 +54,7 @@ const ChangePasswordPage: React.FC<ChangePasswordProps> = (props) => {
         withCredentials: true,
       });
       history.replace("/login");
+      window.location.reload();
     } catch (err) {
       console.error(err);
     }
