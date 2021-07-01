@@ -214,7 +214,8 @@ const GradesPage: React.FC<{ isTA: boolean }> = ({ isTA }) => {
         });
     } else if (!isTA) {
       api.studentGetGrades().then((data: IData) => {
-        debugger;
+        setNewData(data);
+        setIsLoading(false);
         setData(data);
       });
     }
