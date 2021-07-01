@@ -3,7 +3,7 @@ import React from "react";
 import EditableSchedule from "./EditableSchedule";
 import * as api from "../AdminCreateScheduleRequests";
 import * as courseApi from "../../AdminCourseEdit/AdminCourseEditRequests";
-import { Schedule, Sessions } from "../../../SharedObjects/schedule";
+import { Schedule, Sessions, WeekSlot } from "../../../SharedObjects/schedule";
 import {
   Instructor,
   Student,
@@ -24,19 +24,20 @@ import {
 import { Alert, Autocomplete } from "@material-ui/lab";
 import { studentGroupSearch, instructorSelect } from "./ScheduleSearch";
 import { useStyles } from "../AdminCreateScheduleStyles";
+import AddSessionTable from "./AddSessionTable";
 
 interface Props {
   onBackPressed: () => void;
   backMsg: string;
 }
 
-interface Location {
+export interface Location {
   name: string;
   _id: string;
 }
 
 const AddSession: React.FC<Props> = (props: Props) => {
-  const [availableSlots, setAvailableSlots] = React.useState<Sessions>(null);
+  const [availableSlots, setAvailableSlots] = React.useState<WeekSlot[]>(null);
   const [sessionsLoading, setSessionsLoading] = React.useState<boolean>(false);
 
   const [instructors, setInstructors] = React.useState<Instructor[]>(null);
@@ -61,6 +62,8 @@ const AddSession: React.FC<Props> = (props: Props) => {
   const [addingInProgress, setAddingInProgress] =
     React.useState<boolean>(false);
   const [snackbarAddSuccessOpen, setSnackbarAddSuccessOpen] =
+    React.useState<boolean>(false);
+  const [readyToFetchFreeSlots, setReadyToFetchFreeSlots] =
     React.useState<boolean>(false);
 
   const classes = useStyles();
@@ -99,8 +102,28 @@ const AddSession: React.FC<Props> = (props: Props) => {
   }, [selectedStudentGroup]);
 
   React.useEffect(() => {
+    let data: WeekSlot[];
+    const fetchData = async () => {
+      setFetchingInProgress(true);
+      data = await api.getAvailableSlots({
+        studentGroupId: selectedStudentGroup._id,
+        locationId: selectedLocation._id,
+        instructorId: selectedInstructor._id,
+      });
+      setAvailableSlots(data);
+      setFetchingInProgress(false);
+    };
+    if (readyToFetchFreeSlots) fetchData();
+    console.log("free slots load : ", availableSlots);
+  }, [
+    selectedInstructor,
+    selectedLocation,
+    selectedCourse,
+    selectedStudentGroup,
+  ]);
+
+  React.useEffect(() => {
     let data: Location[];
-    console.log("loc load");
     const fetchData = async () => {
       setFetchingInProgress(true);
       data = await api.getLocaitons();
@@ -204,7 +227,30 @@ const AddSession: React.FC<Props> = (props: Props) => {
             )}
           />
         </FormControl>
+        <br />
+        <Fab
+          color="primary"
+          variant="extended"
+          disabled={
+            selectedStudentGroup == null ||
+            selectedCourse == null ||
+            selectedLocation == null ||
+            selectedInstructor == null
+          }
+          onClick={(e) => setReadyToFetchFreeSlots(true)}
+        >
+          find available slots
+        </Fab>
       </Container>
+      {readyToFetchFreeSlots && (
+        <AddSessionTable
+          handleAdd={(e) => {
+            console.log(e);
+          }}
+          isLoading={fetchingInProgress}
+          availableSlots={availableSlots ? availableSlots : []}
+        />
+      )}
     </>
   );
 };

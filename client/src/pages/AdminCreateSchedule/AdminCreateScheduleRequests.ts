@@ -1,5 +1,5 @@
 import axios from "../../util/Axios";
-import { Session } from "../../SharedObjects/schedule";
+import { FreeSlotsRequest, Session } from "../../SharedObjects/schedule";
 
 /**
  * Use axios for http requests to the server- https://github.com/axios/axios (for docs on how to use)
@@ -32,6 +32,13 @@ export const getInstructorSchedules = async (id: string) => {
 
 export const getStudentGroupSchedules = async (id: string) => {
   const result = await axios.get(`/restricted/schedule/student-group/${id}`);
+  return result.data;
+};
+
+export const getAvailableSlots = async (req: FreeSlotsRequest) => {
+  const result = await axios.get(
+    `/restricted/available-slots/${encodeURIComponent(JSON.stringify(req))}`
+  );
   return result.data;
 };
 
