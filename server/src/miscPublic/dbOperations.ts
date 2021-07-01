@@ -9,7 +9,14 @@ export const init = (cl: DatabaseClient) => {
 };
 
 export const getFaculties = async (): Promise<Faculty[]> => {
-  return await db
-  .collection("faculties")
-  .find() as any;
+  return new Promise(async (resolve, reject) => {
+    const all: Faculty[] = [];
+    await db
+      .collection("faculties")
+      .find()
+      .forEach((item) => {
+        all.push(item);
+      });
+    resolve(all);
+  });
 };

@@ -17,9 +17,7 @@ export const getFaculties = async (): Promise<Faculty[]> => {
   });
 };
 
-export const submitApplication = async (
-  application: ApplyState
-): Promise<void> => {
+export const submitApplication = async (application: ApplyState): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await axios.post("/public/apply", application);

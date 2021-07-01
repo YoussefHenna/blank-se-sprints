@@ -47,10 +47,7 @@ export const addCourse = async (course: Course): Promise<void> => {
   });
 };
 
-export const updateCourse = async (
-  courseId: string,
-  course: Course
-): Promise<void> => {
+export const updateCourse = async (courseId: string, course: Course): Promise<void> => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await axios.put("restricted/course/" + courseId, course);
