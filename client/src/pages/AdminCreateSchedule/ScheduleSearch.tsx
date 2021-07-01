@@ -14,6 +14,7 @@ import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useState } from "react";
 import * as api from "./AdminCreateScheduleRequests";
+import StudentGroupSelectTable from "./StudentGroupSelectTable";
 
 interface Props {
   classes: ClassNameMap;
@@ -100,6 +101,10 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
   const [handleStudentGroupSearch, setHandleStudentGroupSearch] =
     React.useState<boolean>(false);
 
+  const [studentGroupLoadInProgress, setStudentGroupLoadInProgress] =
+    React.useState<any>();
+  React.useState<any>();
+
   React.useEffect(() => {
     console.log("ping!");
     const fetchData = async () => {
@@ -113,9 +118,10 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
     if (handleStudentGroupSearch) {
       let data: StudentGroup[];
       const fetchData = async () => {
+        setStudentGroupLoadInProgress(true);
         data = await api.getStudentGroups(studentGroupQueryString);
         setStudentGroups(data);
-        console.log("DATA : ", data);
+        setStudentGroupLoadInProgress(false);
       };
       fetchData();
     }
@@ -134,6 +140,12 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
           setHandleStudentGroupSearch,
           props.classes
         )}
+      {selectedType === "studentGroup" && (
+        <StudentGroupSelectTable
+          data={studentGroups ? studentGroups : []}
+          isLoading={studentGroupLoadInProgress}
+        />
+      )}
     </Container>
   );
 };
