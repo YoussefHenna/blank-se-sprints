@@ -9,6 +9,7 @@ import {
   FormControl,
   FormHelperText,
   Button,
+  Fab,
 } from "@material-ui/core/";
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import { Autocomplete } from "@material-ui/lab";
@@ -68,22 +69,37 @@ const scheduleTypeSelect = (
 
 const instructorSelect = (
   instructors: Instructor[] | undefined,
-  setterFunc: React.Dispatch<React.SetStateAction<Instructor | undefined>>,
-  classes: ClassNameMap
+  setterFunc: React.Dispatch<React.SetStateAction<any>>,
+  selectedInstructor: Instructor | null,
+  classes: ClassNameMap,
+  handleIdSelect: (id: string) => void
 ) => (
-  <FormControl className={classes.formComponent}>
-    <Autocomplete
-      id="admin-schedule-instructor-select"
-      options={instructors}
-      getOptionLabel={(option: Instructor) =>
-        `${option.firstName} ${option.lastName} `
-      }
-      style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label="Select instructor" variant="outlined" />
-      )}
-    />
-  </FormControl>
+  <>
+    <FormControl className={classes.formComponent}>
+      <Autocomplete
+        id="admin-schedule-instructor-select"
+        options={instructors}
+        getOptionLabel={(option: Instructor) =>
+          `${option.firstName} ${option.lastName} `
+        }
+        onChange={(e, v) => setterFunc(v)}
+        style={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField {...params} label="Select instructor" variant="outlined" />
+        )}
+      />
+    </FormControl>
+    <br />
+    {selectedInstructor !== null && (
+      <Fab
+        color="primary"
+        variant="extended"
+        onClick={() => handleIdSelect(selectedInstructor._id)}
+      >
+        Select
+      </Fab>
+    )}
+  </>
 );
 
 const ScheduleSearch: React.FC<Props> = (props: Props) => {
@@ -97,9 +113,8 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
     StudentGroup[] | undefined
   >();
 
-  const [selectedInstructor, setSelectedInstructor] = React.useState<
-    Instructor | undefined
-  >();
+  const [selectedInstructor, setSelectedInstructor] =
+    React.useState<Instructor | null>(null);
 
   const [handleStudentGroupSearch, setHandleStudentGroupSearch] =
     React.useState<boolean>(false);
@@ -109,7 +124,6 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
   React.useState<any>();
 
   React.useEffect(() => {
-    console.log("ping!");
     const fetchData = async () => {
       if (!instructors) setInstructors(await api.getInstructors());
     };
@@ -131,13 +145,23 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
     setHandleStudentGroupSearch(false);
   }, [studentGroupQueryString, handleStudentGroupSearch]);
 
+  React.useEffect(() => {
+    console.log("ins:", selectedInstructor);
+  }, [selectedInstructor]);
+
   return (
     <Container maxWidth="xl">
       <h1>Search for Schedules</h1>
       {scheduleTypeSelect(setSelectedType, props.classes)}
       {selectedType === "instructor" &&
         instructors &&
-        instructorSelect(instructors, setSelectedInstructor, props.classes)}
+        instructorSelect(
+          instructors,
+          setSelectedInstructor,
+          selectedInstructor,
+          props.classes,
+          props.handleIdSelect
+        )}
       {selectedType === "studentGroup" &&
         studentGroupSearch(
           setStudentGroupQueryString,

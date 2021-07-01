@@ -20,8 +20,8 @@ rawurlencode() {
 
 
 getRequestJSON(){
-
   local json=$(jq -c . "${1}" )
+  echo $json
   local url="${2}$(rawurlencode $json)"
 
   if [[ -z $3 ]] 
@@ -83,7 +83,7 @@ deleteRequest(){
 }
 
 
-#getRequestJSON './getAvailableSlotsTest.json' 'http://localhost:3500/available-slots/'
+getRequestJSON './getAvailableSlotsTest.json' 'http://localhost:3500/restricted/available-slots/' '.'
 #getRequest 'http://localhost:3500/faculties'
 #getRequest 'http://localhost:3500/courses/60cc8205111a71a2f67da38e' '.courses'
 #postRequest './addSessionsTest.json' 'http://localhost:3500/sessions/'
@@ -95,5 +95,5 @@ deleteRequest(){
 #postRequest './registerNewStudentTest.json' 'http://localhost:3500/auth/'
 #postRequest './loginStudentTest.json' 'http://localhost:3500/auth/'
 #postRequest './registerNewAdminTest.json' 'http://localhost:3500/auth/'
-postRequest './loginAdminTest.json' 'http://localhost:3500/auth/login'
+#postRequest './loginAdminTest.json' 'http://localhost:3500/auth/login'
 exit 0

@@ -166,6 +166,7 @@ export const getSchedule = async (
     .forEach((doc) => {
       console.log(doc);
       sessions[Schedule.keyString(doc.weekDay, doc.slot)] = {
+        _id: doc._id,
         locationName: doc.locationName,
         instructorName: doc.instructorName,
         courseName: doc.courseName,

@@ -18,6 +18,7 @@ const AdminCreateSchedulePage: React.FC = () => {
     "Search Schedules"
   );
   const [selectedId, setSelectedId] = React.useState<string>("");
+
   //  const history = useHistory();
   //Use this to navigate to different screens
   //Example: history.replace("/student/schedule") to navigate to student schedule page
@@ -45,7 +46,7 @@ const AdminCreateSchedulePage: React.FC = () => {
             setCurr("Search Schedules");
             setPrev("Edit Schedule");
           }}
-          selectedId={"60cc8e35111a71a2f67da393"} //dummy data
+          selectedId={selectedId} //dummy data
         />
       )}
       <Fab

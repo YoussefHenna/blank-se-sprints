@@ -84,7 +84,6 @@ export class Schedule {
     let weekSlotTuple: [WeekDay, Slot];
 
     for (const key in this.sessions) {
-      console.log(Object.keys(this.sessions));
       weekSlotTuple = Schedule.keyStringInverse(key);
       func(weekSlotTuple[0], weekSlotTuple[1], this.sessions[key]);
     }
@@ -99,5 +98,9 @@ export class SessionsToBeModified extends Schedule {
 
   setSession(week: WeekDay, slot: Slot, session: Session) {
     this.sessions[Schedule.keyString(week, slot)] = session;
+  }
+
+  getSessions() {
+    return this.sessions;
   }
 }
