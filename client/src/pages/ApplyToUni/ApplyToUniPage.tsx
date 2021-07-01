@@ -15,7 +15,7 @@ import ConfirmApplication from "./components/ConfirmApplication";
 import { useState } from "react";
 import { Button, CircularProgress } from "@material-ui/core";
 import ErrorDialog, { ErrorDialogProps } from "../../components/ErrorDialog";
-import { Faculty } from "../../../SharedObjects/faculty";
+import { Faculty } from "../../SharedObjects/faculty";
 import { useEffect } from "react";
 import { getFaculties, submitApplication } from "./ApplyToUniRequests";
 import SuccessDialog, {

@@ -12,7 +12,7 @@ import {
 } from "@material-ui/pickers";
 import { useStyles } from "../ApplyToUniStyles";
 import DateFnsUtils from "@date-io/date-fns";
-import { Faculty } from "../../../../SharedObjects/faculty";
+import { Faculty } from "../../../SharedObjects/faculty";
 
 interface MajorSelectionProps {
   faculties: Faculty[];

@@ -8,7 +8,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Fab, Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
 import { getFaculties } from "./AdminCourseEditRequests";
-import { Faculty } from "../../../SharedObjects/faculty";
+import { Faculty } from "../../SharedObjects/faculty";
 import ErrorDialog, { ErrorDialogProps } from "../../components/ErrorDialog";
 
 function Alert(props: any) {

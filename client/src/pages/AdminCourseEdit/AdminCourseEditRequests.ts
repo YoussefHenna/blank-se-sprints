@@ -1,6 +1,6 @@
 import axios from "../../util/Axios";
-import { Faculty } from "../../../SharedObjects/faculty";
-import { Course } from "../../../SharedObjects/course";
+import { Faculty } from "../../SharedObjects/faculty";
+import { Course } from "../../SharedObjects/course";
 
 export const getFaculties = async (): Promise<Faculty[]> => {
   return new Promise(async (resolve, reject) => {

@@ -1,6 +1,6 @@
 import { Button, Typography, CircularProgress } from "@material-ui/core";
 import { useStyles } from "../AdminCourseEditStyles";
-import { Faculty } from "../../../../SharedObjects/faculty";
+import { Faculty } from "../../../SharedObjects/faculty";
 
 interface SelectFacultyProps {
   faculties: Faculty[];

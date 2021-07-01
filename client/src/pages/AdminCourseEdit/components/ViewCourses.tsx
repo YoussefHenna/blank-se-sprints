@@ -11,9 +11,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import { CurrentInputData } from "./AddCourse";
 import { getCourses, deleteCourse } from "../AdminCourseEditRequests";
 import { useState } from "react";
-import { Course } from "../../../../SharedObjects/course";
+import { Course } from "../../../SharedObjects/course";
 import { useEffect } from "react";
-import { Faculty } from "../../../../SharedObjects/faculty";
+import { Faculty } from "../../../SharedObjects/faculty";
 import ErrorDialog, { ErrorDialogProps } from "../../../components/ErrorDialog";
 import DeleteDialog, {
   DeleteDialogProps,

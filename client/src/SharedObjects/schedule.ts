@@ -23,7 +23,11 @@ export enum Slot {
 
 export type KeyStringInverseFunc = (str: string) => [WeekDay, Slot];
 export type Sessions = { [key: string]: Session };
-export type SessionsIterator = (weekDay : WeekDay,slot : Slot, val: Session) => void;
+export type SessionsIterator = (
+  weekDay: WeekDay,
+  slot: Slot,
+  val: Session
+) => void;
 
 export interface Session {
   _id?: any;
@@ -69,23 +73,22 @@ export class Schedule {
   forEach(func: SessionsIterator) {
     //arrow function can be passed here to iterate over the sessions, useful for displaying schedules in the frontend
 
-    let weekSlotTuple : [WeekDay,Slot]
+    let weekSlotTuple: [WeekDay, Slot];
 
-    for (const key in this.sessions){
-      weekSlotTuple = Schedule.keyStringInverse(key)
-      func(weekSlotTuple[0],weekSlotTuple[1],this.sessions[key]);
+    for (const key in this.sessions) {
+      weekSlotTuple = Schedule.keyStringInverse(key);
+      func(weekSlotTuple[0], weekSlotTuple[1], this.sessions[key]);
     }
   }
 }
 
-export class SessionsToBeAdded extends Schedule {
+export class SessionsToBeModified extends Schedule {
   constructor(sessions?: Sessions) {
     super(sessions);
     this.sessions = sessions || {};
   }
 
-  setSession(week: WeekDay, slot: Slot,session : Session) {
-    this.sessions[Schedule.keyString(week, slot)]=session;
+  setSession(week: WeekDay, slot: Slot, session: Session) {
+    this.sessions[Schedule.keyString(week, slot)] = session;
   }
-
 }

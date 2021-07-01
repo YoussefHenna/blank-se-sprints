@@ -1,4 +1,4 @@
-import { Instructor, StudentGroup } from "./../../../SharedObjects/users";
+import { Instructor, StudentGroup } from "../../../SharedObjects/users";
 import {
   Container,
   FormControlLabel,
@@ -13,11 +13,14 @@ import {
 import { ClassNameMap } from "@material-ui/core/styles/withStyles";
 import { Autocomplete } from "@material-ui/lab";
 import React, { useState } from "react";
-import * as api from "./AdminCreateScheduleRequests";
+import * as api from "../AdminCreateScheduleRequests";
 import StudentGroupSelectTable from "./StudentGroupSelectTable";
 
 interface Props {
   classes: ClassNameMap;
+  //  steps : string[];
+  //  setSteps : React.Dispatch<React.SetStateAction<string[]>>
+  handleIdSelect: (id: string) => void;
 }
 
 const studentGroupSearch = (
@@ -130,6 +133,7 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
 
   return (
     <Container maxWidth="xl">
+      <h1>Search for Schedules</h1>
       {scheduleTypeSelect(setSelectedType, props.classes)}
       {selectedType === "instructor" &&
         instructors &&
@@ -142,6 +146,7 @@ const ScheduleSearch: React.FC<Props> = (props: Props) => {
         )}
       {selectedType === "studentGroup" && (
         <StudentGroupSelectTable
+          handleIdSelect={props.handleIdSelect}
           data={studentGroups ? studentGroups : []}
           isLoading={studentGroupLoadInProgress}
         />

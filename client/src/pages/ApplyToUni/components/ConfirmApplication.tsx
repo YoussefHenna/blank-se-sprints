@@ -1,5 +1,5 @@
 import { Typography } from "@material-ui/core";
-import { Faculty } from "../../../../SharedObjects/faculty";
+import { Faculty } from "../../../SharedObjects/faculty";
 import { ApplyState } from "../ApplyToUniPage";
 import { useStyles } from "../ApplyToUniStyles";
 

@@ -5,6 +5,7 @@ import { StudentGroup } from "../../../SharedObjects/users";
 interface Props {
   data: StudentGroup[];
   isLoading: boolean;
+  handleIdSelect: (id: string) => void;
 }
 const columns = [
   { field: "facultyName", headerName: "Faculty", width: 300 },
@@ -26,6 +27,7 @@ const StudentGroupSelectTable = (props: Props) => {
         columns={columns}
         pageSize={5}
         loading={props.isLoading}
+        onRowClick={(e) => props.handleIdSelect(e.id.toString())}
       />
     </div>
   );

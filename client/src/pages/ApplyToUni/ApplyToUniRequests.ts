@@ -1,4 +1,4 @@
-import { Faculty } from "../../../SharedObjects/faculty";
+import { Faculty } from "../../SharedObjects/faculty";
 import axios from "../../util/Axios";
 import { ApplyState } from "./ApplyToUniPage";
 

@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useStyles } from "../AdminCourseEditStyles";
 import BackIcon from "@material-ui/icons/ArrowBackIos";
-import { Faculty } from "../../../../SharedObjects/faculty";
+import { Faculty } from "../../../SharedObjects/faculty";
 import { useState, useEffect } from "react";
 import { addCourse, updateCourse } from "../AdminCourseEditRequests";
 import ErrorDialog, { ErrorDialogProps } from "../../../components/ErrorDialog";

@@ -10,7 +10,7 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { useStyles } from "./AdminCreateScheduleStyles";
+import { useStyles } from "../AdminCreateScheduleStyles";
 //import {StudentGroup} from '../../../SharedObjects/users'
 //import { getStudentGroups } from "./AdminCreateScheduleRequests";
 import _ from "lodash";
