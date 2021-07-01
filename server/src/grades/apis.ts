@@ -79,7 +79,6 @@ const gradesAPIs = (router: Router, cl: DatabaseClient) => {
       return res.status(404).send({ error: "No student with given id" });
     }
     const faculties = await cl.db.collection("faculties").find().toArray();
-
     const data: IData = {
       grades: (await setCourcesNames(studentData.get("grades"))) || [], // TODO: get cources names not IDs
       student: {
@@ -87,7 +86,7 @@ const gradesAPIs = (router: Router, cl: DatabaseClient) => {
         username: studentData.get("username"),
         semester: studentData.get("semester"),
         admissionYear: studentData.get("admissionYear"),
-        faculty: faculties.find((fac) => fac._id.toHexString() === studentData.get("facultyID")).name
+        faculty: faculties.find((fac) => fac._id.toHexString() === studentData.get("facultyID")).facultyName
       }
     };
 
