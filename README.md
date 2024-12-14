@@ -2,7 +2,7 @@
 
 ## **_For Grading/Evalutation:_**
 
-## [**_Full hosted website here_**](https://blank-giu-client.herokuapp.com/)
+## [** YouTube demonstration here_**](https://youtu.be/U_HBUkYcFHU)
 
 ### Sample Users for testing
 
